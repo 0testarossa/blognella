@@ -5,7 +5,7 @@ const baseUrl: string = 'http://localhost:4000'
 export const getTodos = async (): Promise<AxiosResponse<ApiDataType>> => {
   try {
     const todos: AxiosResponse<ApiDataType> = await axios.get(
-      baseUrl + '/todos'
+       '/todos'
     )
     return todos
   } catch (error) {
@@ -43,7 +43,7 @@ export const updateTodo = async (
       status: true,
     }
     const updatedTodo: AxiosResponse<ApiDataType> = await axios.put(
-      `${baseUrl}/edit-todo/${todo._id}`,
+      `/edit-todo/${todo._id}`,
       todoUpdate
     )
     return updatedTodo
@@ -57,7 +57,7 @@ export const deleteTodo = async (
 ): Promise<AxiosResponse<ApiDataType>> => {
   try {
     const deletedTodo: AxiosResponse<ApiDataType> = await axios.delete(
-      `${baseUrl}/delete-todo/${_id}`
+      `/delete-todo/${_id}`
     )
     return deletedTodo
   } catch (error) {
