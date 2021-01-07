@@ -1,0 +1,7 @@
+{
+    "env": {
+        "MONGO_USER": "kiranella",
+        "MONGO_PASSWORD": "czeczuga5",
+        "MONGO_DB": "blognellaDatabase"
+    }
+}
