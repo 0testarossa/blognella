@@ -1,7 +1,9 @@
-//import { ITodo } from './../types/todo';
-import { model, Schema } from 'mongoose'
+//import mongoose from 'mongoose'
 
-const todoSchema: Schema = new Schema({
+const mongoose = require('mongoose');
+const { model, Schema } = mongoose;
+
+const todoSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -20,4 +22,5 @@ const todoSchema: Schema = new Schema({
 }, { timestamps: true })
 
 
-export default model<any>('Todo', todoSchema)
+//export default model('Todo', todoSchema)
+module.exports = model('Todo', todoSchema);
