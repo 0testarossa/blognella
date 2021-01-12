@@ -10,5 +10,8 @@
       "types": [],
       "skipLibCheck": true
     },
-    "lib": ["es2015"]
+    "lib": ["es2015"],
+    "ignoreRules": {
+        "TS2307": true
+    }
   }
