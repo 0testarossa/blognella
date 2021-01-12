@@ -12,7 +12,7 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "module" : "commonjs",
+    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "noEmit": true,
@@ -24,8 +24,7 @@
     "experimentalDecorators": true,
     "incremental": true,
     "noFallthroughCasesInSwitch": true,
-    "isolatedModules": true,
-    "types": [],
+    "isolatedModules": true
   },
   "include": [
     "src/**/*"
