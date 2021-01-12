@@ -24,7 +24,8 @@
     "experimentalDecorators": true,
     "incremental": true,
     "noFallthroughCasesInSwitch": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "checkJs": false
   },
   "include": [
     "src/**/*"
