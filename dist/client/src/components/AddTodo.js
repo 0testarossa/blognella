@@ -23,7 +23,10 @@ const react_1 = __importStar(require("react"));
 const AddTodo = ({ saveTodo }) => {
     const [formData, setFormData] = react_1.useState();
     const handleForm = (e) => {
-        setFormData(Object.assign(Object.assign({}, formData), { [e.currentTarget.id]: e.currentTarget.value }));
+        setFormData({
+            ...formData,
+            [e.currentTarget.id]: e.currentTarget.value,
+        });
     };
     console.log(formData);
     return (react_1.default.createElement("form", { className: 'Form', onSubmit: (e) => saveTodo(e, formData) },
