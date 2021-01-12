@@ -26,7 +26,8 @@
     "client": "cd client && npm start",
     "client:build": "cd client && npm run build",
     "server": "tsc && nodemon dist/server.js",
-    "dev": "concurrently --kill-others-on-fail \"npm run client\" \"npm run server\""
+    "dev": "concurrently --kill-others-on-fail \"npm run client\" \"npm run server\"",
+    "start": "tsc && nodemon dist/server.js"
   },
   "homepage": "https://github.com/0testarossa/blognella#readme"
 }
