@@ -32,7 +32,7 @@
     "server": "tsc && nodemon dist/server.js",
     "dev": "concurrently --kill-others-on-fail \"npm run client\" \"npm run server\"",
     "start": "node dist/server.js",
-    "build": "tsc",
+    "build": "tsc && cd client && npm run build",
     "postinstall": "npm run build"
   },
   "homepage": "https://github.com/0testarossa/blognella#readme"
