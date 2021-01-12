@@ -25,7 +25,8 @@
     "incremental": true,
     "noFallthroughCasesInSwitch": true,
     "isolatedModules": true,
-    "types": []
+    "types": [],
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*"
