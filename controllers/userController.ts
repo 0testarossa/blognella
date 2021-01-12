@@ -1,4 +1,6 @@
-const User = require('../models/user');
+import User from '../models/user';
+
+// const User = require('../models/user');
 
 const getUsers = async (req, res) => {
     try {
@@ -70,7 +72,9 @@ const deleteUser = async (req, res) => {
     }
 }
 
-module.exports.getUsers = getUsers;
-module.exports.addUser = addUser;
-module.exports.updateUser = updateUser;
-module.exports.deleteUser = deleteUser;
+export { getUsers, addUser, updateUser, deleteUser }
+
+// module.exports.getUsers = getUsers;
+// module.exports.addUser = addUser;
+// module.exports.updateUser = updateUser;
+// module.exports.deleteUser = deleteUser;

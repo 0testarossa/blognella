@@ -1,7 +1,7 @@
-//import mongoose from 'mongoose'
+import { model, Schema } from 'mongoose'
 
-const mongoose = require('mongoose');
-const { model, Schema } = mongoose;
+// const mongoose = require('mongoose');
+// const { model, Schema } = mongoose;
 
 const todoSchema = new Schema({
     name: {
@@ -22,5 +22,5 @@ const todoSchema = new Schema({
 }, { timestamps: true })
 
 
-//export default model('Todo', todoSchema)
-module.exports = model('Todo', todoSchema);
+export default model('Todo', todoSchema)
+// module.exports = model('Todo', todoSchema);

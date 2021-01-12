@@ -1,6 +1,6 @@
-//import Todo from '../../models/todo.js'
+import Todo from '../models/todo';
 
-const Todo = require('../models/todo');
+// const Todo = require('../models/todo');
 
 const getTodos = async (req, res) => {
     try {
@@ -71,9 +71,9 @@ const deleteTodo = async (req, res) => {
     }
 }
 
-//export { getTodos, addTodo, updateTodo, deleteTodo }
+export { getTodos, addTodo, updateTodo, deleteTodo }
 
-module.exports.getTodos = getTodos;
-module.exports.addTodo = addTodo;
-module.exports.updateTodo = updateTodo;
-module.exports.deleteTodo = deleteTodo;
+// module.exports.getTodos = getTodos;
+// module.exports.addTodo = addTodo;
+// module.exports.updateTodo = updateTodo;
+// module.exports.deleteTodo = deleteTodo;

@@ -1,17 +1,19 @@
-//import express from "express"
-//import mongoose from "mongoose"
-//import cors from "cors"
-//import todoRoutes from "./routes/index.js"
+import express from "express"
+import mongoose from "mongoose"
+import cors from "cors"
+// import todoRoutes from "./routes/index.js"
+import path from "path";
+import bodyParser from "body-parser";
+import router from "./routes";
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const mongoose = require('mongoose');
-const path = require('path');
+// const express = require('express');
+// const bodyParser = require('body-parser');
+// const cors = require('cors');
+// const mongoose = require('mongoose');
+// const path = require('path');
+
 
 const app = express()
-//const bodyParser = require('body-parser')
-// var bodyParser = require('body-parser')
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
@@ -23,15 +25,16 @@ app.use(bodyParser.json())
 
 const PORT = process.env.PORT || 4000
 
-const api = require('./routes/index');
+// const api = require('./routes/index');
+
 // Configure app to use route
-//app.use(api);
 
 app.use(cors())
-app.use(api)
+app.use(router)
 
 // This middleware informs the express application to serve our compiled React files
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
+// if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
+if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client/build')));
 
   app.get('*', function (req, res) {
