@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { getTodos, addTodo, updateTodo, deleteTodo } from '../controllers/todoController'
-import { getUsers, addUser, updateUser, deleteUser } from '../controllers/userController'
+import { getUsers, getUser, addUser, updateUser, deleteUser } from '../controllers/userController'
 
 const router = Router()
 
@@ -36,6 +36,8 @@ router.put('/edit-todo/:id', updateTodo)
 router.delete('/delete-todo/:id', deleteTodo)
 
 router.get('/users', getUsers)
+
+router.get('/user/:id', getUser)
 
 router.post('/user', addUser)
 

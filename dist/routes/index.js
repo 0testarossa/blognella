@@ -21,6 +21,7 @@ router.post('/add-todo', todoController_1.addTodo);
 router.put('/edit-todo/:id', todoController_1.updateTodo);
 router.delete('/delete-todo/:id', todoController_1.deleteTodo);
 router.get('/users', userController_1.getUsers);
+router.get('/user/:id', userController_1.getUser);
 router.post('/user', userController_1.addUser);
 router.put('/user/:id', userController_1.updateUser);
 router.delete('/user/:id', userController_1.deleteUser);

@@ -9,7 +9,8 @@
       "jsx": "react",
       "types": [],
       "skipLibCheck": true,
-      "checkJs": false
+      "checkJs": false,
+      "experimentalDecorators": true
     },
     // "lib": ["es2015"],
     "ignoreRules": {
