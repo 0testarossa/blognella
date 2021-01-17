@@ -1,10 +1,5 @@
-// import Router from "react-router";
 import React from "react";
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-  } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, } from "react-router-dom";
 import App from "./App";
 import LoginPage from "./pages/loginPage";
 import RegisterPage from "./pages/registerPage";
