@@ -10,7 +10,8 @@
       "types": [],
       "skipLibCheck": true,
       "checkJs": false,
-      "experimentalDecorators": true
+      "experimentalDecorators": true,
+      "noImplicitAny": false
     },
     // "lib": ["es2015"],
     "ignoreRules": {
