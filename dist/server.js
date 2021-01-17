@@ -32,7 +32,8 @@ app.use(routes_1.default);
 if (process.env.NODE_ENV === 'production') {
     app.use(express_1.default.static(path_1.default.join(__dirname, '../client/build')));
     app.get('*', function (req, res) {
-        res.sendFile(path_1.default.join(__dirname, '../client/src', 'index.html'));
+        res.sendFile(path_1.default.join(__dirname, '../client/build', 'index.html'));
+        // res.sendFile(path.join(__dirname, '../client/src', 'index.html'));
     });
 }
 ;
