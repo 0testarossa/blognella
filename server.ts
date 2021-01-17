@@ -35,8 +35,11 @@ app.use(router)
 // This middleware informs the express application to serve our compiled React files
 // if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')));
+  console.log("sciezka");
+  console.log(path.join(__dirname, '../client/build'));
 
+  app.use(express.static(path.join(__dirname, '../client/build')));
+  console.log(path.join(__dirname, '../client/src', 'index.html'));
   app.get('*', function (req, res) {
       res.sendFile(path.join(__dirname, '../client/src', 'index.html'));
   });
