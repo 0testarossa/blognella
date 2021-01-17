@@ -6,7 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importDefault(require("react"));
 const react_dom_1 = __importDefault(require("react-dom"));
 require("./index.css");
-const App_1 = __importDefault(require("./App"));
+// import App from './App'
+const router_1 = __importDefault(require("./router"));
 react_dom_1.default.render(react_1.default.createElement(react_1.default.StrictMode, null,
-    react_1.default.createElement(App_1.default, null)), document.getElementById('root'));
+    react_1.default.createElement(router_1.default, null)), document.getElementById('root'));
 //# sourceMappingURL=index.js.map
