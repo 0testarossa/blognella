@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import { Button } from "@material-ui/core";
 import { FormItem, LogicControls, StyledRegisterForm } from "./RegisterForm.styles";
 import { createUser } from "../../APIRequests/User";
+import { Link } from "react-router-dom";
 
 const RegisterForm = () => {
     const [nick, setNick] = useState("");
@@ -94,6 +95,7 @@ const RegisterForm = () => {
                     />
                 </FormItem>
                 <LogicControls>
+                    <Link to={"/login"}>Home</Link>
                     <div>Have already account? Login</div>
                     <Button variant="contained" color="primary" onClick={onUserSave}>
                     Register
