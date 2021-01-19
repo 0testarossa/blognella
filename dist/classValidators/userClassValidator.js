@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserValidator = void 0;
 const class_validator_1 = require("class-validator");
+const ValidationEnums_1 = require("./ValidationEnums");
 class UserValidator {
     constructor(user) {
         this.nick = user.nick;
@@ -36,7 +37,7 @@ __decorate([
     class_validator_1.NotContains(' ')
 ], UserValidator.prototype, "password", void 0);
 __decorate([
-    class_validator_1.IsString()
+    class_validator_1.IsEnum(ValidationEnums_1.USER_ROLES)
 ], UserValidator.prototype, "role", void 0);
 __decorate([
     class_validator_1.IsEmail()

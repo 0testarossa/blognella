@@ -1,11 +1,13 @@
 import {
   IsAlphanumeric,
     IsEmail,
+    IsEnum,
   IsNotEmpty,
     IsString,
     MinLength,
     NotContains,
   } from 'class-validator';
+import { USER_ROLES } from './ValidationEnums';
   
   export class UserValidator {
     constructor(user) {
@@ -19,25 +21,25 @@ import {
     @IsNotEmpty()
     @IsString()
     @NotContains(' ')
-    nick: any;
+    nick: string;
   
     @IsAlphanumeric()
     @IsNotEmpty()
     @IsString()
     @NotContains(' ')
-    login: any;
+    login: string;
   
     @IsNotEmpty()
     @IsString()
     @MinLength(7)
     @NotContains(' ')
-    password: any;
+    password: string;
   
-    @IsString()
-    role: any;
+    @IsEnum(USER_ROLES)
+    role: string;
   
     @IsEmail()
-    email: any;
+    email: string;
   }
   
   export default UserValidator;

@@ -75,8 +75,9 @@ const RegisterForm = () => {
                         shrink: true,
                     }, onChange: (input) => setEmail(input.target.value) })),
             react_1.default.createElement(RegisterForm_styles_1.LogicControls, null,
-                react_1.default.createElement(react_router_dom_1.Link, { to: "/login" }, "Home"),
-                react_1.default.createElement("div", null, "Have already account? Login"),
+                react_1.default.createElement("div", null,
+                    "Have already account?",
+                    react_1.default.createElement(react_router_dom_1.Link, { to: "/login" }, "Login")),
                 react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onUserSave }, "Register")))));
 };
 exports.default = RegisterForm;

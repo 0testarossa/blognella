@@ -36,7 +36,7 @@ const RegisterForm = () => {
     }
 
     return (
-        <>
+        <>  
             <StyledRegisterForm>
                 <FormItem>
                     <TextField
@@ -95,8 +95,9 @@ const RegisterForm = () => {
                     />
                 </FormItem>
                 <LogicControls>
-                    <Link to={"/login"}>Home</Link>
-                    <div>Have already account? Login</div>
+                    <div>Have already account? 
+                    <Link to={"/login"}>Login</Link>
+                    </div>
                     <Button variant="contained" color="primary" onClick={onUserSave}>
                     Register
                     </Button>

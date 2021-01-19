@@ -25,7 +25,8 @@
     "incremental": true,
     "noFallthroughCasesInSwitch": true,
     "isolatedModules": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "checkJs": false
   },
   "include": [
     "src/**/*"
