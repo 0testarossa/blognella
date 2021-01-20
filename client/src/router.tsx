@@ -39,6 +39,7 @@ export default function BasicExample() {
              <Route path="/panel/posts/add"><App page={PanelPostsAddingPage}/></Route>
              <Route path="/panel/posts/:id"><App page={PanelPostsUpdatingPage}/></Route>
              <Route path="/panel/posts"><App page={PanelPostsPage}/></Route>
+             <Route path="/panel2"><App page={PanelTagsPage}/></Route>
            </Switch>
       </Router>
     );

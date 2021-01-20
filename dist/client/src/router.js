@@ -42,7 +42,9 @@ function BasicExample() {
             react_1.default.createElement(react_router_dom_1.Route, { path: "/panel/posts/:id" },
                 react_1.default.createElement(App_1.default, { page: panelPostsUpdatingPage_1.default })),
             react_1.default.createElement(react_router_dom_1.Route, { path: "/panel/posts" },
-                react_1.default.createElement(App_1.default, { page: panelPostsPage_1.default })))));
+                react_1.default.createElement(App_1.default, { page: panelPostsPage_1.default })),
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/panel2" },
+                react_1.default.createElement(App_1.default, { page: panelTagsPage_1.default })))));
 }
 exports.default = BasicExample;
 //# sourceMappingURL=router.js.map
