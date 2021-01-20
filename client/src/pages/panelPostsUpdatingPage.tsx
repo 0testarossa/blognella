@@ -3,12 +3,13 @@ import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { getPost, PostProps } from "../APIRequests/Post";
 import ChaptersList from "../components/ChaptersList/ChaptersList";
-import PostsPanel from "../components/PostsPanel/PostsPanel";
+import UpdatePostsPanel from "../components/PostsPanel/UpdatePostsPanel";
 
 const PanelPostsUpdatingPage = (props) => {
     const [postType, setPostType] = useState("");
     const [storyTitle, setStoryTitle] = useState("");
-    // const [editedPost, setEditedPost] = useState<PostProps>();
+    // const [postTitle, setPostTitle] = useState("");
+    const [editedPost, setEditedPost] = useState<PostProps>();
 
     const handlePostType = (event) => {
         setPostType(event.target.value);
@@ -22,6 +23,7 @@ const PanelPostsUpdatingPage = (props) => {
             const customPostType = postTitle === "Main" || postTitle === "About" ? postTitle : "Chapter";
             setPostType(customPostType);
             customPostType === "Chapter" && setStoryTitle(postTitle);
+            setEditedPost(post);
         })
         .catch((err: Error) => console.log(err))
     }
@@ -44,7 +46,8 @@ const PanelPostsUpdatingPage = (props) => {
         <div></div>
         {postType === "Chapter" ? <ChaptersList storyTitle={storyTitle} setPostTitle={setStoryTitle}/> : <></>}
 
-        {postType === "Main" || postType === "About" || storyTitle ? <PostsPanel contentTitle={storyTitle || postType}/> : <></>}
+        {(postType === "Main" || postType === "About" || storyTitle) && editedPost ? 
+        <UpdatePostsPanel contentTitle={storyTitle || postType} post={editedPost}/> : <></>}
         </>
     )
 }

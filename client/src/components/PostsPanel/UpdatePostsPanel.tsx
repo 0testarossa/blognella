@@ -107,6 +107,7 @@ const UpdatePostsPanel = (props) => {
                     InputLabelProps={{
                         shrink: true,
                     }}
+                    value={title}
                     onChange={(input) => setTitle(input.target.value)}
          />
 
