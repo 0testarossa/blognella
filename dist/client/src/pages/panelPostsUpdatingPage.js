@@ -25,17 +25,30 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@material-ui/core");
 const react_1 = __importStar(require("react"));
 const react_router_dom_1 = require("react-router-dom");
+const Post_1 = require("../APIRequests/Post");
 const ChaptersList_1 = __importDefault(require("../components/ChaptersList/ChaptersList"));
 const PostsPanel_1 = __importDefault(require("../components/PostsPanel/PostsPanel"));
 const PanelPostsUpdatingPage = (props) => {
     const [postType, setPostType] = react_1.useState("");
     const [storyTitle, setStoryTitle] = react_1.useState("");
+    // const [editedPost, setEditedPost] = useState<PostProps>();
     const handlePostType = (event) => {
         setPostType(event.target.value);
     };
-    console.log("props");
-    console.log(props);
-    // console.log(match.params)
+    const fetchEditedPost = () => {
+        Post_1.getPost(props.match.params.id)
+            .then(({ data: { post } }) => {
+            // setEditedPost(post)
+            const postTitle = post.content[0].title;
+            const customPostType = postTitle === "Main" || postTitle === "About" ? postTitle : "Chapter";
+            setPostType(customPostType);
+            customPostType === "Chapter" && setStoryTitle(postTitle);
+        })
+            .catch((err) => console.log(err));
+    };
+    react_1.useEffect(() => {
+        fetchEditedPost();
+    }, []);
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement("div", null, "UPDATE"),
         react_1.default.createElement(core_1.Select, { value: postType, onChange: handlePostType },
@@ -43,7 +56,7 @@ const PanelPostsUpdatingPage = (props) => {
             react_1.default.createElement(core_1.MenuItem, { value: "Chapter" }, "Chapter"),
             react_1.default.createElement(core_1.MenuItem, { value: "About" }, "About")),
         react_1.default.createElement("div", null),
-        postType === "Chapter" ? react_1.default.createElement(ChaptersList_1.default, { setPostTitle: setStoryTitle }) : react_1.default.createElement(react_1.default.Fragment, null),
+        postType === "Chapter" ? react_1.default.createElement(ChaptersList_1.default, { storyTitle: storyTitle, setPostTitle: setStoryTitle }) : react_1.default.createElement(react_1.default.Fragment, null),
         postType === "Main" || postType === "About" || storyTitle ? react_1.default.createElement(PostsPanel_1.default, { contentTitle: storyTitle || postType }) : react_1.default.createElement(react_1.default.Fragment, null)));
 };
 exports.default = react_router_dom_1.withRouter(PanelPostsUpdatingPage);

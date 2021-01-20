@@ -28,6 +28,11 @@ const ChaptersList = (props) => {
     react_1.useEffect(() => {
         fetchAllPosts();
     }, []);
+    react_1.useEffect(() => {
+        if (postTitle === "" && props.storyTitle) {
+            setPostTitle(props.storyTitle);
+        }
+    }, [props.storyTitle]);
     const fetchAllPosts = () => {
         Post_1.getPosts()
             .then(({ data: { posts } }) => FilterAndSetMainPosts(posts))

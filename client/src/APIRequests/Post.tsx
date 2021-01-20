@@ -19,6 +19,19 @@ export const getPosts = async () => {
     }
   }
 
+  export const getPost = async (
+    _id: string
+  ) => {
+    try {
+      const post = await axios.get(
+        `/post/${_id}`
+      )
+      return post
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
 export const createPost = async (
     post: PostProps
   ): Promise<AxiosResponse<ApiDataType>> => {

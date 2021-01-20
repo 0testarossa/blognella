@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletePost = exports.createPost = exports.getPosts = void 0;
+exports.deletePost = exports.createPost = exports.getPost = exports.getPosts = void 0;
 const axios_1 = __importDefault(require("axios"));
 const getPosts = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -24,6 +24,16 @@ const getPosts = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getPosts = getPosts;
+const getPost = (_id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const post = yield axios_1.default.get(`/post/${_id}`);
+        return post;
+    }
+    catch (error) {
+        throw new Error(error);
+    }
+});
+exports.getPost = getPost;
 const createPost = (post) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const savedPost = yield axios_1.default.post(`/post`, post);

@@ -36,7 +36,7 @@ const useStyles = makeStyles(() => ({
     };
   }
 
-const PostsPanel = (props) => {
+const UpdatePostsPanel = (props) => {
     const classes = useStyles();
     const theme = useTheme();
     const [data, setData] = useState('<p>React is really <em>nice</em>!</p>');
@@ -55,7 +55,6 @@ const PostsPanel = (props) => {
             text: data,
             title: props.contentTitle
         }
-        // const createdContent = createContent(content)
         createContent(content)
         .then(({ status, data }) => {
                 if (status !== 201) {
@@ -63,7 +62,6 @@ const PostsPanel = (props) => {
                 }
                 setContentId(data.content._id);
               })
-        // return createdContent;
     }
 
     useEffect(() => {
@@ -151,9 +149,7 @@ const PostsPanel = (props) => {
                     Save Post
          </Button>
       </>
-
-
     )
 }
 
-export default PostsPanel
+export default UpdatePostsPanel

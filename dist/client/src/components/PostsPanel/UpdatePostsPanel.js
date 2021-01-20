@@ -55,7 +55,7 @@ function getStyles(name, personName, theme) {
             : theme.typography.fontWeightMedium,
     };
 }
-const PostsPanel = (props) => {
+const UpdatePostsPanel = (props) => {
     const classes = useStyles();
     const theme = core_1.useTheme();
     const [data, setData] = react_1.useState('<p>React is really <em>nice</em>!</p>');
@@ -71,7 +71,6 @@ const PostsPanel = (props) => {
             text: data,
             title: props.contentTitle
         };
-        // const createdContent = createContent(content)
         Content_1.createContent(content)
             .then(({ status, data }) => {
             if (status !== 201) {
@@ -79,7 +78,6 @@ const PostsPanel = (props) => {
             }
             setContentId(data.content._id);
         });
-        // return createdContent;
     };
     react_1.useEffect(() => {
         if (contentId) {
@@ -120,5 +118,5 @@ const PostsPanel = (props) => {
         react_1.default.createElement("div", null),
         react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onContentSave }, "Save Post")));
 };
-exports.default = PostsPanel;
-//# sourceMappingURL=PostsPanel.js.map
+exports.default = UpdatePostsPanel;
+//# sourceMappingURL=UpdatePostsPanel.js.map
