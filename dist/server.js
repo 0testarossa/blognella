@@ -30,6 +30,8 @@ app.use(routes_1.default);
 // This middleware informs the express application to serve our compiled React files
 // if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
 if (process.env.NODE_ENV === 'production') {
+    console.log("jestem2");
+    console.log(express_1.default.static(path_1.default.join(__dirname, '../client/build')));
     app.use(express_1.default.static(path_1.default.join(__dirname, '../client/build')));
     app.get('*', function (req, res) {
         console.log("jestem");
