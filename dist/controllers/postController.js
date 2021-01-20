@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletePost = exports.updatePost = exports.addPost = exports.getPost = exports.getPosts = void 0;
 const post_1 = __importDefault(require("../models/post"));
+const content_1 = __importDefault(require("../models/content"));
 const postClassValidator_1 = __importDefault(require("../classValidators/postClassValidator"));
 const validation_1 = require("../classValidators/validation");
 const getPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -93,6 +94,11 @@ const deletePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         if (!post) {
             res.status(404).json("Id doesn't exist");
             return;
+        }
+        if (post.content.length > 0) {
+            post.content.map((content) => __awaiter(void 0, void 0, void 0, function* () {
+                const deletedContent = yield content_1.default.findByIdAndRemove(content._id);
+            }));
         }
         const deletedPost = yield post_1.default.findByIdAndRemove(id);
         res.status(200).json({ post: deletedPost });

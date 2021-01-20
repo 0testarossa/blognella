@@ -1,4 +1,5 @@
 import React from 'react'
+import { StyledMain } from './App.styles';
 import DefaultView from './components/DefaultView/DefaultView'
 import { MainContentContainer } from './components/DefaultView/DefaultView.styles';
 import DefaultViewAbout from './components/DefaultView/DefaultViewAbout';
@@ -62,7 +63,7 @@ const App: React.FC = (props:any) => {
   // const Content = props.page;
   const Content = props.page;
   return (
-    <main style={{maxWidth: "824px", margin: "0rem auto 0rem auto"}}>
+    <StyledMain>
       {/* <LoginPage/> */}
       <DefaultView/>
       <MainContentContainer>
@@ -86,7 +87,7 @@ const App: React.FC = (props:any) => {
           todo={todo}
         />
       ))} */}
-    </main>
+    </StyledMain>
   )
 }
 

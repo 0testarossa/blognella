@@ -11,7 +11,7 @@ import {
         this.title = post.title;
         this.content = post.content;
       }
-      @IsAlphanumeric()
+    //   @IsAlphanumeric()
       @IsNotEmpty()
       @IsString()
       date: string;
@@ -21,7 +21,7 @@ import {
     //   @IsString()
       tags: string[];
 
-      @IsAlphanumeric()
+    //   @IsAlphanumeric()
       @IsNotEmpty()
       @IsString()
       title: string[];

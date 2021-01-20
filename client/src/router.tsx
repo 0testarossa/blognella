@@ -8,6 +8,10 @@ import MainViewPage from "./pages/mainViewPage";
 
 import RegisterPage from "./pages/registerPage";
 import TestPage from "./pages/testPage";
+import PanelTagsPage from "./pages/panelTagsPage";
+import PanelPostsAddingPage from "./pages/panelPostsAddingPage";
+import PanelPostsPage from "./pages/panelPostsPage";
+import PanelPostsUpdatingPage from "./pages/panelPostsUpdatingPage";
 
 // export default <Router history={hashHistory}>
 //   <Route path="/" component={App}>
@@ -31,6 +35,10 @@ export default function BasicExample() {
              <Route path="/register"><App page={RegisterPage} /></Route>
              <Route path="/login"><App page={LoginPage}/></Route>
              <Route path="/test"><App page={TestPage}/></Route>
+             <Route path="/panel/tags"><App page={PanelTagsPage}/></Route>
+             <Route path="/panel/posts/add"><App page={PanelPostsAddingPage}/></Route>
+             <Route path="/panel/posts/:id"><App page={PanelPostsUpdatingPage}/></Route>
+             <Route path="/panel/posts"><App page={PanelPostsPage}/></Route>
            </Switch>
       </Router>
     );

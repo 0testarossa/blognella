@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 
 interface UserProps {
+    _id?: string;
     nick: string;
     login: string;
     password: string;

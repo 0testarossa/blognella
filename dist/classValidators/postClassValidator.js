@@ -17,12 +17,10 @@ class PostValidator {
     }
 }
 __decorate([
-    class_validator_1.IsAlphanumeric(),
     class_validator_1.IsNotEmpty(),
     class_validator_1.IsString()
 ], PostValidator.prototype, "date", void 0);
 __decorate([
-    class_validator_1.IsAlphanumeric(),
     class_validator_1.IsNotEmpty(),
     class_validator_1.IsString()
 ], PostValidator.prototype, "title", void 0);

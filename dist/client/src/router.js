@@ -12,6 +12,10 @@ const loginPage_1 = __importDefault(require("./pages/loginPage"));
 const mainViewPage_1 = __importDefault(require("./pages/mainViewPage"));
 const registerPage_1 = __importDefault(require("./pages/registerPage"));
 const testPage_1 = __importDefault(require("./pages/testPage"));
+const panelTagsPage_1 = __importDefault(require("./pages/panelTagsPage"));
+const panelPostsAddingPage_1 = __importDefault(require("./pages/panelPostsAddingPage"));
+const panelPostsPage_1 = __importDefault(require("./pages/panelPostsPage"));
+const panelPostsUpdatingPage_1 = __importDefault(require("./pages/panelPostsUpdatingPage"));
 // export default <Router history={hashHistory}>
 //   <Route path="/" component={App}>
 //     <IndexRoute component={AppSplash}/>
@@ -30,7 +34,15 @@ function BasicExample() {
             react_1.default.createElement(react_router_dom_1.Route, { path: "/login" },
                 react_1.default.createElement(App_1.default, { page: loginPage_1.default })),
             react_1.default.createElement(react_router_dom_1.Route, { path: "/test" },
-                react_1.default.createElement(App_1.default, { page: testPage_1.default })))));
+                react_1.default.createElement(App_1.default, { page: testPage_1.default })),
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/panel/tags" },
+                react_1.default.createElement(App_1.default, { page: panelTagsPage_1.default })),
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/panel/posts/add" },
+                react_1.default.createElement(App_1.default, { page: panelPostsAddingPage_1.default })),
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/panel/posts/:id" },
+                react_1.default.createElement(App_1.default, { page: panelPostsUpdatingPage_1.default })),
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/panel/posts" },
+                react_1.default.createElement(App_1.default, { page: panelPostsPage_1.default })))));
 }
 exports.default = BasicExample;
 //# sourceMappingURL=router.js.map

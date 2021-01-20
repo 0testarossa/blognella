@@ -1,4 +1,5 @@
 import Post from '../models/post';
+import Content from '../models/content';
 import PostValidator from '../classValidators/postClassValidator';
 import { validateOrRejectExample } from '../classValidators/validation';
 
@@ -92,7 +93,13 @@ const deletePost = async (req, res) => {
             res.status(404).json("Id doesn't exist");
             return;
         }
-
+        if(post.content.length > 0) {
+            post.content.map(async (content) => {        
+                const deletedContent = await Content.findByIdAndRemove(
+                    content._id
+                )
+            })
+        }
         const deletedPost = await Post.findByIdAndRemove(
             id
         )

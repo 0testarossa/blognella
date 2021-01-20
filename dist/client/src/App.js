@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importDefault(require("react"));
+const App_styles_1 = require("./App.styles");
 const DefaultView_1 = __importDefault(require("./components/DefaultView/DefaultView"));
 const DefaultView_styles_1 = require("./components/DefaultView/DefaultView.styles");
 const DefaultViewAbout_1 = __importDefault(require("./components/DefaultView/DefaultViewAbout"));
@@ -58,7 +59,7 @@ const App = (props) => {
     //   }
     // const Content = props.page;
     const Content = props.page;
-    return (react_1.default.createElement("main", { style: { maxWidth: "824px", margin: "0rem auto 0rem auto" } },
+    return (react_1.default.createElement(App_styles_1.StyledMain, null,
         react_1.default.createElement(DefaultView_1.default, null),
         react_1.default.createElement(DefaultView_styles_1.MainContentContainer, null,
             react_1.default.createElement(MainView_styles_1.MainViewContainer, null,

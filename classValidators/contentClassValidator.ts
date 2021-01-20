@@ -9,7 +9,7 @@ import {
         this.text = content.text;
         this.title = content.title;
       }
-      @IsAlphanumeric()
+    //   @IsAlphanumeric()
       @IsNotEmpty()
       @IsString()
       text: string;

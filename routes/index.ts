@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { addContent, deleteContent, getContent, getContents, updateContent } from '../controllers/contentController'
 import { addImage, deleteImage, getImage, getImages, updateImage } from '../controllers/imageController'
 import { addPost, deletePost, getPost, getPosts, updatePost } from '../controllers/postController'
+import { addTag, deleteTag, getTag, getTags, updateTag } from '../controllers/tagController'
 import { getTodos, addTodo, updateTodo, deleteTodo } from '../controllers/todoController'
 import { getUsers, getUser, addUser, updateUser, deleteUser } from '../controllers/userController'
 
@@ -77,6 +78,16 @@ router.post('/post', addPost)
 router.put('/post/:id', updatePost)
 
 router.delete('/post/:id', deletePost)
+
+router.get('/tags', getTags)
+
+router.get('/tag/:id', getTag)
+
+router.post('/tag', addTag)
+
+router.put('/tag/:id', updateTag)
+
+router.delete('/tag/:id', deleteTag)
 
 export default router
 // module.exports = router;

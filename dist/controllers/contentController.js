@@ -75,7 +75,8 @@ const updateContent = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             return;
         }
         const updatedContent = yield content_1.default.findByIdAndUpdate({ _id: id }, body);
-        res.status(200).json({ content: updatedContent });
+        const changedContent = yield content_1.default.findOne({ _id: id });
+        res.status(200).json({ content: changedContent });
     }
     catch (error) {
         console.log("myerror");

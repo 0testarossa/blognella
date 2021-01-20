@@ -73,8 +73,9 @@ const updateContent = async (req, res) => {
             { _id: id },
             body
         )
+        const changedContent = await Content.findOne({_id: id})
 
-        res.status(200).json({content: updatedContent})
+        res.status(200).json({content: changedContent})
     } catch (error) {
         console.log("myerror");
         console.log(error);
