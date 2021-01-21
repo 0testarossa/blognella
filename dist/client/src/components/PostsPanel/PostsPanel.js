@@ -108,7 +108,7 @@ const PostsPanel = (props) => {
         setTags(event.target.value);
     };
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Title", style: { margin: 8 }, placeholder: "Please type in your login here", fullWidth: true, margin: "normal", InputLabelProps: {
+        react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Title", style: { margin: 8 }, placeholder: "Please type in your post title here", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
             }, onChange: (input) => setTitle(input.target.value) }),
         react_1.default.createElement(tinymce_react_1.Editor, { initialValue: data, init: {

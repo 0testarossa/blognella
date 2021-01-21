@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createContent = void 0;
+exports.updateContent = exports.createContent = void 0;
 const axios_1 = __importDefault(require("axios"));
 const createContent = (content) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -24,4 +24,14 @@ const createContent = (content) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.createContent = createContent;
+const updateContent = (content) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const updatedContent = yield axios_1.default.put(`/content/${content._id}`, content);
+        return updatedContent;
+    }
+    catch (error) {
+        throw new Error(error);
+    }
+});
+exports.updateContent = updateContent;
 //# sourceMappingURL=Content.js.map

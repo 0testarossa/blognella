@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const bookmark_1 = require("../controllers/bookmark");
 const contentController_1 = require("../controllers/contentController");
 const imageController_1 = require("../controllers/imageController");
 const postController_1 = require("../controllers/postController");
@@ -49,6 +50,11 @@ router.get('/tag/:id', tagController_1.getTag);
 router.post('/tag', tagController_1.addTag);
 router.put('/tag/:id', tagController_1.updateTag);
 router.delete('/tag/:id', tagController_1.deleteTag);
+router.get('/bookmarks', bookmark_1.getBookmarks);
+router.get('/bookmark/:id', bookmark_1.getBookmark);
+router.post('/bookmark', bookmark_1.addBookmark);
+router.put('/bookmark/:id', bookmark_1.updateBookmark);
+router.delete('/bookmark/:id', bookmark_1.deleteBookmark);
 exports.default = router;
 // module.exports = router;
 //# sourceMappingURL=index.js.map

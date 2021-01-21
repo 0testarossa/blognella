@@ -2,9 +2,9 @@ import React, {useState, useEffect} from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import TextField from '@material-ui/core/TextField';
 import { Button, Chip, Input, makeStyles, MenuItem, Select, useTheme } from '@material-ui/core';
-import { createContent } from '../../APIRequests/Content';
+import { updateContent } from '../../APIRequests/Content';
 import { getTags, TagProps } from '../../APIRequests/Tag';
-import { createPost } from '../../APIRequests/Post';
+import { updatePost } from '../../APIRequests/Post';
 
 const useStyles = makeStyles(() => ({
     chips: {
@@ -39,10 +39,10 @@ const useStyles = makeStyles(() => ({
 const UpdatePostsPanel = (props) => {
     const classes = useStyles();
     const theme = useTheme();
-    const [data, setData] = useState('<p>React is really <em>nice</em>!</p>');
-    const [title, setTitle] = useState("");
-    const [tags, setTags] = useState([]);
-    const [contentId, setContentId] = useState(undefined)
+    const [data, setData] = useState(props.post.content[0].text || "");
+    const [title, setTitle] = useState(props.post.title || "");
+    const [tags, setTags] = useState(props.post.tags || []);
+    // const [contentId, setContentId] = useState(undefined)
     const [allTags, setAllTags] = useState([])
 
 
@@ -53,23 +53,18 @@ const UpdatePostsPanel = (props) => {
     const onContentSave = () => {
         const content = {
             text: data,
-            title: props.contentTitle
+            title: props.contentTitle,
+            _id: props.post.content[0]._id
         }
-        createContent(content)
-        .then(({ status, data }) => {
-                if (status !== 201) {
-                  throw new Error('Error! Todo not saved')
+        updateContent(content)
+        .then(({ status }) => {
+                if (status !== 200) {
+                  throw new Error('Error! Content not saved')
                 }
-                setContentId(data.content._id);
+                // setContentId(data.content._id);
+                onPostSave()
               })
     }
-
-    useEffect(() => {
-        if(contentId){
-            onPostSave()
-            setContentId(undefined)
-        }
-    }, [contentId])
 
     const fetchAllTags = () => {
     getTags()
@@ -86,9 +81,15 @@ const UpdatePostsPanel = (props) => {
             date: new Date(),
             tags: tags,
             title: title,
-            content: contentId,
+            content: props.post.content[0]._id,
+            _id: props.post._id
         }
-        createPost(post);
+        updatePost(post)
+        .then(({ status}) => {
+            if (status !== 200) {
+              throw new Error('Error! Post not saved')
+            }
+          })
     }
 
     const handleChange = (event) => {
@@ -101,13 +102,13 @@ const UpdatePostsPanel = (props) => {
                     id="standard-full-width"
                     label="Title"
                     style={{ margin: 8 }}
-                    placeholder="Please type in your login here"
+                    placeholder="Please type in your post title here"
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
                         shrink: true,
                     }}
-                    value={title}
+                    defaultValue={title}
                     onChange={(input) => setTitle(input.target.value)}
          />
 

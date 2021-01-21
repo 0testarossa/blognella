@@ -46,6 +46,20 @@ export const createPost = async (
     }
   }
 
+  export const updatePost = async (
+    post: PostProps
+  ): Promise<AxiosResponse<ApiDataType>> => {
+    try {
+      const updatedPost: AxiosResponse<ApiDataType> = await axios.put(
+        `/post/${post._id}`,
+        post
+      )
+      return updatedPost;
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
   export const deletePost = async (
     _id: string
   ) => {

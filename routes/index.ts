@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { addBookmark, deleteBookmark, getBookmark, getBookmarks, updateBookmark } from '../controllers/bookmark'
 import { addContent, deleteContent, getContent, getContents, updateContent } from '../controllers/contentController'
 import { addImage, deleteImage, getImage, getImages, updateImage } from '../controllers/imageController'
 import { addPost, deletePost, getPost, getPosts, updatePost } from '../controllers/postController'
@@ -88,6 +89,16 @@ router.post('/tag', addTag)
 router.put('/tag/:id', updateTag)
 
 router.delete('/tag/:id', deleteTag)
+
+router.get('/bookmarks', getBookmarks)
+
+router.get('/bookmark/:id', getBookmark)
+
+router.post('/bookmark', addBookmark)
+
+router.put('/bookmark/:id', updateBookmark)
+
+router.delete('/bookmark/:id', deleteBookmark)
 
 export default router
 // module.exports = router;

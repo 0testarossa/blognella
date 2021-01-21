@@ -58,10 +58,10 @@ function getStyles(name, personName, theme) {
 const UpdatePostsPanel = (props) => {
     const classes = useStyles();
     const theme = core_1.useTheme();
-    const [data, setData] = react_1.useState('<p>React is really <em>nice</em>!</p>');
-    const [title, setTitle] = react_1.useState("");
-    const [tags, setTags] = react_1.useState([]);
-    const [contentId, setContentId] = react_1.useState(undefined);
+    const [data, setData] = react_1.useState(props.post.content[0].text || "");
+    const [title, setTitle] = react_1.useState(props.post.title || "");
+    const [tags, setTags] = react_1.useState(props.post.tags || []);
+    // const [contentId, setContentId] = useState(undefined)
     const [allTags, setAllTags] = react_1.useState([]);
     const handleEditorChange = (e) => {
         setData(e.target.getContent());
@@ -69,22 +69,18 @@ const UpdatePostsPanel = (props) => {
     const onContentSave = () => {
         const content = {
             text: data,
-            title: props.contentTitle
+            title: props.contentTitle,
+            _id: props.post.content[0]._id
         };
-        Content_1.createContent(content)
-            .then(({ status, data }) => {
-            if (status !== 201) {
-                throw new Error('Error! Todo not saved');
+        Content_1.updateContent(content)
+            .then(({ status }) => {
+            if (status !== 200) {
+                throw new Error('Error! Content not saved');
             }
-            setContentId(data.content._id);
+            // setContentId(data.content._id);
+            onPostSave();
         });
     };
-    react_1.useEffect(() => {
-        if (contentId) {
-            onPostSave();
-            setContentId(undefined);
-        }
-    }, [contentId]);
     const fetchAllTags = () => {
         Tag_1.getTags()
             .then(({ data: { tags } }) => setAllTags(tags.map(tag => tag.name)))
@@ -98,17 +94,23 @@ const UpdatePostsPanel = (props) => {
             date: new Date(),
             tags: tags,
             title: title,
-            content: contentId,
+            content: props.post.content[0]._id,
+            _id: props.post._id
         };
-        Post_1.createPost(post);
+        Post_1.updatePost(post)
+            .then(({ status }) => {
+            if (status !== 200) {
+                throw new Error('Error! Post not saved');
+            }
+        });
     };
     const handleChange = (event) => {
         setTags(event.target.value);
     };
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Title", style: { margin: 8 }, placeholder: "Please type in your login here", fullWidth: true, margin: "normal", InputLabelProps: {
+        react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Title", style: { margin: 8 }, placeholder: "Please type in your post title here", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
-            }, value: title, onChange: (input) => setTitle(input.target.value) }),
+            }, defaultValue: title, onChange: (input) => setTitle(input.target.value) }),
         react_1.default.createElement(tinymce_react_1.Editor, { initialValue: data, init: {
                 plugins: 'link image code',
                 toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'

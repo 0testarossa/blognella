@@ -103,7 +103,7 @@ const PostsPanel = (props) => {
                     id="standard-full-width"
                     label="Title"
                     style={{ margin: 8 }}
-                    placeholder="Please type in your login here"
+                    placeholder="Please type in your post title here"
                     fullWidth
                     margin="normal"
                     InputLabelProps={{

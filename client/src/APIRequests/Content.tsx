@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 interface ContentProps {
     _id?: string;
@@ -15,6 +15,20 @@ export const createContent = async (
         content
       )
       return savedContent
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
+  export const updateContent = async (
+    content: ContentProps
+  ): Promise<AxiosResponse<ApiDataType>> => {
+    try {
+      const updatedContent: AxiosResponse<ApiDataType> = await axios.put(
+        `/content/${content._id}`,
+        content
+      )
+      return updatedContent
     } catch (error) {
       throw new Error(error)
     }

@@ -1,4 +1,5 @@
 import Tag from '../models/tag';
+import Post from '../models/post';
 import TagValidator from '../classValidators/tagClassValidator';
 import { validateOrRejectExample } from '../classValidators/validation';
 
@@ -89,6 +90,27 @@ const deleteTag = async (req, res) => {
             res.status(404).json("Id doesn't exist");
             return;
         }
+
+        const posts = await Post.find();
+        posts.map(async (post) => {
+            const tags = post.tags;
+            const updatedTags = await tags.filter((nextag) => {
+                return nextag != tag.name
+            })
+            if(tags.length != updatedTags.length) {
+                const updatedPost = {
+                    content: post.content,
+                    _id: post._id,
+                    date: post.date,
+                    title: post.title,
+                    tags: updatedTags
+                }
+                await Post.findByIdAndUpdate(
+                    { _id: post.id },
+                    updatedPost
+                )
+            }
+        })
 
         const deletedTag = await Tag.findByIdAndRemove(
             id

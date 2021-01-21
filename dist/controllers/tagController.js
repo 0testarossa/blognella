@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteTag = exports.updateTag = exports.addTag = exports.getTag = exports.getTags = void 0;
 const tag_1 = __importDefault(require("../models/tag"));
+const post_1 = __importDefault(require("../models/post"));
 const tagClassValidator_1 = __importDefault(require("../classValidators/tagClassValidator"));
 const validation_1 = require("../classValidators/validation");
 const getTags = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -91,6 +92,23 @@ const deleteTag = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             res.status(404).json("Id doesn't exist");
             return;
         }
+        const posts = yield post_1.default.find();
+        posts.map((post) => __awaiter(void 0, void 0, void 0, function* () {
+            const tags = post.tags;
+            const updatedTags = yield tags.filter((nextag) => {
+                return nextag != tag.name;
+            });
+            if (tags.length != updatedTags.length) {
+                const updatedPost = {
+                    content: post.content,
+                    _id: post._id,
+                    date: post.date,
+                    title: post.title,
+                    tags: updatedTags
+                };
+                yield post_1.default.findByIdAndUpdate({ _id: post.id }, updatedPost);
+            }
+        }));
         const deletedTag = yield tag_1.default.findByIdAndRemove(id);
         res.status(200).json({ tag: deletedTag });
     }

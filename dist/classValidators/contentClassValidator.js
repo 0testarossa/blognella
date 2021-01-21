@@ -19,7 +19,6 @@ __decorate([
     class_validator_1.IsString()
 ], ContentValidator.prototype, "text", void 0);
 __decorate([
-    class_validator_1.IsAlphanumeric(),
     class_validator_1.IsNotEmpty(),
     class_validator_1.IsString()
 ], ContentValidator.prototype, "title", void 0);

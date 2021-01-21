@@ -16,6 +16,9 @@ const panelTagsPage_1 = __importDefault(require("./pages/panelTagsPage"));
 const panelPostsAddingPage_1 = __importDefault(require("./pages/panelPostsAddingPage"));
 const panelPostsPage_1 = __importDefault(require("./pages/panelPostsPage"));
 const panelPostsUpdatingPage_1 = __importDefault(require("./pages/panelPostsUpdatingPage"));
+const panelBookmarkPage_1 = __importDefault(require("./pages/panelBookmarkPage"));
+const panelBookmarkAddingPage_1 = __importDefault(require("./pages/panelBookmarkAddingPage"));
+const panelBookmarkUpdatingPage_1 = __importDefault(require("./pages/panelBookmarkUpdatingPage"));
 // export default <Router history={hashHistory}>
 //   <Route path="/" component={App}>
 //     <IndexRoute component={AppSplash}/>
@@ -43,8 +46,12 @@ function BasicExample() {
                 react_1.default.createElement(App_1.default, { page: panelPostsUpdatingPage_1.default })),
             react_1.default.createElement(react_router_dom_1.Route, { path: "/panel/posts" },
                 react_1.default.createElement(App_1.default, { page: panelPostsPage_1.default })),
-            react_1.default.createElement(react_router_dom_1.Route, { path: "/panel2" },
-                react_1.default.createElement(App_1.default, { page: panelTagsPage_1.default })))));
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/panel/bookmarks/add" },
+                react_1.default.createElement(App_1.default, { page: panelBookmarkAddingPage_1.default })),
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/panel/bookmarks/:id" },
+                react_1.default.createElement(App_1.default, { page: panelBookmarkUpdatingPage_1.default })),
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/panel/bookmarks" },
+                react_1.default.createElement(App_1.default, { page: panelBookmarkPage_1.default })))));
 }
 exports.default = BasicExample;
 //# sourceMappingURL=router.js.map

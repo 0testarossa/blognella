@@ -14,7 +14,7 @@ import {
       @IsString()
       text: string;
     
-      @IsAlphanumeric()
+    //   @IsAlphanumeric()
       @IsNotEmpty()
       @IsString()
       title: string;
