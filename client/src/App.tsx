@@ -15,6 +15,8 @@ import './components/globalStyles/globalStyles.css';
 import { MainViewContainer } from './components/MainView/MainView.styles';
 
 const App: React.FC = (props:any) => {
+
+
 //   const [todos, setTodos] = useState<ITodo[]>([])
 
 //   useEffect(() => {
@@ -64,7 +66,6 @@ const App: React.FC = (props:any) => {
   const Content = props.page;
   return (
     <StyledMain>
-      {/* <LoginPage/> */}
       <DefaultView/>
       <MainContentContainer>
         <MainViewContainer>
