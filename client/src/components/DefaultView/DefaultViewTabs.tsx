@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { LinkElement, MainViewTabsContainer } from "../DefaultView/DefaultView.styles";
+import { LinkElement, MainViewTabsContainer, MainViewTabsContainerWrapper } from "../DefaultView/DefaultView.styles";
 import { Link } from "react-router-dom";
 import { BookmarkProps, getBookmarks } from "../../APIRequests/Bookmark";
 
@@ -19,11 +19,13 @@ const DefaultViewTabs = () => {
     }
 
     return (
-        <MainViewTabsContainer>
-            <LinkElement><Link to={"/"}>Home</Link></LinkElement>
-            {getAllLinks()}
-            {/* <LinkElement><Link to={"/"}>Home</Link></LinkElement> */}
-        </MainViewTabsContainer>
+        <MainViewTabsContainerWrapper>
+            <MainViewTabsContainer>
+                <LinkElement><Link to={"/"}>Home</Link></LinkElement>
+                {getAllLinks()}
+                {/* <LinkElement><Link to={"/"}>Home</Link></LinkElement> */}
+            </MainViewTabsContainer>
+        </MainViewTabsContainerWrapper>
     )
 }
 
