@@ -10,6 +10,7 @@ import {
         this.tags = post.tags;
         this.title = post.title;
         this.content = post.content;
+        this.comment = post.comment;
       }
     //   @IsAlphanumeric()
       @IsNotEmpty()
@@ -27,6 +28,8 @@ import {
       title: string[];
 
       content: any;
+
+      comment: any;
     }
     
     export default PostValidator;

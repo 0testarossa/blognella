@@ -1,11 +1,19 @@
 import Post from '../models/post';
 import Content from '../models/content';
+import Comment from '../models/comment';
 import PostValidator from '../classValidators/postClassValidator';
 import { validateOrRejectExample } from '../classValidators/validation';
 
 const getPosts = async (req, res) => {
     try {
-        const posts = await Post.find().populate("content");
+        const posts = await Post.find().populate("content").populate({
+            path: 'comment', 
+            model: 'Comment',
+            populate: {
+                path: 'user',
+                model: 'User'
+            }
+    });
         res.status(200).json({ posts })
     } catch (error) {
         console.log("myerror");
@@ -19,7 +27,14 @@ const getPost = async (req, res) => {
         const {
             params: { id },
         } = req;
-        const post = await Post.findOne({_id: id}).populate("content");
+        const post = await Post.findOne({_id: id}).populate("content").populate({
+            path: 'comment', 
+            model: 'Comment',
+            populate: {
+                path: 'user',
+                model: 'User'
+            }
+    });
         if(!post) {
             res.status(404).json("Id doesn't exist");
             return;
@@ -40,7 +55,8 @@ const addPost = async (req, res) => {
             date: body.date,
             tags: body.tags,
             title: body.title,
-            content: body.content
+            content: body.content,
+            comment: body.comment
         }) 
 
         const postValidator = new PostValidator(post);
@@ -100,6 +116,15 @@ const deletePost = async (req, res) => {
                 )
             })
         }
+
+        if(post.comment.length > 0) {
+            post.comment.map(async (comment) => {        
+                const deletedComment = await Comment.findByIdAndRemove(
+                    comment._id
+                )
+            })
+        }
+
         const deletedPost = await Post.findByIdAndRemove(
             id
         )

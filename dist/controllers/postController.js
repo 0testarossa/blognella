@@ -15,11 +15,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletePost = exports.updatePost = exports.addPost = exports.getPost = exports.getPosts = void 0;
 const post_1 = __importDefault(require("../models/post"));
 const content_1 = __importDefault(require("../models/content"));
+const comment_1 = __importDefault(require("../models/comment"));
 const postClassValidator_1 = __importDefault(require("../classValidators/postClassValidator"));
 const validation_1 = require("../classValidators/validation");
 const getPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const posts = yield post_1.default.find().populate("content");
+        const posts = yield post_1.default.find().populate("content").populate({
+            path: 'comment',
+            model: 'Comment',
+            populate: {
+                path: 'user',
+                model: 'User'
+            }
+        });
         res.status(200).json({ posts });
     }
     catch (error) {
@@ -32,7 +40,14 @@ exports.getPosts = getPosts;
 const getPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { params: { id }, } = req;
-        const post = yield post_1.default.findOne({ _id: id }).populate("content");
+        const post = yield post_1.default.findOne({ _id: id }).populate("content").populate({
+            path: 'comment',
+            model: 'Comment',
+            populate: {
+                path: 'user',
+                model: 'User'
+            }
+        });
         if (!post) {
             res.status(404).json("Id doesn't exist");
             return;
@@ -53,7 +68,8 @@ const addPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             date: body.date,
             tags: body.tags,
             title: body.title,
-            content: body.content
+            content: body.content,
+            comment: body.comment
         });
         const postValidator = new postClassValidator_1.default(post);
         yield validation_1.validateOrRejectExample(postValidator);
@@ -98,6 +114,11 @@ const deletePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         if (post.content.length > 0) {
             post.content.map((content) => __awaiter(void 0, void 0, void 0, function* () {
                 const deletedContent = yield content_1.default.findByIdAndRemove(content._id);
+            }));
+        }
+        if (post.comment.length > 0) {
+            post.comment.map((comment) => __awaiter(void 0, void 0, void 0, function* () {
+                const deletedComment = yield comment_1.default.findByIdAndRemove(comment._id);
             }));
         }
         const deletedPost = yield post_1.default.findByIdAndRemove(id);

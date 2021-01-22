@@ -15,7 +15,7 @@ const DefaultViewTabs = () => {
     if(allBookmarks.length === 0) fetchAllBookmarks();
 
     const getAllLinks = () => {
-        return allBookmarks.map((bookmark) => <LinkElement key={bookmark._id}><Link to={"/"}>{bookmark.title}</Link></LinkElement>) || []
+        return allBookmarks.map((bookmark) => <LinkElement key={bookmark._id}><Link to={`/post/${bookmark.post[0]._id}`}>{bookmark.title}</Link></LinkElement>) || []
     }
 
     return (

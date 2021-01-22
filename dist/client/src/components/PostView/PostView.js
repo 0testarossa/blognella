@@ -23,27 +23,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
+const react_router_dom_1 = require("react-router-dom");
 const Post_1 = require("../../APIRequests/Post");
 const PostComponent_1 = __importDefault(require("../PostComponent/PostComponent"));
-const MainView = () => {
-    const [newestPost, setNewestPost] = react_1.useState();
-    const fetchNewestPost = () => {
-        Post_1.getPosts()
-            .then(({ data: { posts } }) => {
-            const allMainPosts = posts.filter((post) => post.content[0].title === "Main");
-            const mainViewPost = allMainPosts.reduce((mainPost, nextPost) => {
-                if (JSON.stringify(mainPost) === JSON.stringify({}))
-                    return nextPost;
-                return mainPost.date < nextPost.date ? nextPost : mainPost;
-            }, {});
-            setNewestPost(mainViewPost);
+const PostView = (props) => {
+    const [post, setPost] = react_1.useState();
+    const fetchPost = () => {
+        Post_1.getPost(props.match.params.id)
+            .then(({ data: { post } }) => {
+            setPost(post);
         })
             .catch((err) => console.log(err));
     };
     react_1.useEffect(() => {
-        fetchNewestPost();
+        fetchPost();
     }, []);
-    return (react_1.default.createElement(react_1.default.Fragment, null, newestPost ? react_1.default.createElement(PostComponent_1.default, { post: newestPost }) : react_1.default.createElement(react_1.default.Fragment, null)));
+    console.log(props.match.params.id);
+    return (react_1.default.createElement(react_1.default.Fragment, null, post ? react_1.default.createElement(PostComponent_1.default, { post: post }) : react_1.default.createElement(react_1.default.Fragment, null)));
 };
-exports.default = MainView;
-//# sourceMappingURL=MainView.js.map
+exports.default = react_router_dom_1.withRouter(PostView);
+//# sourceMappingURL=PostView.js.map

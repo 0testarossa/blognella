@@ -35,7 +35,7 @@ const DefaultViewTabs = () => {
         fetchAllBookmarks();
     const getAllLinks = () => {
         return allBookmarks.map((bookmark) => react_1.default.createElement(DefaultView_styles_1.LinkElement, { key: bookmark._id },
-            react_1.default.createElement(react_router_dom_1.Link, { to: "/" }, bookmark.title))) || [];
+            react_1.default.createElement(react_router_dom_1.Link, { to: `/post/${bookmark.post[0]._id}` }, bookmark.title))) || [];
     };
     return (react_1.default.createElement(DefaultView_styles_1.MainViewTabsContainer, null,
         react_1.default.createElement(DefaultView_styles_1.LinkElement, null,

@@ -6,25 +6,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PostValidator = void 0;
+exports.CommentValidator = void 0;
 const class_validator_1 = require("class-validator");
-class PostValidator {
-    constructor(post) {
-        this.date = post.date;
-        this.tags = post.tags;
-        this.title = post.title;
-        this.content = post.content;
-        this.comment = post.comment;
+class CommentValidator {
+    constructor(comment) {
+        this.date = comment.date;
+        this.text = comment.text;
+        this.user = comment.user;
     }
 }
 __decorate([
     class_validator_1.IsNotEmpty(),
     class_validator_1.IsString()
-], PostValidator.prototype, "date", void 0);
+], CommentValidator.prototype, "date", void 0);
 __decorate([
     class_validator_1.IsNotEmpty(),
     class_validator_1.IsString()
-], PostValidator.prototype, "title", void 0);
-exports.PostValidator = PostValidator;
-exports.default = PostValidator;
-//# sourceMappingURL=postClassValidator.js.map
+], CommentValidator.prototype, "text", void 0);
+exports.CommentValidator = CommentValidator;
+exports.default = CommentValidator;
+//# sourceMappingURL=commentClassValidator.js.map
