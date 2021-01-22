@@ -15,6 +15,9 @@ import PanelPostsUpdatingPage from "./pages/panelPostsUpdatingPage";
 import PanelBookmarksPage from "./pages/panelBookmarkPage";
 import PanelBookmarkAddingPage from "./pages/panelBookmarkAddingPage";
 import panelBookmarkUpdatingPage from "./pages/panelBookmarkUpdatingPage";
+import PanelUsersPage from "./pages/panelUsersPage";
+import PanelUsersAddingPage from "./pages/panelUsersAddingPage";
+import panelUsersUpdatingPage from "./pages/panelUsersUpdatingPage";
 
 // export default <Router history={hashHistory}>
 //   <Route path="/" component={App}>
@@ -45,7 +48,9 @@ export default function BasicExample() {
              <Route path="/panel/bookmarks/add"><App page={PanelBookmarkAddingPage}/></Route>
              <Route path="/panel/bookmarks/:id"><App page={panelBookmarkUpdatingPage}/></Route>
              <Route path="/panel/bookmarks"><App page={PanelBookmarksPage}/></Route>
-             {/* <Route path="/panel2"><App page={PanelTagsPage}/></Route> */}
+             <Route path="/panel/users/add"><App page={PanelUsersAddingPage}/></Route>
+             <Route path="/panel/users/:id"><App page={panelUsersUpdatingPage}/></Route>
+             <Route path="/panel/users"><App page={PanelUsersPage}/></Route>
            </Switch>
       </Router>
     );

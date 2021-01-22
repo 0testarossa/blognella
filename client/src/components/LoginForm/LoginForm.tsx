@@ -2,14 +2,23 @@ import React, {useState} from "react";
 import { FormItem, LogicControls, StyledLoginForm } from "./LoginForm.styles";
 import TextField from '@material-ui/core/TextField';
 import { Button } from "@material-ui/core";
+import { withRouter } from "react-router-dom";
+import { getUsers, UserProps } from "../../APIRequests/User";
 
-const LoginForm = () => {
+const LoginForm = (props) => {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
 
     const onSubmit = () => {
-        console.log(login);
-        console.log(password);
+        getUsers()
+        .then(({ data: { users } }: UserProps[] | any) => {
+            const user = users.find((user) => user.login === login && user.password === password)
+            if(user) {
+                localStorage.setItem('blognellaId', user._id);
+                props.history.push('/');
+            }
+        })
+        .catch((err: Error) => console.log(err))
     }
 
     return (
@@ -54,4 +63,4 @@ const LoginForm = () => {
     )
 }
 
-export default LoginForm;
+export default withRouter(LoginForm);

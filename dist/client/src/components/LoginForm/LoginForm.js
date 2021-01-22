@@ -26,12 +26,21 @@ const react_1 = __importStar(require("react"));
 const LoginForm_styles_1 = require("./LoginForm.styles");
 const TextField_1 = __importDefault(require("@material-ui/core/TextField"));
 const core_1 = require("@material-ui/core");
-const LoginForm = () => {
+const react_router_dom_1 = require("react-router-dom");
+const User_1 = require("../../APIRequests/User");
+const LoginForm = (props) => {
     const [login, setLogin] = react_1.useState("");
     const [password, setPassword] = react_1.useState("");
     const onSubmit = () => {
-        console.log(login);
-        console.log(password);
+        User_1.getUsers()
+            .then(({ data: { users } }) => {
+            const user = users.find((user) => user.login === login && user.password === password);
+            if (user) {
+                localStorage.setItem('blognellaId', user._id);
+                props.history.push('/');
+            }
+        })
+            .catch((err) => console.log(err));
     };
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(LoginForm_styles_1.StyledLoginForm, null,
@@ -47,5 +56,5 @@ const LoginForm = () => {
                 react_1.default.createElement("div", null, "Zapomniales hasla?"),
                 react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onSubmit }, "Login")))));
 };
-exports.default = LoginForm;
+exports.default = react_router_dom_1.withRouter(LoginForm);
 //# sourceMappingURL=LoginForm.js.map
