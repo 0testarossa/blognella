@@ -31,7 +31,8 @@
     "class-validator": "^0.13.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongoose": "5.10.1"
+    "mongoose": "5.10.1",
+    "react-date-picker": "^8.0.6"
   },
   "scripts": {
     "client": "cd client && npm start",
