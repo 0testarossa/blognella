@@ -23,6 +23,7 @@ const panelUsersAddingPage_1 = __importDefault(require("./pages/panelUsersAdding
 const panelUsersUpdatingPage_1 = __importDefault(require("./pages/panelUsersUpdatingPage"));
 const postPage_1 = __importDefault(require("./pages/postPage"));
 const loginForgetPage_1 = __importDefault(require("./pages/loginForgetPage"));
+const searchPage_1 = __importDefault(require("./pages/searchPage"));
 // export default <Router history={hashHistory}>
 //   <Route path="/" component={App}>
 //     <IndexRoute component={AppSplash}/>
@@ -42,6 +43,8 @@ function BasicExample() {
                 react_1.default.createElement(App_1.default, { page: loginForgetPage_1.default })),
             react_1.default.createElement(react_router_dom_1.Route, { path: "/login" },
                 react_1.default.createElement(App_1.default, { page: loginPage_1.default })),
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/search" },
+                react_1.default.createElement(App_1.default, { page: searchPage_1.default })),
             react_1.default.createElement(react_router_dom_1.Route, { path: "/post/:id" },
                 react_1.default.createElement(App_1.default, { page: postPage_1.default })),
             react_1.default.createElement(react_router_dom_1.Route, { path: "/panel/tags" },

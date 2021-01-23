@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { getUser, UserProps } from "../../APIRequests/User";
 import DefaultViewTabs from "./DefaultViewTabs";
 import { availablePages } from "../../App";
+import SearchComponent from "../SearchComponent/SearchComponent";
 
 const DefaultViewLinks = (props) => {
     const [nick, setNick] = useState("");
@@ -27,6 +28,7 @@ const DefaultViewLinks = (props) => {
     return (
         <>
             <LoginRegisterContainer>
+                <LinkElement><SearchComponent/></LinkElement>
                 {availablePages.includes(props.pageName) && role === "admin" ? <LinkElement><Link to={"/panel/posts"}>Panel</Link></LinkElement> : <></>}
                 { nick ? <LinkElement onClick={onLogout} ><Link to={"/"}>Logout {nick}</Link></LinkElement> : 
                 <LinkElement ><Link to={"/login"}>Login</Link></LinkElement> }

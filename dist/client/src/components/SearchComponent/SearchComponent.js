@@ -22,23 +22,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const Button_1 = __importDefault(require("@material-ui/core/Button"));
+const TextField_1 = __importDefault(require("@material-ui/core/TextField"));
 const react_1 = __importStar(require("react"));
-const Post_1 = require("../../APIRequests/Post");
-const PostAboutComponent_1 = __importDefault(require("../PostComponent/PostAboutComponent"));
-const DefaultView_styles_1 = require("./DefaultView.styles");
-const DefaultViewAbout = () => {
-    const [aboutPost, setAboutPost] = react_1.useState([]);
-    const fetchAllPosts = () => {
-        Post_1.getPosts()
-            .then(({ data: { posts } }) => {
-            const allAboutPosts = posts.filter((post) => post.content[0].title === "About");
-            setAboutPost(allAboutPosts);
-        })
-            .catch((err) => console.log(err));
+const react_router_dom_1 = require("react-router-dom");
+const SearchComponent = (props) => {
+    const [searchValue, setSearchValue] = react_1.useState("");
+    const onSearch = () => {
+        props.history.push({
+            pathname: '/search',
+            state: { search: searchValue }
+        });
     };
-    if (aboutPost.length === 0)
-        fetchAllPosts();
-    return (react_1.default.createElement(DefaultView_styles_1.AboutSection, null, aboutPost.length > 0 ? react_1.default.createElement(PostAboutComponent_1.default, { post: aboutPost[0] }) : react_1.default.createElement("div", null, "There is no About post")));
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Search", style: { margin: 8 }, placeholder: "Please type in tag or title here", fullWidth: true, margin: "normal", InputLabelProps: {
+                shrink: true,
+            }, onChange: (input) => setSearchValue(input.target.value) }),
+        react_1.default.createElement(Button_1.default, { variant: "contained", color: "primary", onClick: onSearch }, "Search")));
 };
-exports.default = DefaultViewAbout;
-//# sourceMappingURL=DefaultViewAbout.js.map
+exports.default = react_router_dom_1.withRouter(SearchComponent);
+//# sourceMappingURL=SearchComponent.js.map

@@ -10,7 +10,7 @@ import DefaultViewAbout from './components/DefaultView/DefaultViewAbout';
 import './components/globalStyles/globalStyles.css';
 import { MainViewContainer } from './components/MainView/MainView.styles';
 
-export const availablePages = ["/register", "/login/forget", "/login", "/post/:id", "/"]
+export const availablePages = ["/register", "/login/forget", "/login", "/post/:id", "/search", "/"]
 
 const App: React.FC = (props:any) => {
   const [role, setRole] = useState("");
@@ -35,8 +35,7 @@ const App: React.FC = (props:any) => {
 
   if(props.match.path === "/login" &&  localStorage.getItem('blognellaId')) {props.history.push("/")};
   if(!availablePages.includes(props.match.path) && role !== "admin" && role) {props.history.push("/")};
-  console.log("page");
-  console.log(props);
+
   const Content = props.page;
   return (
     <StyledMain>

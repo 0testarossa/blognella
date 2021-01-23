@@ -28,6 +28,7 @@ const react_router_dom_1 = require("react-router-dom");
 const User_1 = require("../../APIRequests/User");
 const DefaultViewTabs_1 = __importDefault(require("./DefaultViewTabs"));
 const App_1 = require("../../App");
+const SearchComponent_1 = __importDefault(require("../SearchComponent/SearchComponent"));
 const DefaultViewLinks = (props) => {
     const [nick, setNick] = react_1.useState("");
     const [role, setRole] = react_1.useState("");
@@ -50,6 +51,8 @@ const DefaultViewLinks = (props) => {
         fetchUser();
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(DefaultView_styles_1.LoginRegisterContainer, null,
+            react_1.default.createElement(DefaultView_styles_1.LinkElement, null,
+                react_1.default.createElement(SearchComponent_1.default, null)),
             App_1.availablePages.includes(props.pageName) && role === "admin" ? react_1.default.createElement(DefaultView_styles_1.LinkElement, null,
                 react_1.default.createElement(react_router_dom_1.Link, { to: "/panel/posts" }, "Panel")) : react_1.default.createElement(react_1.default.Fragment, null),
             nick ? react_1.default.createElement(DefaultView_styles_1.LinkElement, { onClick: onLogout },

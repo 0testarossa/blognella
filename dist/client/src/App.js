@@ -33,7 +33,7 @@ const DefaultView_styles_1 = require("./components/DefaultView/DefaultView.style
 const DefaultViewAbout_1 = __importDefault(require("./components/DefaultView/DefaultViewAbout"));
 require("./components/globalStyles/globalStyles.css");
 const MainView_styles_1 = require("./components/MainView/MainView.styles");
-exports.availablePages = ["/register", "/login/forget", "/login", "/post/:id", "/"];
+exports.availablePages = ["/register", "/login/forget", "/login", "/post/:id", "/search", "/"];
 const App = (props) => {
     const [role, setRole] = react_1.useState("");
     const fetchUser = () => {
@@ -62,8 +62,6 @@ const App = (props) => {
         props.history.push("/");
     }
     ;
-    console.log("page");
-    console.log(props);
     const Content = props.page;
     return (react_1.default.createElement(App_styles_1.StyledMain, null,
         react_1.default.createElement(DefaultView_1.default, { pageName: props.match.path }),

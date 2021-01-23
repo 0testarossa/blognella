@@ -18,27 +18,35 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = require("@material-ui/core");
 const react_1 = __importStar(require("react"));
+const react_router_dom_1 = require("react-router-dom");
 const Post_1 = require("../../APIRequests/Post");
-const PostAboutComponent_1 = __importDefault(require("../PostComponent/PostAboutComponent"));
-const DefaultView_styles_1 = require("./DefaultView.styles");
-const DefaultViewAbout = () => {
-    const [aboutPost, setAboutPost] = react_1.useState([]);
+const SearchList = (props) => {
+    const [allPosts, setAllPosts] = react_1.useState([]);
     const fetchAllPosts = () => {
         Post_1.getPosts()
             .then(({ data: { posts } }) => {
-            const allAboutPosts = posts.filter((post) => post.content[0].title === "About");
-            setAboutPost(allAboutPosts);
+            const allMainPosts = posts.filter((post) => post.title === props.search || post.tags.includes(props.search));
+            setAllPosts(allMainPosts);
         })
             .catch((err) => console.log(err));
     };
-    if (aboutPost.length === 0)
+    react_1.useEffect(() => {
         fetchAllPosts();
-    return (react_1.default.createElement(DefaultView_styles_1.AboutSection, null, aboutPost.length > 0 ? react_1.default.createElement(PostAboutComponent_1.default, { post: aboutPost[0] }) : react_1.default.createElement("div", null, "There is no About post")));
+    }, [props.search]);
+    const getListItems = () => {
+        return allPosts.map((post) => react_1.default.createElement(core_1.ListItem, { key: post._id },
+            react_1.default.createElement(core_1.ListItemText, { primary: react_1.default.createElement(react_router_dom_1.Link, { to: {
+                        pathname: `/post/${post._id}`,
+                    } },
+                    " ",
+                    post.title,
+                    " ") })));
+    };
+    return (allPosts.length === 0 ? react_1.default.createElement("div", null, "There is no post that meets the expected criteria") :
+        react_1.default.createElement(core_1.List, null, getListItems()));
 };
-exports.default = DefaultViewAbout;
-//# sourceMappingURL=DefaultViewAbout.js.map
+exports.default = SearchList;
+//# sourceMappingURL=SearchList.js.map
