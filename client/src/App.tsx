@@ -33,8 +33,11 @@ const App: React.FC = (props:any) => {
   }, [props])
 
 
-  // if(props.page.name === "LoginPage" &&  localStorage.getItem('blognellaId')) {props.history.push("/")};
+  if(props.page.name === "LoginPage" &&  localStorage.getItem('blognellaId')) {props.history.push("/")};
   // if(!availablePages.includes(props.page.name) && role !== "admin" && role) {props.history.push("/")};
+  console.log("page");
+  console.log(props.page.name)
+  console.log(!availablePages.includes(props.page.name))
   const Content = props.page;
   return (
     <StyledMain>

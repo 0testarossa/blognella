@@ -54,8 +54,14 @@ const App = (props) => {
     react_1.useEffect(() => {
         fetchUser();
     }, [props]);
-    // if(props.page.name === "LoginPage" &&  localStorage.getItem('blognellaId')) {props.history.push("/")};
+    if (props.page.name === "LoginPage" && localStorage.getItem('blognellaId')) {
+        props.history.push("/");
+    }
+    ;
     // if(!availablePages.includes(props.page.name) && role !== "admin" && role) {props.history.push("/")};
+    console.log("page");
+    console.log(props.page.name);
+    console.log(!exports.availablePages.includes(props.page.name));
     const Content = props.page;
     return (react_1.default.createElement(App_styles_1.StyledMain, null,
         react_1.default.createElement(DefaultView_1.default, { pageName: props.page.name }),
