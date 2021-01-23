@@ -62,6 +62,7 @@ const App = (props) => {
     console.log("page");
     console.log(props.page.name);
     console.log(!exports.availablePages.includes(props.page.name));
+    console.log(props);
     const Content = props.page;
     return (react_1.default.createElement(App_styles_1.StyledMain, null,
         react_1.default.createElement(DefaultView_1.default, { pageName: props.page.name }),

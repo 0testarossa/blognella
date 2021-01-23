@@ -38,6 +38,7 @@ const App: React.FC = (props:any) => {
   console.log("page");
   console.log(props.page.name)
   console.log(!availablePages.includes(props.page.name))
+  console.log(props);
   const Content = props.page;
   return (
     <StyledMain>
