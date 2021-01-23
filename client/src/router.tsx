@@ -7,7 +7,6 @@ import LoginPage from "./pages/loginPage";
 import MainViewPage from "./pages/mainViewPage";
 
 import RegisterPage from "./pages/registerPage";
-import TestPage from "./pages/testPage";
 import PanelTagsPage from "./pages/panelTagsPage";
 import PanelPostsAddingPage from "./pages/panelPostsAddingPage";
 import PanelPostsPage from "./pages/panelPostsPage";
@@ -43,7 +42,6 @@ export default function BasicExample() {
              <Route path="/register"><App page={RegisterPage} /></Route>
              <Route path="/login/forget"><App page={LoginForgetPage}/></Route>
              <Route path="/login"><App page={LoginPage}/></Route>
-             {/* <Route path="/test"><App page={TestPage}/></Route> */}
              <Route path="/post/:id"><App page={PostPage}/></Route>
              <Route path="/panel/tags"><App page={PanelTagsPage}/></Route>
              <Route path="/panel/posts/add"><App page={PanelPostsAddingPage}/></Route>
