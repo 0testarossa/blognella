@@ -9,10 +9,10 @@ const getPosts = async (req, res) => {
         const posts = await Post.find().populate("content").populate({
             path: 'comment', 
             model: 'Comment',
-            populate: {
-                path: 'user',
-                model: 'User'
-            }
+            // populate: {
+            //     path: 'user',
+            //     model: 'User'
+            // }
     });
         res.status(200).json({ posts })
     } catch (error) {
@@ -30,10 +30,10 @@ const getPost = async (req, res) => {
         const post = await Post.findOne({_id: id}).populate("content").populate({
             path: 'comment', 
             model: 'Comment',
-            populate: {
-                path: 'user',
-                model: 'User'
-            }
+            // populate: {
+            //     path: 'user',
+            //     model: 'User'
+            // }
     });
         if(!post) {
             res.status(404).json("Id doesn't exist");
@@ -56,7 +56,8 @@ const addPost = async (req, res) => {
             tags: body.tags,
             title: body.title,
             content: body.content,
-            comment: body.comment
+            comment: body.comment,
+            user: body.user
         }) 
 
         const postValidator = new PostValidator(post);

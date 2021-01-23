@@ -46,3 +46,9 @@ export const MainContentContainer = styled.div`
     flex-grow: 1;
     padding-top: 1rem;
 `;
+
+export const StyledAdminPanelContainer = styled.div`
+    display:flex;
+    height: 100%;
+    /* flex-direction: column; */
+`;

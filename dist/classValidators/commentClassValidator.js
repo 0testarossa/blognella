@@ -23,6 +23,10 @@ __decorate([
     class_validator_1.IsNotEmpty(),
     class_validator_1.IsString()
 ], CommentValidator.prototype, "text", void 0);
+__decorate([
+    class_validator_1.IsNotEmpty(),
+    class_validator_1.IsString()
+], CommentValidator.prototype, "user", void 0);
 exports.CommentValidator = CommentValidator;
 exports.default = CommentValidator;
 //# sourceMappingURL=commentClassValidator.js.map

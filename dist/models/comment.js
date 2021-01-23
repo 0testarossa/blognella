@@ -10,12 +10,10 @@ const commentSchema = new mongoose_1.Schema({
         type: String,
         required: true
     },
-    user: [
-        {
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: "User"
-        }
-    ]
+    user: {
+        type: String,
+        required: true
+    },
 }, { timestamps: true });
 exports.default = mongoose_1.model('Comment', commentSchema);
 //# sourceMappingURL=comment.js.map

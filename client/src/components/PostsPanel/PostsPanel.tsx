@@ -5,6 +5,8 @@ import { Button, Chip, Input, makeStyles, MenuItem, Select, useTheme } from '@ma
 import { createContent } from '../../APIRequests/Content';
 import { getTags, TagProps } from '../../APIRequests/Tag';
 import { createPost } from '../../APIRequests/Post';
+import DatePicker from 'react-date-picker';
+import { getUser, UserProps } from '../../APIRequests/User';
 
 const useStyles = makeStyles(() => ({
     chips: {
@@ -44,6 +46,8 @@ const PostsPanel = (props) => {
     const [tags, setTags] = useState([]);
     const [contentId, setContentId] = useState(undefined)
     const [allTags, setAllTags] = useState([])
+    const [date, setDate] = useState<any>(new Date());
+    const [user, setUser] = useState("");
 
 
     const handleEditorChange = (e) => {
@@ -79,16 +83,30 @@ const PostsPanel = (props) => {
     .catch((err: Error) => console.log(err))
     }
 
+    const fetchUser = () => {
+      const userId = localStorage.getItem('blognellaId');
+      if(userId) {
+        getUser(userId)
+        .then(({ data: { user } }: UserProps | any) => {
+            setUser(user.nick);
+        })
+        .catch((err: Error) => console.log(err))
+      }
+      
+    }
+
     useEffect(() => {
         fetchAllTags();
+        fetchUser();
     },[])
 
     const onPostSave = () => {
         const post = {
-            date: new Date(),
+            date: date.toISOString(),
             tags: tags,
             title: title,
             content: contentId,
+            user: user
         }
         createPost(post);
     }
@@ -121,7 +139,25 @@ const PostsPanel = (props) => {
         onChange={(e) => handleEditorChange(e)}
       />
 
+          <TextField
+                    id="standard-full-width"
+                    label="Nick"
+                    style={{ margin: 8 }}
+                    placeholder="Please type in your nick here"
+                    fullWidth
+                    margin="normal"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    value={user}
+                    onChange={(input) => setUser(input.target.value)}
+         />
 
+        <div>date of publication</div>
+        <DatePicker
+            onChange={(val:any) => setDate(val)}
+            value={date}
+        />
 
         <div>Add tags to post</div>
         <Select

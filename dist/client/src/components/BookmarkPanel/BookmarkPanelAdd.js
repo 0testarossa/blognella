@@ -49,7 +49,7 @@ const BookmarkPanelAdd = () => {
         Bookmark_1.createBookmark(bookmark);
     };
     const getPostsTitles = () => {
-        return allPosts.map((post) => react_1.default.createElement(core_1.MenuItem, { value: post._id }, post.title));
+        return allPosts.map((post) => react_1.default.createElement(core_1.MenuItem, { key: post._id, value: post._id }, post.title));
     };
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(core_1.Select, { value: postId, onChange: handlePostId }, getPostsTitles()),

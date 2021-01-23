@@ -28,18 +28,27 @@ const Post_1 = require("../../APIRequests/Post");
 const PostComponent_1 = __importDefault(require("../PostComponent/PostComponent"));
 const PostView = (props) => {
     const [post, setPost] = react_1.useState();
+    const [postChapters, setPostChapters] = react_1.useState([]);
     const fetchPost = () => {
         Post_1.getPost(props.match.params.id)
             .then(({ data: { post } }) => {
             setPost(post);
+            fetchAllPosts(post.title);
+        })
+            .catch((err) => console.log(err));
+    };
+    const fetchAllPosts = (storyTitle) => {
+        Post_1.getPosts()
+            .then(({ data: { posts } }) => {
+            const allPostChapters = posts.filter((post) => post.content[0].title === storyTitle);
+            setPostChapters(allPostChapters || []);
         })
             .catch((err) => console.log(err));
     };
     react_1.useEffect(() => {
         fetchPost();
-    }, []);
-    console.log(props.match.params.id);
-    return (react_1.default.createElement(react_1.default.Fragment, null, post ? react_1.default.createElement(PostComponent_1.default, { post: post }) : react_1.default.createElement(react_1.default.Fragment, null)));
+    }, [props]);
+    return (react_1.default.createElement(react_1.default.Fragment, null, post ? react_1.default.createElement(PostComponent_1.default, { post: post, postChapters: postChapters }) : react_1.default.createElement(react_1.default.Fragment, null)));
 };
 exports.default = react_router_dom_1.withRouter(PostView);
 //# sourceMappingURL=PostView.js.map

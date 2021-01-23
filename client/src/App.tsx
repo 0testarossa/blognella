@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { withRouter } from 'react-router-dom';
+import { getUser, UserProps } from './APIRequests/User';
 import { StyledMain } from './App.styles';
+import AdminPanel from './components/AdminPanel/AdminPanel';
 import DefaultView from './components/DefaultView/DefaultView'
-import { MainContentContainer } from './components/DefaultView/DefaultView.styles';
+import { MainContentContainer, StyledAdminPanelContainer } from './components/DefaultView/DefaultView.styles';
 import DefaultViewAbout from './components/DefaultView/DefaultViewAbout';
 // import TodoItem from './components/TodoItem'
 // import AddTodo from './components/AddTodo'
@@ -14,7 +17,27 @@ import DefaultViewAbout from './components/DefaultView/DefaultViewAbout';
 import './components/globalStyles/globalStyles.css';
 import { MainViewContainer } from './components/MainView/MainView.styles';
 
+export const availablePages = ["RegisterPage", "LoginForgetPage", "LoginPage", "PostPage", "MainViewPage"]
+
 const App: React.FC = (props:any) => {
+  const [role, setRole] = useState("");
+
+  const fetchUser = () => {
+      const userId = localStorage.getItem('blognellaId') || "";
+      if(userId) {
+        getUser(userId)
+        .then(({ data: { user } }: UserProps | any) => {
+            if(role !== user.role) {setRole(user.role);}
+        })
+        .catch((err: Error) => console.log(err))
+      } else {
+        setRole("guest");
+      }
+  }
+
+  useEffect(() => {
+    fetchUser()
+  }, [props])
 
 
 //   const [todos, setTodos] = useState<ITodo[]>([])
@@ -63,15 +86,30 @@ const App: React.FC = (props:any) => {
 //       .catch((err) => console.log(err))
 //   }
   // const Content = props.page;
+  // localStorage.getItem('blognellaId')
+  if(props.page.name === "LoginPage" &&  localStorage.getItem('blognellaId')) {props.history.push("/")};
+  if(!availablePages.includes(props.page.name) && role !== "admin" && role) {props.history.push("/")};
   const Content = props.page;
   return (
     <StyledMain>
-      <DefaultView/>
+      <DefaultView pageName={props.page.name}/>
       <MainContentContainer>
         <MainViewContainer>
-          <Content/>
+          <StyledAdminPanelContainer>
+
+          {role && 
+            <>
+           {!availablePages.includes(props.page.name) ? <AdminPanel/> : <></>}
+           <div><Content/></div>
+           </>
+           }
+          {/* {!availablePages.includes(props.page.name) ? <AdminPanel/> : <></>}
+          <div><Content/></div> */}
+
+
+          </StyledAdminPanelContainer>
         </MainViewContainer>
-        <DefaultViewAbout/>
+        {availablePages.includes(props.page.name) ? <DefaultViewAbout/> : <></>}
       </MainContentContainer>
 
       
@@ -92,4 +130,4 @@ const App: React.FC = (props:any) => {
   )
 }
 
-export default App
+export default withRouter(App)

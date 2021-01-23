@@ -18,7 +18,7 @@ const commentClassValidator_1 = __importDefault(require("../classValidators/comm
 const validation_1 = require("../classValidators/validation");
 const getComments = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const comments = yield comment_1.default.find().populate('user');
+        const comments = yield comment_1.default.find();
         res.status(200).json({ comments });
     }
     catch (error) {
@@ -31,7 +31,7 @@ exports.getComments = getComments;
 const getComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { params: { id }, } = req;
-        const comment = yield comment_1.default.findOne({ _id: id }).populate("user");
+        const comment = yield comment_1.default.findOne({ _id: id });
         if (!comment) {
             res.status(404).json("Id doesn't exist");
             return;

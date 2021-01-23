@@ -23,10 +23,6 @@ const getPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const posts = yield post_1.default.find().populate("content").populate({
             path: 'comment',
             model: 'Comment',
-            populate: {
-                path: 'user',
-                model: 'User'
-            }
         });
         res.status(200).json({ posts });
     }
@@ -43,10 +39,6 @@ const getPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const post = yield post_1.default.findOne({ _id: id }).populate("content").populate({
             path: 'comment',
             model: 'Comment',
-            populate: {
-                path: 'user',
-                model: 'User'
-            }
         });
         if (!post) {
             res.status(404).json("Id doesn't exist");
@@ -69,7 +61,8 @@ const addPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             tags: body.tags,
             title: body.title,
             content: body.content,
-            comment: body.comment
+            comment: body.comment,
+            user: body.user
         });
         const postValidator = new postClassValidator_1.default(post);
         yield validation_1.validateOrRejectExample(postValidator);

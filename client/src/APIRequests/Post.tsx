@@ -6,6 +6,7 @@ export interface PostProps {
     tags: string[];
     title: string;
     content: any;
+    user: string;
 }
 
 export const getPosts = async () => {

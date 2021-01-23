@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import DatePicker from 'react-date-picker';
+import React from "react";
+import PostCommentList from "./PostCommentList";
+import PostLinkComponent from "./PostLinkComponent";
+// import DatePicker from 'react-date-picker';
 
 const PostComponent = (props) => {
-    const [value, onChange] = useState<any>(new Date());
+    // const [value, onChange] = useState<any>(new Date());
     // const date = new Date('2018-05-18T04:00:00Z').toLocaleString();
     // const date = new Date(props.post.date).toUTCString();
 
@@ -17,25 +19,36 @@ const PostComponent = (props) => {
     // console.log(customoldData > customnewData); //true
     // console.log(customoldData > actualDate)
 
+
     const date = new Date(props.post.date).toDateString();
 
     const getTags = () => {
         return props.post.tags.map((tag) => <span key={tag}>{tag}</span>)
     }
 
-    console.log(date);
-    console.log("calendar")
-    console.log(value.toDateString());
+    const getPostChapters = () => {
+        return props.postChapters.map((postChapter) => <div key={postChapter._id}><PostLinkComponent post={postChapter}/></div>)
+    }
+
     return (
-        <>
-         <DatePicker
-        onChange={onChange}
-        value={value}
-      />
-        <div>{date}</div>
-        <div dangerouslySetInnerHTML={{ __html: props.post.content[0].text }} />
-        <div><span>Tagi: </span>{getTags()}</div>
-        </>
+        props.post.date > new Date().toISOString() ? <div>It will be avaiable soon - {date}</div> : 
+            <>
+            {/* <DatePicker
+            onChange={onChange}
+            value={value}
+            /> */}
+            <div>{date}</div>
+            <div>{props.post.title}</div>
+            <div dangerouslySetInnerHTML={{ __html: props.post.content[0].text }} />
+
+            <div>Chapters</div>
+            {getPostChapters()}
+
+            <div><span>Tags: </span>{getTags()}</div>
+            <div>Added by {props.post.user}</div>
+            <PostCommentList post={props.post}/>
+            </>
+        
     )
 }
 

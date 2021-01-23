@@ -29,6 +29,7 @@ const core_1 = require("@material-ui/core");
 const Content_1 = require("../../APIRequests/Content");
 const Tag_1 = require("../../APIRequests/Tag");
 const Post_1 = require("../../APIRequests/Post");
+const react_date_picker_1 = __importDefault(require("react-date-picker"));
 const useStyles = core_1.makeStyles(() => ({
     chips: {
         display: 'flex',
@@ -63,6 +64,9 @@ const UpdatePostsPanel = (props) => {
     const [tags, setTags] = react_1.useState(props.post.tags || []);
     // const [contentId, setContentId] = useState(undefined)
     const [allTags, setAllTags] = react_1.useState([]);
+    const [date, setDate] = react_1.useState(new Date());
+    // const [date, setDate] = useState<any>(props.post.date);
+    const [user, setUser] = react_1.useState(props.post.user);
     const handleEditorChange = (e) => {
         setData(e.target.getContent());
     };
@@ -91,11 +95,12 @@ const UpdatePostsPanel = (props) => {
     }, []);
     const onPostSave = () => {
         const post = {
-            date: new Date(),
+            date: date.toISOString(),
             tags: tags,
             title: title,
             content: props.post.content[0]._id,
-            _id: props.post._id
+            _id: props.post._id,
+            user: user
         };
         Post_1.updatePost(post)
             .then(({ status }) => {
@@ -115,6 +120,11 @@ const UpdatePostsPanel = (props) => {
                 plugins: 'link image code',
                 toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
             }, onChange: (e) => handleEditorChange(e) }),
+        react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Nick", style: { margin: 8 }, placeholder: "Please type in your nick here", fullWidth: true, margin: "normal", InputLabelProps: {
+                shrink: true,
+            }, defaultValue: user, onChange: (input) => setUser(input.target.value) }),
+        react_1.default.createElement("div", null, "date of publication"),
+        react_1.default.createElement(react_date_picker_1.default, { onChange: (val) => setDate(val), value: date }),
         react_1.default.createElement("div", null, "Add tags to post"),
         react_1.default.createElement(core_1.Select, { labelId: "demo-mutiple-chip-label", multiple: true, value: tags, onChange: handleChange, input: react_1.default.createElement(core_1.Input, { id: "select-multiple-chip" }), renderValue: (selected) => (react_1.default.createElement("div", { className: classes.chips }, selected.map((value) => (react_1.default.createElement(core_1.Chip, { key: value, label: value, className: classes.chip }))))), MenuProps: MenuProps }, allTags.map((name) => (react_1.default.createElement(core_1.MenuItem, { key: name, value: name, style: getStyles(name, tags, theme) }, name)))),
         react_1.default.createElement("div", null),

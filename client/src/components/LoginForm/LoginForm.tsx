@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { FormItem, LogicControls, StyledLoginForm } from "./LoginForm.styles";
 import TextField from '@material-ui/core/TextField';
 import { Button } from "@material-ui/core";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { getUsers, UserProps } from "../../APIRequests/User";
 
 const LoginForm = (props) => {
@@ -53,7 +53,7 @@ const LoginForm = (props) => {
                     />
                 </FormItem>
                 <LogicControls>
-                    <div>Zapomniales hasla?</div>
+                    <div>Zapomniales hasla? Kliknij <Link to={"/login/forget"}>Tutaj</Link></div>
                     <Button variant="contained" color="primary" onClick={onSubmit}>
                     Login
                     </Button>

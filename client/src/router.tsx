@@ -19,6 +19,7 @@ import PanelUsersPage from "./pages/panelUsersPage";
 import PanelUsersAddingPage from "./pages/panelUsersAddingPage";
 import PanelUsersUpdatingPage from "./pages/panelUsersUpdatingPage";
 import PostPage from "./pages/postPage";
+import LoginForgetPage from "./pages/loginForgetPage";
 
 // export default <Router history={hashHistory}>
 //   <Route path="/" component={App}>
@@ -40,8 +41,9 @@ export default function BasicExample() {
             /> */}
 
              <Route path="/register"><App page={RegisterPage} /></Route>
+             <Route path="/login/forget"><App page={LoginForgetPage}/></Route>
              <Route path="/login"><App page={LoginPage}/></Route>
-             <Route path="/test"><App page={TestPage}/></Route>
+             {/* <Route path="/test"><App page={TestPage}/></Route> */}
              <Route path="/post/:id"><App page={PostPage}/></Route>
              <Route path="/panel/tags"><App page={PanelTagsPage}/></Route>
              <Route path="/panel/posts/add"><App page={PanelPostsAddingPage}/></Route>

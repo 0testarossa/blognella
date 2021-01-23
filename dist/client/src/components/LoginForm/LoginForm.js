@@ -53,7 +53,9 @@ const LoginForm = (props) => {
                         shrink: true,
                     }, onChange: (input) => setPassword(input.target.value) })),
             react_1.default.createElement(LoginForm_styles_1.LogicControls, null,
-                react_1.default.createElement("div", null, "Zapomniales hasla?"),
+                react_1.default.createElement("div", null,
+                    "Zapomniales hasla? Kliknij ",
+                    react_1.default.createElement(react_router_dom_1.Link, { to: "/login/forget" }, "Tutaj")),
                 react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onSubmit }, "Login")))));
 };
 exports.default = react_router_dom_1.withRouter(LoginForm);

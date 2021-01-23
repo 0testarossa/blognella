@@ -5,6 +5,7 @@ import { Button, Chip, Input, makeStyles, MenuItem, Select, useTheme } from '@ma
 import { updateContent } from '../../APIRequests/Content';
 import { getTags, TagProps } from '../../APIRequests/Tag';
 import { updatePost } from '../../APIRequests/Post';
+import DatePicker from 'react-date-picker';
 
 const useStyles = makeStyles(() => ({
     chips: {
@@ -44,6 +45,9 @@ const UpdatePostsPanel = (props) => {
     const [tags, setTags] = useState(props.post.tags || []);
     // const [contentId, setContentId] = useState(undefined)
     const [allTags, setAllTags] = useState([])
+    const [date, setDate] = useState<any>(new Date());
+    // const [date, setDate] = useState<any>(props.post.date);
+    const [user, setUser] = useState(props.post.user);
 
 
     const handleEditorChange = (e) => {
@@ -78,12 +82,14 @@ const UpdatePostsPanel = (props) => {
 
     const onPostSave = () => {
         const post = {
-            date: new Date(),
+            date: date.toISOString(),
             tags: tags,
             title: title,
             content: props.post.content[0]._id,
-            _id: props.post._id
+            _id: props.post._id,
+            user: user
         }
+
         updatePost(post)
         .then(({ status}) => {
             if (status !== 200) {
@@ -121,6 +127,25 @@ const UpdatePostsPanel = (props) => {
         onChange={(e) => handleEditorChange(e)}
       />
 
+        <TextField
+                    id="standard-full-width"
+                    label="Nick"
+                    style={{ margin: 8 }}
+                    placeholder="Please type in your nick here"
+                    fullWidth
+                    margin="normal"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    defaultValue={user}
+                    onChange={(input) => setUser(input.target.value)}
+        />
+
+        <div>date of publication</div>
+        <DatePicker
+            onChange={(val:any) => setDate(val)}
+            value={date}
+        />
 
 
         <div>Add tags to post</div>

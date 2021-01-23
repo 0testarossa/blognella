@@ -24,7 +24,7 @@ const MainView = () => {
 
     return (
         <>
-            {newestPost ? <PostComponent post={newestPost}/> : <></>}
+            {newestPost ? <PostComponent post={newestPost} postChapters={[]}/> : <></>}
         </>
     )
 }

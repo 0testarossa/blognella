@@ -25,7 +25,11 @@ const postSchema = new mongoose_1.Schema({
             type: mongoose_1.Schema.Types.ObjectId,
             ref: "Comment"
         }
-    ]
+    ],
+    user: {
+        type: String,
+        required: true
+    },
 }, { timestamps: true });
 exports.default = mongoose_1.model('Post', postSchema);
 //# sourceMappingURL=post.js.map

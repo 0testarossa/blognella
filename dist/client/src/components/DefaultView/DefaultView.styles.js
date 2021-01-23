@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MainContentContainer = exports.AboutSection = exports.MainViewTabsContainer = exports.LoginRegisterContainer = exports.LinkElement = exports.LinksContainer = exports.LogoContainer = exports.Logo = void 0;
+exports.StyledAdminPanelContainer = exports.MainContentContainer = exports.AboutSection = exports.MainViewTabsContainer = exports.LoginRegisterContainer = exports.LinkElement = exports.LinksContainer = exports.LogoContainer = exports.Logo = void 0;
 const styled_components_1 = __importDefault(require("styled-components"));
 exports.Logo = styled_components_1.default.div `
     font-family: Roboto;
@@ -43,5 +43,10 @@ exports.MainContentContainer = styled_components_1.default.div `
     justify-content: space-between;
     flex-grow: 1;
     padding-top: 1rem;
+`;
+exports.StyledAdminPanelContainer = styled_components_1.default.div `
+    display:flex;
+    height: 100%;
+    /* flex-direction: column; */
 `;
 //# sourceMappingURL=DefaultView.styles.js.map

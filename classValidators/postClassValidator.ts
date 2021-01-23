@@ -11,6 +11,7 @@ import {
         this.title = post.title;
         this.content = post.content;
         this.comment = post.comment;
+        this.user = post.user;
       }
     //   @IsAlphanumeric()
       @IsNotEmpty()
@@ -30,6 +31,10 @@ import {
       content: any;
 
       comment: any;
+
+      @IsNotEmpty()
+      @IsString()
+      user: string;
     }
     
     export default PostValidator;

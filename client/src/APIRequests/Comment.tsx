@@ -2,27 +2,15 @@ import axios, { AxiosResponse } from "axios";
 
 export interface CommentProps {
     _id?: string;
-    date: Date;
+    date: string;
     text: string;
     user: any;
-    comment: any;
 }
 
 export const getComments = async () => {
     try {
       const comments = await axios.get(
          '/comments'
-      )
-      return comments
-    } catch (error) {
-      throw new Error(error)
-    }
-  }
-
-  export const getMainComments = async () => {
-    try {
-      const comments = await axios.get(
-         '/commentsMain'
       )
       return comments
     } catch (error) {
@@ -45,9 +33,9 @@ export const getComments = async () => {
 
 export const createComment = async (
     comment: CommentProps
-  ): Promise<AxiosResponse<ApiDataType>> => {
+  ) => {
     try {
-      const savedComment: AxiosResponse<ApiDataType> = await axios.post(
+      const savedComment = await axios.post(
         `/comment`,
         comment
       )

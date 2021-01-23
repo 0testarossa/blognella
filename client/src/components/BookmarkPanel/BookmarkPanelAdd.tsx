@@ -34,7 +34,7 @@ const BookmarkPanelAdd = () => {
     }
 
     const getPostsTitles = () => {
-        return allPosts.map((post) => <MenuItem value={post._id}>{post.title}</MenuItem>)
+        return allPosts.map((post) => <MenuItem key={post._id} value={post._id}>{post.title}</MenuItem>)
     }
 
     return (

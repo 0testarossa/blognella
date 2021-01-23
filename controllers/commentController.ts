@@ -4,7 +4,7 @@ import { validateOrRejectExample } from '../classValidators/validation';
 
 const getComments = async (req, res) => {
     try {
-        const comments = await Comment.find().populate('user')
+        const comments = await Comment.find();
         res.status(200).json({ comments })
     } catch (error) {
         console.log("myerror");
@@ -18,7 +18,7 @@ const getComment = async (req, res) => {
         const {
             params: { id },
         } = req;
-        const comment = await Comment.findOne({_id: id}).populate("user");
+        const comment = await Comment.findOne({_id: id});
         if(!comment) {
             res.status(404).json("Id doesn't exist");
             return;

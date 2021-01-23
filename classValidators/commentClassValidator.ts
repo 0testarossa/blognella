@@ -19,7 +19,9 @@ import {
       @IsString()
       text: string[];
 
-      user: any;
+      @IsNotEmpty()
+      @IsString()
+      user: string;
     }
     
     export default CommentValidator;
