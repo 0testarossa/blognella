@@ -10,7 +10,7 @@ import DefaultViewAbout from './components/DefaultView/DefaultViewAbout';
 import './components/globalStyles/globalStyles.css';
 import { MainViewContainer } from './components/MainView/MainView.styles';
 
-export const availablePages = ["RegisterPage", "LoginForgetPage", "LoginPage", "PostPage", "MainViewPage"]
+export const availablePages = ["/register", "/login/forget", "/login", "/post/:id", "/"]
 
 const App: React.FC = (props:any) => {
   const [role, setRole] = useState("");
@@ -33,29 +33,27 @@ const App: React.FC = (props:any) => {
   }, [props])
 
 
-  if(props.page.name === "LoginPage" &&  localStorage.getItem('blognellaId')) {props.history.push("/")};
-  // if(!availablePages.includes(props.page.name) && role !== "admin" && role) {props.history.push("/")};
+  if(props.match.path === "/login" &&  localStorage.getItem('blognellaId')) {props.history.push("/")};
+  if(!availablePages.includes(props.match.path) && role !== "admin" && role) {props.history.push("/")};
   console.log("page");
-  console.log(props.page.name)
-  console.log(!availablePages.includes(props.page.name))
   console.log(props);
   const Content = props.page;
   return (
     <StyledMain>
-      <DefaultView pageName={props.page.name}/>
+      <DefaultView pageName={props.match.path}/>
       <MainContentContainer>
         <MainViewContainer>
           <StyledAdminPanelContainer>
 
-          {/* {role && 
-            <> */}
-           {!availablePages.includes(props.page.name) ? <AdminPanel/> : <></>}
+          {role && 
+            <>
+           {!availablePages.includes(props.match.path) ? <AdminPanel/> : <></>}
            <div><Content/></div>
-           {/* </>
-           } */}
+           </>
+           }
           </StyledAdminPanelContainer>
         </MainViewContainer>
-        {availablePages.includes(props.page.name) ? <DefaultViewAbout/> : <></>}
+        {availablePages.includes(props.match.path) ? <DefaultViewAbout/> : <></>}
       </MainContentContainer>
 
 
