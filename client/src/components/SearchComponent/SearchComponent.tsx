@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 
 const SearchComponent = (props) => {
     const [searchValue, setSearchValue] = useState("");
+    const lang = localStorage.getItem("blognellaLang");
 
     const onSearch = () => {
         props.history.push({
@@ -17,9 +18,9 @@ const SearchComponent = (props) => {
         <>
             <TextField
                     id="standard-full-width"
-                    label="Search"
+                    label={lang === "en" ? "Search" : "Wyszukaj"}
                     style={{ margin: 8 }}
-                    placeholder="Please type in tag or title here"
+                    placeholder={lang === "en" ? "Please type in tag or title here" : "Proszę wpisz etykietę lub tytuł"}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -28,7 +29,7 @@ const SearchComponent = (props) => {
                     onChange={(input) => setSearchValue(input.target.value)}
             />
             <Button variant="contained" color="primary" onClick={onSearch}>
-                Search
+                {lang === "en" ? "Search" : "Wyszukaj"}
             </Button>
         </>
     ) 

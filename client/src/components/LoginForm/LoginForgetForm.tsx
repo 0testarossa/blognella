@@ -9,6 +9,7 @@ const LoginForgetForm = (props) => {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
+    const lang = localStorage.getItem("blognellaLang");
 
     const updateUserPassword = (user) => {
         const updatedSser = {
@@ -43,7 +44,7 @@ const LoginForgetForm = (props) => {
                     id="standard-full-width"
                     label="Email"
                     style={{ margin: 8 }}
-                    placeholder="Please type in your email here"
+                    placeholder={lang === "en" ? "Please type in your email here" : "Proszę wpisz swój email"}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -57,7 +58,7 @@ const LoginForgetForm = (props) => {
                     id="standard-full-width"
                     label="Login"
                     style={{ margin: 8 }}
-                    placeholder="Please type in your login here"
+                    placeholder={lang === "en" ? "Please type in your login here" : "Proszę wpisz swój login"}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -69,9 +70,9 @@ const LoginForgetForm = (props) => {
                 <FormItem>
                 <TextField
                     id="standard-full-width"
-                    label="New Password"
+                    label={lang === "en" ? "New Password" : "Nowe hasło"}
                     style={{ margin: 8 }}
-                    placeholder="Please type in your new password here"
+                    placeholder={lang === "en" ? "Please type in your new password here" : "Proszę wpisz swoje nowe hasło"}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -83,7 +84,7 @@ const LoginForgetForm = (props) => {
                 <LogicControls>
                     <div></div>
                     <Button variant="contained" color="primary" onClick={onSubmit}>
-                    Update Password
+                        {lang === "en" ? "Update Password" : "Aktualizuj Hasło"}
                     </Button>
                 </LogicControls>
             </StyledLoginForm>

@@ -9,6 +9,7 @@ import SearchComponent from "../SearchComponent/SearchComponent";
 const DefaultViewLinks = (props) => {
     const [nick, setNick] = useState("");
     const [role, setRole] = useState("");
+    const lang = localStorage.getItem('blognellaLang');
 
     const fetchUser = () => {
         getUser(localStorage.getItem('blognellaId') || "")
@@ -25,14 +26,21 @@ const DefaultViewLinks = (props) => {
 
     if(localStorage.getItem('blognellaId')) fetchUser();
 
+    const changeLanguage = () => {
+        const actualLang = localStorage.getItem('blognellaLang') || "en";
+        actualLang === "en" ? localStorage.setItem("blognellaLang", "pl") : localStorage.setItem("blognellaLang", "en");
+        window.location.reload();
+    }
+
     return (
         <>
             <LoginRegisterContainer>
                 <LinkElement><SearchComponent/></LinkElement>
                 {availablePages.includes(props.pageName) && role === "admin" ? <LinkElement><Link to={"/panel/posts"}>Panel</Link></LinkElement> : <></>}
-                { nick ? <LinkElement onClick={onLogout} ><Link to={"/"}>Logout {nick}</Link></LinkElement> : 
-                <LinkElement ><Link to={"/login"}>Login</Link></LinkElement> }
-                <LinkElement><Link to={"/register"}>Register</Link></LinkElement>
+                { nick ? <LinkElement onClick={onLogout} ><Link to={"/"}>{lang === "en" ? "Logout" : "Wyloguj"} {nick}</Link></LinkElement> : 
+                <LinkElement ><Link to={"/login"}>{lang === "en" ? "Login" : "Zaloguj"}</Link></LinkElement> }
+                <LinkElement><Link to={"/register"}>{lang === "en" ? "Register" : "Zarejestruj"}</Link></LinkElement>
+                <LinkElement onClick={changeLanguage}>{localStorage.getItem('blognellaLang') || "en"}</LinkElement>
             </LoginRegisterContainer>
             <DefaultViewTabs/>
         </>

@@ -6,6 +6,7 @@ import { updateContent } from '../../APIRequests/Content';
 import { getTags, TagProps } from '../../APIRequests/Tag';
 import { updatePost } from '../../APIRequests/Post';
 import DatePicker from 'react-date-picker';
+import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles(() => ({
     chips: {
@@ -48,6 +49,7 @@ const UpdatePostsPanel = (props) => {
     const [date, setDate] = useState<any>(new Date());
     // const [date, setDate] = useState<any>(props.post.date);
     const [user, setUser] = useState(props.post.user);
+    const lang = localStorage.getItem("blognellaLang");
 
 
     const handleEditorChange = (e) => {
@@ -96,6 +98,7 @@ const UpdatePostsPanel = (props) => {
               throw new Error('Error! Post not saved')
             }
           })
+        props.history.push("/panel/posts");
     }
 
     const handleChange = (event) => {
@@ -106,9 +109,9 @@ const UpdatePostsPanel = (props) => {
         <>
          <TextField
                     id="standard-full-width"
-                    label="Title"
+                    label={lang === "en" ? "Title" : "Tytuł"}
                     style={{ margin: 8 }}
-                    placeholder="Please type in your post title here"
+                    placeholder={lang === "en" ? "Please type in your post title here" : "Proszę wpisz tytuł wpisu"}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -131,7 +134,7 @@ const UpdatePostsPanel = (props) => {
                     id="standard-full-width"
                     label="Nick"
                     style={{ margin: 8 }}
-                    placeholder="Please type in your nick here"
+                    placeholder={lang === "en" ? "Please type in your nick here" : "Proszę wpisz nick"}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -141,14 +144,14 @@ const UpdatePostsPanel = (props) => {
                     onChange={(input) => setUser(input.target.value)}
         />
 
-        <div>date of publication</div>
+        <div>{lang === "en" ? "Date of publication" : "Data publikacji"}</div>
         <DatePicker
             onChange={(val:any) => setDate(val)}
             value={date}
         />
 
 
-        <div>Add tags to post</div>
+        <div>{lang === "en" ? "Add tags to post" : "Dodaj etykiety do wpisu"}</div>
         <Select
           labelId="demo-mutiple-chip-label"
           multiple
@@ -173,10 +176,10 @@ const UpdatePostsPanel = (props) => {
 
         <div></div>
         <Button variant="contained" color="primary" onClick={onContentSave}>
-                    Save Post
+                    {lang === "en" ? "Save Post" : "Zapisz post"}
          </Button>
       </>
     )
 }
 
-export default UpdatePostsPanel
+export default withRouter(UpdatePostsPanel);

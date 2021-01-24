@@ -32,8 +32,10 @@ const PostView = (props) => {
     const fetchPost = () => {
         Post_1.getPost(props.match.params.id)
             .then(({ data: { post } }) => {
-            setPost(post);
-            fetchAllPosts(post.title);
+            if (JSON.stringify(post) !== JSON.stringify({})) {
+                setPost(post);
+                fetchAllPosts(post.title);
+            }
         })
             .catch((err) => console.log(err));
     };

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 const BookmarksPanel = () => {
     const [allBookmarks, setAllBookmarks] = useState([]);
+    const lang = localStorage.getItem("blognellaLang");
 
     const fetchAllBookmarks = () => {
         getBookmarks()
@@ -56,7 +57,7 @@ const BookmarksPanel = () => {
 
             <div>
 
-            <Link to={"/panel/bookmarks/add"}>Add Bookmark</Link>
+            <Link to={"/panel/bookmarks/add"}>{lang === "en" ? "Add Bookmark" : "Dodaj Zakładkę"}</Link>
             </div>
         </>
     )

@@ -21,14 +21,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@material-ui/core");
 const react_1 = __importStar(require("react"));
+const react_router_dom_1 = require("react-router-dom");
 const User_1 = require("../../APIRequests/User");
 const allUsersRoles = ["loggedUser", "admin"];
-const UserPanelAdd = () => {
+const UserPanelAdd = (props) => {
     const [nick, setNick] = react_1.useState("");
     const [login, setLogin] = react_1.useState("");
     const [password, setPassword] = react_1.useState("");
     const [role, setRole] = react_1.useState("");
     const [email, setEmail] = react_1.useState("");
+    const lang = localStorage.getItem("blognellaLang");
     const handleUserRole = (event) => {
         setRole(event.target.value);
     };
@@ -41,26 +43,27 @@ const UserPanelAdd = () => {
             email: email,
         };
         User_1.createUser(user);
+        props.history.push("/panel/users");
     };
     const getUsersRoles = () => {
         return allUsersRoles.map((role) => react_1.default.createElement(core_1.MenuItem, { key: role, value: role }, role));
     };
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(core_1.TextField, { label: "Nick", style: { margin: 8 }, placeholder: "Please type in your nick here", fullWidth: true, margin: "normal", InputLabelProps: {
+        react_1.default.createElement(core_1.TextField, { label: "Nick", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your nickname here" : "Proszę wpisz nick", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
             }, onChange: (input) => setNick(input.target.value) }),
-        react_1.default.createElement(core_1.TextField, { label: "Login", style: { margin: 8 }, placeholder: "Please type in your login here", fullWidth: true, margin: "normal", InputLabelProps: {
+        react_1.default.createElement(core_1.TextField, { label: "Login", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your login here" : "Proszę wpisz swój login", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
             }, onChange: (input) => setLogin(input.target.value) }),
-        react_1.default.createElement(core_1.TextField, { label: "Password", style: { margin: 8 }, placeholder: "Please type in your password here", fullWidth: true, margin: "normal", InputLabelProps: {
+        react_1.default.createElement(core_1.TextField, { label: lang === "en" ? "Password" : "Hasło", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your password here" : "Proszę wpisz swoje hasło", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
             }, onChange: (input) => setPassword(input.target.value) }),
         react_1.default.createElement(core_1.Select, { value: role, onChange: handleUserRole }, getUsersRoles()),
         react_1.default.createElement("div", null),
-        react_1.default.createElement(core_1.TextField, { label: "Email", style: { margin: 8 }, placeholder: "Please type in your email here", fullWidth: true, margin: "normal", InputLabelProps: {
+        react_1.default.createElement(core_1.TextField, { label: "Email", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your email here" : "Proszę wpisz swój email", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
             }, onChange: (input) => setEmail(input.target.value) }),
-        react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onUserSave }, "Save User")));
+        react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onUserSave }, lang === "en" ? "Save User" : "Zapisz Użytkownika")));
 };
-exports.default = UserPanelAdd;
+exports.default = react_router_dom_1.withRouter(UserPanelAdd);
 //# sourceMappingURL=UserPanelAdd.js.map

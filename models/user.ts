@@ -2,16 +2,19 @@
 // const { model, Schema } = mongoose;
 
 import { model, Schema } from 'mongoose'
+import uniqueValidator from 'mongoose-unique-validator';
 
 const userSchema = new Schema({
     nick: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
 
     login: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
 
     password: {
@@ -26,10 +29,11 @@ const userSchema = new Schema({
 
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     }
 
 }, { timestamps: true })
 
-export default model('User', userSchema)
+export default model('User', userSchema.plugin(uniqueValidator));
 // module.exports = model('User', userSchema);

@@ -20,7 +20,8 @@ const createContent = (content) => __awaiter(void 0, void 0, void 0, function* (
         return savedContent;
     }
     catch (error) {
-        throw new Error(error);
+        //   throw new Error(error)
+        return { data: [], status: 403 };
     }
 });
 exports.createContent = createContent;
@@ -30,7 +31,8 @@ const updateContent = (content) => __awaiter(void 0, void 0, void 0, function* (
         return updatedContent;
     }
     catch (error) {
-        throw new Error(error);
+        //   throw new Error(error)
+        return { data: [], status: 403 };
     }
 });
 exports.updateContent = updateContent;

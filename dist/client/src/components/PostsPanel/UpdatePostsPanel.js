@@ -30,6 +30,7 @@ const Content_1 = require("../../APIRequests/Content");
 const Tag_1 = require("../../APIRequests/Tag");
 const Post_1 = require("../../APIRequests/Post");
 const react_date_picker_1 = __importDefault(require("react-date-picker"));
+const react_router_dom_1 = require("react-router-dom");
 const useStyles = core_1.makeStyles(() => ({
     chips: {
         display: 'flex',
@@ -67,6 +68,7 @@ const UpdatePostsPanel = (props) => {
     const [date, setDate] = react_1.useState(new Date());
     // const [date, setDate] = useState<any>(props.post.date);
     const [user, setUser] = react_1.useState(props.post.user);
+    const lang = localStorage.getItem("blognellaLang");
     const handleEditorChange = (e) => {
         setData(e.target.getContent());
     };
@@ -108,27 +110,28 @@ const UpdatePostsPanel = (props) => {
                 throw new Error('Error! Post not saved');
             }
         });
+        props.history.push("/panel/posts");
     };
     const handleChange = (event) => {
         setTags(event.target.value);
     };
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Title", style: { margin: 8 }, placeholder: "Please type in your post title here", fullWidth: true, margin: "normal", InputLabelProps: {
+        react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: lang === "en" ? "Title" : "Tytuł", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your post title here" : "Proszę wpisz tytuł wpisu", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
             }, defaultValue: title, onChange: (input) => setTitle(input.target.value) }),
         react_1.default.createElement(tinymce_react_1.Editor, { initialValue: data, init: {
                 plugins: 'link image code',
                 toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
             }, onChange: (e) => handleEditorChange(e) }),
-        react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Nick", style: { margin: 8 }, placeholder: "Please type in your nick here", fullWidth: true, margin: "normal", InputLabelProps: {
+        react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Nick", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your nick here" : "Proszę wpisz nick", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
             }, defaultValue: user, onChange: (input) => setUser(input.target.value) }),
-        react_1.default.createElement("div", null, "date of publication"),
+        react_1.default.createElement("div", null, lang === "en" ? "Date of publication" : "Data publikacji"),
         react_1.default.createElement(react_date_picker_1.default, { onChange: (val) => setDate(val), value: date }),
-        react_1.default.createElement("div", null, "Add tags to post"),
+        react_1.default.createElement("div", null, lang === "en" ? "Add tags to post" : "Dodaj etykiety do wpisu"),
         react_1.default.createElement(core_1.Select, { labelId: "demo-mutiple-chip-label", multiple: true, value: tags, onChange: handleChange, input: react_1.default.createElement(core_1.Input, { id: "select-multiple-chip" }), renderValue: (selected) => (react_1.default.createElement("div", { className: classes.chips }, selected.map((value) => (react_1.default.createElement(core_1.Chip, { key: value, label: value, className: classes.chip }))))), MenuProps: MenuProps }, allTags.map((name) => (react_1.default.createElement(core_1.MenuItem, { key: name, value: name, style: getStyles(name, tags, theme) }, name)))),
         react_1.default.createElement("div", null),
-        react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onContentSave }, "Save Post")));
+        react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onContentSave }, lang === "en" ? "Save Post" : "Zapisz post")));
 };
-exports.default = UpdatePostsPanel;
+exports.default = react_router_dom_1.withRouter(UpdatePostsPanel);
 //# sourceMappingURL=UpdatePostsPanel.js.map

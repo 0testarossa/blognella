@@ -1,12 +1,14 @@
 import { Button, MenuItem, Select, TextField } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
 import { updateBookmark } from "../../APIRequests/Bookmark";
 import { getPosts, PostProps } from "../../APIRequests/Post";
 
 const BookmarkPanelUpdate = (props) => {
-    const [postId, setPostId] = useState(props.bookmark.post[0]._id || "");
+    const [postId, setPostId] = useState(props.bookmark.post.length > 0 ? props.bookmark.post[0]._id : "");
     const [allPosts, setAllPosts] = useState<PostProps[]>([]);
     const [bookmarkTitle, setBookmarkTitle] = useState(props.bookmark.title || "");
+    const lang = localStorage.getItem("blognellaLang");
 
     const fetchAllPosts = () => {
         getPosts()
@@ -37,6 +39,7 @@ const BookmarkPanelUpdate = (props) => {
               throw new Error('Error! Bookmark not saved')
             }
           })
+        props.history.push("/panel/bookmarks");
     }
 
     const getPostsTitles = () => {
@@ -53,9 +56,9 @@ const BookmarkPanelUpdate = (props) => {
         </Select>
         <div></div>
         <TextField
-            label="Bookmark title"
+            label={lang === "en" ? "Bookmark title" : "Tytuł zakladki"}
             style={{ margin: 8 }}
-            placeholder="Please type in your bookmark title here"
+            placeholder={lang === "en" ? "Please type in your bookmark title here" : "Proszę wpisz tytuł zakładki"}
             fullWidth
             margin="normal"
             InputLabelProps={{
@@ -65,10 +68,10 @@ const BookmarkPanelUpdate = (props) => {
             onChange={(input) => setBookmarkTitle(input.target.value)}
             />
         <Button variant="contained" color="primary" onClick={onBookmarkSave}>
-            Save Bookmark
+            {lang === "en" ? "Save Bookmark" : "Zapisz Zakładkę"}
         </Button>
         </>
     )
 }
 
-export default BookmarkPanelUpdate;
+export default withRouter(BookmarkPanelUpdate);

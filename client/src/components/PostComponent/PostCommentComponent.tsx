@@ -1,11 +1,13 @@
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 import { deleteComment, updateComment } from "../../APIRequests/Comment";
 
 const PostCommentComponent = (props) => {
     const [isEditingMode, setIsEditingMode] = useState(false);
     const [commentText, setCommentText] = useState(props.comment.text);
+    const lang = localStorage.getItem("blognellaLang");
 
     const canEdit = props.role !== "guest" && (props.comment.user === props.nick || props.role === "admin" )
 
@@ -40,7 +42,7 @@ const PostCommentComponent = (props) => {
             }
         })
         .catch((err) => console.log(err))
-
+        window.location.reload();
     }
 
     return (
@@ -54,7 +56,7 @@ const PostCommentComponent = (props) => {
                     id="standard-full-width"
                     label=""
                     style={{ margin: 8 }}
-                    placeholder="Please type in your comment here"
+                    placeholder={lang === "en" ? "Please type in your comment here" : "Proszę wpisz komentarz"}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -68,10 +70,10 @@ const PostCommentComponent = (props) => {
             />
             {isEditingMode ? 
             <Button variant="contained" color="primary" onClick={onSaveEditedComment}>
-                Save Comment
+                {lang === "en" ? "Save Comment" : "Zapisz Komentarz"}
             </Button> : <></>}
         </>
     )
 }
 
-export default PostCommentComponent;
+export default withRouter(PostCommentComponent);

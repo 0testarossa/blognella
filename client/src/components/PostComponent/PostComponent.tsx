@@ -21,6 +21,7 @@ const PostComponent = (props) => {
 
 
     const date = new Date(props.post.date).toDateString();
+    const lang = localStorage.getItem("blognellaLang");
 
     const getTags = () => {
         return props.post.tags.map((tag) => <span key={tag}>{tag}</span>)
@@ -31,7 +32,7 @@ const PostComponent = (props) => {
     }
 
     return (
-        props.post.date > new Date().toISOString() ? <div>It will be avaiable soon - {date}</div> : 
+        props.post.date > new Date().toISOString() ? <div>{lang === "en" ? "It will be avaiable soon - " : "Dostępne wkrótce - "}{date}</div> : 
             <>
             {/* <DatePicker
             onChange={onChange}
@@ -41,11 +42,11 @@ const PostComponent = (props) => {
             <div>{props.post.title}</div>
             <div dangerouslySetInnerHTML={{ __html: props.post.content[0].text }} />
 
-            <div>Chapters</div>
+            <div>{lang === "en" ? "Chapters" : "Rozdziały"}</div>
             {getPostChapters()}
 
-            <div><span>Tags: </span>{getTags()}</div>
-            <div>Added by {props.post.user}</div>
+            <div><span>{lang === "en" ? "Tags: " : "Etykiety: "}</span>{getTags()}</div>
+            <div>{lang === "en" ? "Added by " : "Dodane przez "}{props.post.user}</div>
             <PostCommentList post={props.post}/>
             </>
         

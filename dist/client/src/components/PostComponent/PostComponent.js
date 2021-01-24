@@ -21,6 +21,7 @@ const PostComponent = (props) => {
     // console.log(customoldData > customnewData); //true
     // console.log(customoldData > actualDate)
     const date = new Date(props.post.date).toDateString();
+    const lang = localStorage.getItem("blognellaLang");
     const getTags = () => {
         return props.post.tags.map((tag) => react_1.default.createElement("span", { key: tag }, tag));
     };
@@ -29,19 +30,19 @@ const PostComponent = (props) => {
             react_1.default.createElement(PostLinkComponent_1.default, { post: postChapter })));
     };
     return (props.post.date > new Date().toISOString() ? react_1.default.createElement("div", null,
-        "It will be avaiable soon - ",
+        lang === "en" ? "It will be avaiable soon - " : "Dostępne wkrótce - ",
         date) :
         react_1.default.createElement(react_1.default.Fragment, null,
             react_1.default.createElement("div", null, date),
             react_1.default.createElement("div", null, props.post.title),
             react_1.default.createElement("div", { dangerouslySetInnerHTML: { __html: props.post.content[0].text } }),
-            react_1.default.createElement("div", null, "Chapters"),
+            react_1.default.createElement("div", null, lang === "en" ? "Chapters" : "Rozdziały"),
             getPostChapters(),
             react_1.default.createElement("div", null,
-                react_1.default.createElement("span", null, "Tags: "),
+                react_1.default.createElement("span", null, lang === "en" ? "Tags: " : "Etykiety: "),
                 getTags()),
             react_1.default.createElement("div", null,
-                "Added by ",
+                lang === "en" ? "Added by " : "Dodane przez ",
                 props.post.user),
             react_1.default.createElement(PostCommentList_1.default, { post: props.post })));
 };

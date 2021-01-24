@@ -16,14 +16,12 @@ exports.deletePost = exports.updatePost = exports.addPost = exports.getPost = ex
 const post_1 = __importDefault(require("../models/post"));
 const content_1 = __importDefault(require("../models/content"));
 const comment_1 = __importDefault(require("../models/comment"));
+const bookmark_1 = __importDefault(require("../models/bookmark"));
 const postClassValidator_1 = __importDefault(require("../classValidators/postClassValidator"));
 const validation_1 = require("../classValidators/validation");
 const getPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const posts = yield post_1.default.find().populate("content").populate({
-            path: 'comment',
-            model: 'Comment',
-        });
+        const posts = yield post_1.default.find().populate("content").populate("comment");
         res.status(200).json({ posts });
     }
     catch (error) {
@@ -36,12 +34,10 @@ exports.getPosts = getPosts;
 const getPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { params: { id }, } = req;
-        const post = yield post_1.default.findOne({ _id: id }).populate("content").populate({
-            path: 'comment',
-            model: 'Comment',
-        });
+        const post = yield post_1.default.findOne({ _id: id }).populate("content").populate('comment');
         if (!post) {
-            res.status(404).json("Id doesn't exist");
+            // res.status(404).json("Id doesn't exist");
+            res.status(200).json({ post: {} });
             return;
         }
         res.status(200).json({ post });
@@ -56,6 +52,20 @@ exports.getPost = getPost;
 const addPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const body = req.body;
+        const content = yield content_1.default.findOne({ _id: body.content });
+        if (!content) {
+            console.log("myerror");
+            console.log("content ID doesn't exists");
+            res.status(403).json("Fordidden");
+        }
+        if (content.title === "About") {
+            const posts = yield post_1.default.find().populate("content");
+            const aboutPost = posts.find((nextPost) => nextPost.content[0].title === "About");
+            if (aboutPost) {
+                res.status(403).json("Fordidden");
+                return;
+            }
+        }
         const post = new post_1.default({
             date: body.date,
             tags: body.tags,
@@ -114,6 +124,16 @@ const deletePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 const deletedComment = yield comment_1.default.findByIdAndRemove(comment._id);
             }));
         }
+        const bookmarks = yield bookmark_1.default.find();
+        bookmarks.map((bookmark) => __awaiter(void 0, void 0, void 0, function* () {
+            if (bookmark.post === id) {
+                const bookmarkWithoutPost = {
+                    post: [],
+                    title: bookmark.title
+                };
+                const updateBookmark = yield bookmark_1.default.findByIdAndUpdate({ _id: bookmark._id }, bookmarkWithoutPost);
+            }
+        }));
         const deletedPost = yield post_1.default.findByIdAndRemove(id);
         res.status(200).json({ post: deletedPost });
     }

@@ -6,6 +6,7 @@ import PostsPanel from "../components/PostsPanel/PostsPanel";
 const PanelPostsAddingPage = () => {
     const [postType, setPostType] = useState("");
     const [storyTitle, setStoryTitle] = useState("");
+    const lang = localStorage.getItem("blognellaLang");
 
     const handlePostType = (event) => {
         setPostType(event.target.value);
@@ -17,9 +18,9 @@ const PanelPostsAddingPage = () => {
           value={postType}
           onChange={handlePostType}
         >
-          <MenuItem value="Main">Main</MenuItem>
-          <MenuItem value="Chapter">Chapter</MenuItem>
-          <MenuItem value="About">About</MenuItem>
+          <MenuItem value="Main">{lang === "en" ? "Main" : "Wpis"}</MenuItem>
+          <MenuItem value="Chapter">{lang === "en" ? "Chapter" : "Rozdział"}</MenuItem>
+          <MenuItem value="About">{lang === "en" ? "About" : "O mnie"}</MenuItem>
         </Select>
         <div></div>
         {postType === "Chapter" ? <ChaptersList setPostTitle={setStoryTitle}/> : <></>}

@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 export interface CommentProps {
     _id?: string;
@@ -41,21 +41,23 @@ export const createComment = async (
       )
       return savedComment
     } catch (error) {
-      throw new Error(error)
+    //   throw new Error(error)
+    return {data: [], status: 403}
     }
   }
 
   export const updateComment = async (
     comment: CommentProps
-  ): Promise<AxiosResponse<ApiDataType>> => {
+  ) => {
     try {
-      const updatedComment: AxiosResponse<ApiDataType> = await axios.put(
+      const updatedComment = await axios.put(
         `/comment/${comment._id}`,
         comment
       )
       return updatedComment;
     } catch (error) {
-      throw new Error(error)
+    //   throw new Error(error)
+    return {data: [], status: 403}
     }
   }
 

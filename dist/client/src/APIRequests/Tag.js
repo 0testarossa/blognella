@@ -30,7 +30,8 @@ const createTag = (tag) => __awaiter(void 0, void 0, void 0, function* () {
         return saveTag;
     }
     catch (error) {
-        throw new Error(error);
+        //   throw new Error(error)
+        return { data: [], status: 403 };
     }
 });
 exports.createTag = createTag;

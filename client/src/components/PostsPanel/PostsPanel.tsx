@@ -7,6 +7,7 @@ import { getTags, TagProps } from '../../APIRequests/Tag';
 import { createPost } from '../../APIRequests/Post';
 import DatePicker from 'react-date-picker';
 import { getUser, UserProps } from '../../APIRequests/User';
+import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles(() => ({
     chips: {
@@ -48,6 +49,7 @@ const PostsPanel = (props) => {
     const [allTags, setAllTags] = useState([])
     const [date, setDate] = useState<any>(new Date());
     const [user, setUser] = useState("");
+    const lang = localStorage.getItem("blognellaLang");
 
 
     const handleEditorChange = (e) => {
@@ -63,11 +65,10 @@ const PostsPanel = (props) => {
         createContent(content)
         .then(({ status, data }) => {
                 if (status !== 201) {
-                  throw new Error('Error! Todo not saved')
+                  throw new Error('Error! Post not saved')
                 }
                 setContentId(data.content._id);
               })
-        // return createdContent;
     }
 
     useEffect(() => {
@@ -109,6 +110,7 @@ const PostsPanel = (props) => {
             user: user
         }
         createPost(post);
+        props.history.push("/panel/posts");
     }
 
     const handleChange = (event) => {
@@ -119,9 +121,9 @@ const PostsPanel = (props) => {
         <>
          <TextField
                     id="standard-full-width"
-                    label="Title"
+                    label={lang === "en" ? "Title" : "Tytuł"}
                     style={{ margin: 8 }}
-                    placeholder="Please type in your post title here"
+                    placeholder={lang === "en" ? "Please type in your post title here" : "Proszę wpisz tytuł wpisu"}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -143,7 +145,7 @@ const PostsPanel = (props) => {
                     id="standard-full-width"
                     label="Nick"
                     style={{ margin: 8 }}
-                    placeholder="Please type in your nick here"
+                    placeholder={lang === "en" ? "Please type in your nick here" : "Proszę wpisz nick"}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -153,13 +155,13 @@ const PostsPanel = (props) => {
                     onChange={(input) => setUser(input.target.value)}
          />
 
-        <div>date of publication</div>
+        <div>{lang === "en" ? "Date of publication" : "Data publikacji"}</div>
         <DatePicker
             onChange={(val:any) => setDate(val)}
             value={date}
         />
 
-        <div>Add tags to post</div>
+        <div>{lang === "en" ? "Add tags to post" : "Dodaj etykiety do wpisu"}</div>
         <Select
           labelId="demo-mutiple-chip-label"
           multiple
@@ -184,7 +186,7 @@ const PostsPanel = (props) => {
 
         <div></div>
         <Button variant="contained" color="primary" onClick={onContentSave}>
-                    Save Post
+                    {lang === "en" ? "Save Post" : "Zapisz Wpis"}
          </Button>
       </>
 
@@ -192,4 +194,4 @@ const PostsPanel = (props) => {
     )
 }
 
-export default PostsPanel
+export default withRouter(PostsPanel);

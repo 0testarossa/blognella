@@ -53,6 +53,9 @@ const App = (props) => {
     };
     react_1.useEffect(() => {
         fetchUser();
+        if (!localStorage.getItem('blognellaLang')) {
+            localStorage.setItem('blognellaLang', "en");
+        }
     }, [props]);
     if (props.match.path === "/login" && localStorage.getItem('blognellaId')) {
         props.history.push("/");

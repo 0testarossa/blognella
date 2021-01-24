@@ -28,9 +28,11 @@ const TextField_1 = __importDefault(require("@material-ui/core/TextField"));
 const react_1 = __importStar(require("react"));
 const Tag_1 = require("../../APIRequests/Tag");
 const Delete_1 = __importDefault(require("@material-ui/icons/Delete"));
-const TagsPanel = () => {
+const react_router_dom_1 = require("react-router-dom");
+const TagsPanel = (props) => {
     const [tag, setTag] = react_1.useState("");
     const [allTags, setAllTags] = react_1.useState([]);
+    const lang = localStorage.getItem("blognellaLang");
     const fetchAllTags = () => {
         Tag_1.getTags()
             .then(({ data: { tags } }) => setAllTags(tags))
@@ -45,6 +47,7 @@ const TagsPanel = () => {
             }
             fetchAllTags();
         });
+        props.history.push("/panel/tags");
     };
     react_1.useEffect(() => {
         fetchAllTags();
@@ -69,10 +72,10 @@ const TagsPanel = () => {
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(core_1.List, null, getListItems()),
         react_1.default.createElement("div", null,
-            react_1.default.createElement(TextField_1.default, { label: "Tag", style: { margin: 8 }, placeholder: "Please type in your tag here", fullWidth: true, margin: "normal", InputLabelProps: {
+            react_1.default.createElement(TextField_1.default, { label: lang === "en" ? "Tag" : "Etykieta", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your tag here" : "Proszę wpisz etykietę", fullWidth: true, margin: "normal", InputLabelProps: {
                     shrink: true,
                 }, onChange: (input) => setTag(input.target.value) }),
-            react_1.default.createElement(Button_1.default, { variant: "contained", color: "primary", onClick: onTagSave }, "Add Tag"))));
+            react_1.default.createElement(Button_1.default, { variant: "contained", color: "primary", onClick: onTagSave }, lang === "en" ? "Add Tag" : "Dodaj etykietę"))));
 };
-exports.default = TagsPanel;
+exports.default = react_router_dom_1.withRouter(TagsPanel);
 //# sourceMappingURL=TagsPanel.js.map

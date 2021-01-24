@@ -5,6 +5,7 @@ import { getPosts, PostProps } from "../../APIRequests/Post";
 
 const SearchList = (props) => {
     const [allPosts, setAllPosts] = useState([]);
+    const lang = localStorage.getItem("blognellaLang");
 
     const fetchAllPosts = () => {
         getPosts()
@@ -32,7 +33,7 @@ const SearchList = (props) => {
     }
 
     return (
-        allPosts.length === 0 ? <div>There is no post that meets the expected criteria</div> :
+        allPosts.length === 0 ? <div>{lang === "en" ? "There is no post that meets the expected criteria" : "Nie ma wpisów spełniających podane kryteria"}</div> :
         <List>
             {getListItems()}
         </List>

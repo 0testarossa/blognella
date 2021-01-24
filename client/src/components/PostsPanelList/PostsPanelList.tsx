@@ -6,6 +6,7 @@ import { deletePost, getPosts, PostProps } from "../../APIRequests/Post";
 
 const PostsPanelList = () => {
     const [allPosts, setAllPosts] = useState([]);
+    const lang = localStorage.getItem("blognellaLang");
 
     const fetchAllPosts = () => {
         getPosts()
@@ -54,7 +55,7 @@ const PostsPanelList = () => {
              <List>
               {getListItems()}
             </List>
-            <Link to={"/panel/posts/add"}>AddPost</Link>
+            <Link to={"/panel/posts/add"}>{lang === "en" ? "Add Post" : "Dodaj Wpis"}</Link>
             {/* <Link to={{
             pathname: '/template',
             search: '?query=abc',

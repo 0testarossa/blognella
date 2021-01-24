@@ -25,10 +25,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Button_1 = __importDefault(require("@material-ui/core/Button"));
 const TextField_1 = __importDefault(require("@material-ui/core/TextField"));
 const react_1 = __importStar(require("react"));
+const react_router_dom_1 = require("react-router-dom");
 const Comment_1 = require("../../APIRequests/Comment");
 const PostCommentComponent = (props) => {
     const [isEditingMode, setIsEditingMode] = react_1.useState(false);
     const [commentText, setCommentText] = react_1.useState(props.comment.text);
+    const lang = localStorage.getItem("blognellaLang");
     const canEdit = props.role !== "guest" && (props.comment.user === props.nick || props.role === "admin");
     const onEdit = () => {
         setIsEditingMode(!isEditingMode);
@@ -58,6 +60,7 @@ const PostCommentComponent = (props) => {
             }
         })
             .catch((err) => console.log(err));
+        window.location.reload();
     };
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement("div", null,
@@ -67,13 +70,13 @@ const PostCommentComponent = (props) => {
             canEdit ? react_1.default.createElement(react_1.default.Fragment, null,
                 react_1.default.createElement("span", { onClick: onEdit }, "Edit"),
                 react_1.default.createElement("span", { onClick: onDelete }, "Delete")) : react_1.default.createElement(react_1.default.Fragment, null)),
-        react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "", style: { margin: 8 }, placeholder: "Please type in your comment here", fullWidth: true, margin: "normal", InputLabelProps: {
+        react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your comment here" : "Proszę wpisz komentarz", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
             }, InputProps: {
                 readOnly: !isEditingMode,
             }, defaultValue: commentText, onChange: (input) => setCommentText(input.target.value) }),
         isEditingMode ?
-            react_1.default.createElement(Button_1.default, { variant: "contained", color: "primary", onClick: onSaveEditedComment }, "Save Comment") : react_1.default.createElement(react_1.default.Fragment, null)));
+            react_1.default.createElement(Button_1.default, { variant: "contained", color: "primary", onClick: onSaveEditedComment }, lang === "en" ? "Save Comment" : "Zapisz Komentarz") : react_1.default.createElement(react_1.default.Fragment, null)));
 };
-exports.default = PostCommentComponent;
+exports.default = react_router_dom_1.withRouter(PostCommentComponent);
 //# sourceMappingURL=PostCommentComponent.js.map

@@ -28,6 +28,7 @@ const react_1 = __importStar(require("react"));
 const react_router_dom_1 = require("react-router-dom");
 const SearchComponent = (props) => {
     const [searchValue, setSearchValue] = react_1.useState("");
+    const lang = localStorage.getItem("blognellaLang");
     const onSearch = () => {
         props.history.push({
             pathname: '/search',
@@ -35,10 +36,10 @@ const SearchComponent = (props) => {
         });
     };
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Search", style: { margin: 8 }, placeholder: "Please type in tag or title here", fullWidth: true, margin: "normal", InputLabelProps: {
+        react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: lang === "en" ? "Search" : "Wyszukaj", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in tag or title here" : "Proszę wpisz etykietę lub tytuł", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
             }, onChange: (input) => setSearchValue(input.target.value) }),
-        react_1.default.createElement(Button_1.default, { variant: "contained", color: "primary", onClick: onSearch }, "Search")));
+        react_1.default.createElement(Button_1.default, { variant: "contained", color: "primary", onClick: onSearch }, lang === "en" ? "Search" : "Wyszukaj")));
 };
 exports.default = react_router_dom_1.withRouter(SearchComponent);
 //# sourceMappingURL=SearchComponent.js.map

@@ -11,6 +11,7 @@ const PostCommentList = (props) => {
     const [role, setRole] = useState("guest");
     // const [user, setUser] = useState();
     const [newComment, setNewComment] = useState("");
+    const lang = localStorage.getItem("blognellaLang");
 
     const fetchUser = (userId:string) => {
         getUser(userId)
@@ -81,6 +82,7 @@ const PostCommentList = (props) => {
             })
           })
           .catch((err) => console.log(err))
+          window.location.reload();
     }
 
     const getComments = () => {
@@ -90,13 +92,13 @@ const PostCommentList = (props) => {
 
     return (
     <>
-    {props.post.comment.length < 1 ? <div>No comments</div> : getComments()}
+    {props.post.comment.length < 1 ? <div>{lang === "en" ? "No comments" : "Brak komentarzy"}</div> : getComments()}
 
     <TextField
                     id="standard-full-width"
-                    label="Add Comment"
+                    label={lang === "en" ? "Add Comment" : "Dodaj komentarz"}
                     style={{ margin: 8 }}
-                    placeholder="Please type in your comment here"
+                    placeholder={lang === "en" ? "Please type in your comment here" : "Proszę wpisz komentarz"}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -106,7 +108,7 @@ const PostCommentList = (props) => {
                     onChange={(input) => setNewComment(input.target.value)}
     />
     <Button variant="contained" color="primary" onClick={onNewCommentSave}>
-        Add Comment
+        {lang === "en" ? "Add Comment" : "Dodaj Komentarz"}
     </Button>
     </>
     )

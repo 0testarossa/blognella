@@ -40,7 +40,8 @@ const createComment = (comment) => __awaiter(void 0, void 0, void 0, function* (
         return savedComment;
     }
     catch (error) {
-        throw new Error(error);
+        //   throw new Error(error)
+        return { data: [], status: 403 };
     }
 });
 exports.createComment = createComment;
@@ -50,7 +51,8 @@ const updateComment = (comment) => __awaiter(void 0, void 0, void 0, function* (
         return updatedComment;
     }
     catch (error) {
-        throw new Error(error);
+        //   throw new Error(error)
+        return { data: [], status: 403 };
     }
 });
 exports.updateComment = updateComment;

@@ -28,11 +28,12 @@ const core_1 = require("@material-ui/core");
 const RegisterForm_styles_1 = require("./RegisterForm.styles");
 const User_1 = require("../../APIRequests/User");
 const react_router_dom_1 = require("react-router-dom");
-const RegisterForm = () => {
+const RegisterForm = (props) => {
     const [nick, setNick] = react_1.useState("");
     const [login, setLogin] = react_1.useState("");
     const [password, setPassword] = react_1.useState("");
     const [email, setEmail] = react_1.useState("");
+    const lang = localStorage.getItem("blognellaLang");
     const onUserSave = () => {
         console.log(nick);
         console.log(login);
@@ -55,30 +56,31 @@ const RegisterForm = () => {
             // setTodos(data.todos)
         })
             .catch((err) => console.log(err));
+        props.history.push("/");
     };
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(RegisterForm_styles_1.StyledRegisterForm, null,
             react_1.default.createElement(RegisterForm_styles_1.FormItem, null,
-                react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Nick", style: { margin: 8 }, placeholder: "Please type in your nickname here", fullWidth: true, margin: "normal", InputLabelProps: {
+                react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Nick", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your nickname here" : "Proszę wpisz nick", fullWidth: true, margin: "normal", InputLabelProps: {
                         shrink: true,
                     }, onChange: (input) => setNick(input.target.value) })),
             react_1.default.createElement(RegisterForm_styles_1.FormItem, null,
-                react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Login", style: { margin: 8 }, placeholder: "Please type in your login here", fullWidth: true, margin: "normal", InputLabelProps: {
+                react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Login", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your login here" : "Proszę wpisz swój login", fullWidth: true, margin: "normal", InputLabelProps: {
                         shrink: true,
                     }, onChange: (input) => setLogin(input.target.value) })),
             react_1.default.createElement(RegisterForm_styles_1.FormItem, null,
-                react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Password", style: { margin: 8 }, placeholder: "Please type in your password here", fullWidth: true, margin: "normal", InputLabelProps: {
+                react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: lang === "en" ? "Password" : "Hasło", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your password here" : "Proszę wpisz swoje hasło", fullWidth: true, margin: "normal", InputLabelProps: {
                         shrink: true,
                     }, onChange: (input) => setPassword(input.target.value) })),
             react_1.default.createElement(RegisterForm_styles_1.FormItem, null,
-                react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Email", style: { margin: 8 }, placeholder: "Please type in your email here", fullWidth: true, margin: "normal", InputLabelProps: {
+                react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Email", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your email here" : "Proszę wpisz swój email", fullWidth: true, margin: "normal", InputLabelProps: {
                         shrink: true,
                     }, onChange: (input) => setEmail(input.target.value) })),
             react_1.default.createElement(RegisterForm_styles_1.LogicControls, null,
                 react_1.default.createElement("div", null,
-                    "Have already account?",
-                    react_1.default.createElement(react_router_dom_1.Link, { to: "/login" }, "Login")),
-                react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onUserSave }, "Register")))));
+                    lang === "en" ? "Have already account? " : "Masz już konto?",
+                    react_1.default.createElement(react_router_dom_1.Link, { to: "/login" }, lang === "en" ? "Login" : "Zaloguj się")),
+                react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onUserSave }, lang === "en" ? "Register" : "Zarejestruj się")))));
 };
-exports.default = RegisterForm;
+exports.default = react_router_dom_1.withRouter(RegisterForm);
 //# sourceMappingURL=RegisterForm.js.map

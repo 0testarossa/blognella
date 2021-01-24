@@ -29,6 +29,7 @@ const react_router_dom_1 = require("react-router-dom");
 const Post_1 = require("../../APIRequests/Post");
 const PostsPanelList = () => {
     const [allPosts, setAllPosts] = react_1.useState([]);
+    const lang = localStorage.getItem("blognellaLang");
     const fetchAllPosts = () => {
         Post_1.getPosts()
             .then(({ data: { posts } }) => setAllPosts(posts))
@@ -63,7 +64,7 @@ const PostsPanelList = () => {
     };
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(core_1.List, null, getListItems()),
-        react_1.default.createElement(react_router_dom_1.Link, { to: "/panel/posts/add" }, "AddPost")));
+        react_1.default.createElement(react_router_dom_1.Link, { to: "/panel/posts/add" }, lang === "en" ? "Add Post" : "Dodaj Wpis")));
 };
 exports.default = PostsPanelList;
 //# sourceMappingURL=PostsPanelList.js.map

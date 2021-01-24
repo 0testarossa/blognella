@@ -34,6 +34,7 @@ const PostCommentList = (props) => {
     const [role, setRole] = react_1.useState("guest");
     // const [user, setUser] = useState();
     const [newComment, setNewComment] = react_1.useState("");
+    const lang = localStorage.getItem("blognellaLang");
     const fetchUser = (userId) => {
         User_1.getUser(userId)
             .then(({ data: { user } }) => {
@@ -100,16 +101,17 @@ const PostCommentList = (props) => {
             });
         })
             .catch((err) => console.log(err));
+        window.location.reload();
     };
     const getComments = () => {
         return props.post.comment.map((comment) => react_1.default.createElement(PostCommentComponent_1.default, { key: comment._id, nick: nick, role: role, comment: comment, updatePostToDeleteComment: updatePostToEditComment }));
     };
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        props.post.comment.length < 1 ? react_1.default.createElement("div", null, "No comments") : getComments(),
-        react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Add Comment", style: { margin: 8 }, placeholder: "Please type in your comment here", fullWidth: true, margin: "normal", InputLabelProps: {
+        props.post.comment.length < 1 ? react_1.default.createElement("div", null, lang === "en" ? "No comments" : "Brak komentarzy") : getComments(),
+        react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: lang === "en" ? "Add Comment" : "Dodaj komentarz", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your comment here" : "Proszę wpisz komentarz", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
             }, defaultValue: newComment, onChange: (input) => setNewComment(input.target.value) }),
-        react_1.default.createElement(Button_1.default, { variant: "contained", color: "primary", onClick: onNewCommentSave }, "Add Comment")));
+        react_1.default.createElement(Button_1.default, { variant: "contained", color: "primary", onClick: onNewCommentSave }, lang === "en" ? "Add Comment" : "Dodaj Komentarz")));
 };
 exports.default = PostCommentList;
 //# sourceMappingURL=PostCommentList.js.map

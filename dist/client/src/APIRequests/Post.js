@@ -40,7 +40,8 @@ const createPost = (post) => __awaiter(void 0, void 0, void 0, function* () {
         return savedPost;
     }
     catch (error) {
-        throw new Error(error);
+        //   throw new Error(error)
+        return { data: [], status: 403 };
     }
 });
 exports.createPost = createPost;
@@ -50,7 +51,8 @@ const updatePost = (post) => __awaiter(void 0, void 0, void 0, function* () {
         return updatedPost;
     }
     catch (error) {
-        throw new Error(error);
+        //   throw new Error(error)
+        return { data: [], status: 403 };
     }
 });
 exports.updatePost = updatePost;

@@ -25,6 +25,7 @@ const react_router_dom_1 = require("react-router-dom");
 const Post_1 = require("../../APIRequests/Post");
 const SearchList = (props) => {
     const [allPosts, setAllPosts] = react_1.useState([]);
+    const lang = localStorage.getItem("blognellaLang");
     const fetchAllPosts = () => {
         Post_1.getPosts()
             .then(({ data: { posts } }) => {
@@ -45,7 +46,7 @@ const SearchList = (props) => {
                     post.title,
                     " ") })));
     };
-    return (allPosts.length === 0 ? react_1.default.createElement("div", null, "There is no post that meets the expected criteria") :
+    return (allPosts.length === 0 ? react_1.default.createElement("div", null, lang === "en" ? "There is no post that meets the expected criteria" : "Nie ma wpisów spełniających podane kryteria") :
         react_1.default.createElement(core_1.List, null, getListItems()));
 };
 exports.default = SearchList;

@@ -30,6 +30,9 @@ const App: React.FC = (props:any) => {
 
   useEffect(() => {
     fetchUser()
+    if(!localStorage.getItem('blognellaLang')) {
+      localStorage.setItem('blognellaLang', "en");
+    }
   }, [props])
 
 

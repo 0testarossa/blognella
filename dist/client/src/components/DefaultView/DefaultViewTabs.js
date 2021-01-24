@@ -25,6 +25,7 @@ const react_router_dom_1 = require("react-router-dom");
 const Bookmark_1 = require("../../APIRequests/Bookmark");
 const DefaultViewTabs = () => {
     const [allBookmarks, setAllBookmarks] = react_1.useState([]);
+    const lang = localStorage.getItem("blognellaLang");
     const fetchAllBookmarks = () => {
         Bookmark_1.getBookmarks()
             .then(({ data: { bookmarks } }) => { if (bookmarks.length !== allBookmarks.length)
@@ -35,11 +36,11 @@ const DefaultViewTabs = () => {
         fetchAllBookmarks();
     const getAllLinks = () => {
         return allBookmarks.map((bookmark) => react_1.default.createElement(DefaultView_styles_1.LinkElement, { key: bookmark._id },
-            react_1.default.createElement(react_router_dom_1.Link, { to: `/post/${bookmark.post[0]._id}` }, bookmark.title))) || [];
+            react_1.default.createElement(react_router_dom_1.Link, { to: bookmark.post.length > 0 ? `/post/${bookmark.post[0]._id}` : '/' }, bookmark.title))) || [];
     };
     return (react_1.default.createElement(DefaultView_styles_1.MainViewTabsContainer, null,
         react_1.default.createElement(DefaultView_styles_1.LinkElement, null,
-            react_1.default.createElement(react_router_dom_1.Link, { to: "/" }, "Home")),
+            react_1.default.createElement(react_router_dom_1.Link, { to: "/" }, lang === "en" ? "Home" : "Główna")),
         getAllLinks()));
 };
 exports.default = DefaultViewTabs;

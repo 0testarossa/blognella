@@ -6,6 +6,7 @@ import { AboutSection } from "./DefaultView.styles";
 
 const DefaultViewAbout = () => {
     const [aboutPost, setAboutPost] = useState([]);
+    const lang = localStorage.getItem("blognellaLang");
 
     const fetchAllPosts = () => {
         getPosts()
@@ -20,7 +21,7 @@ const DefaultViewAbout = () => {
 
     return (
         <AboutSection>
-            {aboutPost.length > 0 ? <PostAboutComponent post={aboutPost[0]} /> : <div>There is no About post</div>}
+            {aboutPost.length > 0 ? <PostAboutComponent post={aboutPost[0]} /> : <div>{lang === "en" ? "There is no About post" : "Brak wpisu o mnie"}</div>}
         </AboutSection>
     )
 }

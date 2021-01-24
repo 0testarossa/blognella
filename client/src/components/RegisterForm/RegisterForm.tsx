@@ -3,13 +3,15 @@ import TextField from '@material-ui/core/TextField';
 import { Button } from "@material-ui/core";
 import { FormItem, LogicControls, StyledRegisterForm } from "./RegisterForm.styles";
 import { createUser } from "../../APIRequests/User";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
-const RegisterForm = () => {
+const RegisterForm = (props) => {
     const [nick, setNick] = useState("");
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
+    const lang = localStorage.getItem("blognellaLang");
+    
 
     const onUserSave = () => {
         console.log(nick);
@@ -33,6 +35,7 @@ const RegisterForm = () => {
             // setTodos(data.todos)
           })
           .catch((err) => console.log(err))
+        props.history.push("/");
     }
 
     return (
@@ -43,7 +46,7 @@ const RegisterForm = () => {
                     id="standard-full-width"
                     label="Nick"
                     style={{ margin: 8 }}
-                    placeholder="Please type in your nickname here"
+                    placeholder={lang === "en" ? "Please type in your nickname here" : "Proszę wpisz nick"}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -57,7 +60,7 @@ const RegisterForm = () => {
                     id="standard-full-width"
                     label="Login"
                     style={{ margin: 8 }}
-                    placeholder="Please type in your login here"
+                    placeholder={lang === "en" ? "Please type in your login here" : "Proszę wpisz swój login"}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -69,9 +72,9 @@ const RegisterForm = () => {
                 <FormItem>
                 <TextField
                     id="standard-full-width"
-                    label="Password"
+                    label={lang === "en" ? "Password" : "Hasło"}
                     style={{ margin: 8 }}
-                    placeholder="Please type in your password here"
+                    placeholder={lang === "en" ? "Please type in your password here" : "Proszę wpisz swoje hasło"}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -85,7 +88,7 @@ const RegisterForm = () => {
                     id="standard-full-width"
                     label="Email"
                     style={{ margin: 8 }}
-                    placeholder="Please type in your email here"
+                    placeholder={lang === "en" ? "Please type in your email here" : "Proszę wpisz swój email"}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -95,11 +98,11 @@ const RegisterForm = () => {
                     />
                 </FormItem>
                 <LogicControls>
-                    <div>Have already account? 
-                    <Link to={"/login"}>Login</Link>
+                    <div>{lang === "en" ? "Have already account? " : "Masz już konto?"}
+                    <Link to={"/login"}>{lang === "en" ? "Login" : "Zaloguj się"}</Link>
                     </div>
                     <Button variant="contained" color="primary" onClick={onUserSave}>
-                    Register
+                        {lang === "en" ? "Register" : "Zarejestruj się"}
                     </Button>
                 </LogicControls>
             </StyledRegisterForm>
@@ -107,4 +110,4 @@ const RegisterForm = () => {
     )
 }
 
-export default RegisterForm;
+export default withRouter(RegisterForm);

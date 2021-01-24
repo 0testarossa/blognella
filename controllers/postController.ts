@@ -1,19 +1,13 @@
 import Post from '../models/post';
 import Content from '../models/content';
 import Comment from '../models/comment';
+import Bookmark from '../models/bookmark';
 import PostValidator from '../classValidators/postClassValidator';
 import { validateOrRejectExample } from '../classValidators/validation';
 
 const getPosts = async (req, res) => {
     try {
-        const posts = await Post.find().populate("content").populate({
-            path: 'comment', 
-            model: 'Comment',
-            // populate: {
-            //     path: 'user',
-            //     model: 'User'
-            // }
-    });
+        const posts = await Post.find().populate("content").populate("comment")
         res.status(200).json({ posts })
     } catch (error) {
         console.log("myerror");
@@ -27,16 +21,11 @@ const getPost = async (req, res) => {
         const {
             params: { id },
         } = req;
-        const post = await Post.findOne({_id: id}).populate("content").populate({
-            path: 'comment', 
-            model: 'Comment',
-            // populate: {
-            //     path: 'user',
-            //     model: 'User'
-            // }
-    });
+        const post = await Post.findOne({_id: id}).populate("content").populate('comment')
+
         if(!post) {
-            res.status(404).json("Id doesn't exist");
+            // res.status(404).json("Id doesn't exist");
+            res.status(200).json({post: {}});
             return;
         }
         res.status(200).json({ post })
@@ -50,6 +39,22 @@ const getPost = async (req, res) => {
 const addPost = async (req, res) => {
     try {
         const body = req.body
+
+        const content = await Content.findOne({_id:body.content})
+        if(!content) {
+            console.log("myerror");
+            console.log("content ID doesn't exists")
+            res.status(403).json("Fordidden");
+        }
+
+        if(content.title === "About") {
+            const posts = await Post.find().populate("content");
+            const aboutPost = posts.find((nextPost) => nextPost.content[0].title === "About");
+            if(aboutPost) {
+                res.status(403).json("Fordidden");
+                return;
+            }
+        }
 
         const post = new Post({
             date: body.date,
@@ -125,6 +130,20 @@ const deletePost = async (req, res) => {
                 )
             })
         }
+
+        const bookmarks = await Bookmark.find();
+        bookmarks.map(async (bookmark) => {
+            if(bookmark.post === id) {    
+                const bookmarkWithoutPost = {
+                    post: [],
+                    title: bookmark.title
+                } 
+                const updateBookmark = await Bookmark.findByIdAndUpdate(
+                    { _id: bookmark._id },
+                    bookmarkWithoutPost
+                )
+            }
+        })
 
         const deletedPost = await Post.findByIdAndRemove(
             id

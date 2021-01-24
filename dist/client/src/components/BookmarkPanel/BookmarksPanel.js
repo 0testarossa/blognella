@@ -29,6 +29,7 @@ const Bookmark_1 = require("../../APIRequests/Bookmark");
 const react_router_dom_1 = require("react-router-dom");
 const BookmarksPanel = () => {
     const [allBookmarks, setAllBookmarks] = react_1.useState([]);
+    const lang = localStorage.getItem("blognellaLang");
     const fetchAllBookmarks = () => {
         Bookmark_1.getBookmarks()
             .then(({ data: { bookmarks } }) => setAllBookmarks(bookmarks))
@@ -63,7 +64,7 @@ const BookmarksPanel = () => {
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(core_1.List, null, getListItems()),
         react_1.default.createElement("div", null,
-            react_1.default.createElement(react_router_dom_1.Link, { to: "/panel/bookmarks/add" }, "Add Bookmark"))));
+            react_1.default.createElement(react_router_dom_1.Link, { to: "/panel/bookmarks/add" }, lang === "en" ? "Add Bookmark" : "Dodaj Zakładkę"))));
 };
 exports.default = BookmarksPanel;
 //# sourceMappingURL=BookmarksPanel.js.map

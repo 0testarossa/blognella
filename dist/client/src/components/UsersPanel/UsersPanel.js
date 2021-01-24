@@ -29,6 +29,7 @@ const react_router_dom_1 = require("react-router-dom");
 const User_1 = require("../../APIRequests/User");
 const UsersPanel = () => {
     const [allUsers, setAllUsers] = react_1.useState([]);
+    const lang = localStorage.getItem("blognellaLang");
     const fetchAllUsers = () => {
         User_1.getUsers()
             .then(({ data: { users } }) => setAllUsers(users))
@@ -63,7 +64,7 @@ const UsersPanel = () => {
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(core_1.List, null, getListItems()),
         react_1.default.createElement("div", null,
-            react_1.default.createElement(react_router_dom_1.Link, { to: "/panel/users/add" }, "Add User"))));
+            react_1.default.createElement(react_router_dom_1.Link, { to: "/panel/users/add" }, lang === "en" ? "Add User" : "Dodaj użytkownika"))));
 };
 exports.default = UsersPanel;
 //# sourceMappingURL=UsersPanel.js.map

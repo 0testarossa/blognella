@@ -1,15 +1,17 @@
 import { Button, MenuItem, Select, TextField } from "@material-ui/core";
 import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 import { createUser } from "../../APIRequests/User";
 
 const allUsersRoles = ["loggedUser", "admin"];
 
-const UserPanelAdd = () => {
+const UserPanelAdd = (props) => {
     const [nick, setNick] = useState("");
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [role, setRole] = useState("");
     const [email, setEmail] = useState("");
+    const lang = localStorage.getItem("blognellaLang");
 
     const handleUserRole = (event) => {
         setRole(event.target.value);
@@ -24,6 +26,7 @@ const UserPanelAdd = () => {
             email: email,
         }
         createUser(user);
+        props.history.push("/panel/users");
     }
 
     const getUsersRoles = () => {
@@ -35,7 +38,7 @@ const UserPanelAdd = () => {
         <TextField
             label="Nick"
             style={{ margin: 8 }}
-            placeholder="Please type in your nick here"
+            placeholder={lang === "en" ? "Please type in your nickname here" : "Proszę wpisz nick"}
             fullWidth
             margin="normal"
             InputLabelProps={{
@@ -46,7 +49,7 @@ const UserPanelAdd = () => {
         <TextField
             label="Login"
             style={{ margin: 8 }}
-            placeholder="Please type in your login here"
+            placeholder={lang === "en" ? "Please type in your login here" : "Proszę wpisz swój login"}
             fullWidth
             margin="normal"
             InputLabelProps={{
@@ -55,9 +58,9 @@ const UserPanelAdd = () => {
             onChange={(input) => setLogin(input.target.value)}
         />
         <TextField
-            label="Password"
+            label={lang === "en" ? "Password" : "Hasło"}
             style={{ margin: 8 }}
-            placeholder="Please type in your password here"
+            placeholder={lang === "en" ? "Please type in your password here" : "Proszę wpisz swoje hasło"}
             fullWidth
             margin="normal"
             InputLabelProps={{
@@ -76,7 +79,7 @@ const UserPanelAdd = () => {
         <TextField
             label="Email"
             style={{ margin: 8 }}
-            placeholder="Please type in your email here"
+            placeholder={lang === "en" ? "Please type in your email here" : "Proszę wpisz swój email"}
             fullWidth
             margin="normal"
             InputLabelProps={{
@@ -86,10 +89,10 @@ const UserPanelAdd = () => {
         />
 
         <Button variant="contained" color="primary" onClick={onUserSave}>
-            Save User
+            {lang === "en" ? "Save User" : "Zapisz Użytkownika"}
         </Button>
         </>
     )
 }
 
-export default UserPanelAdd;
+export default withRouter(UserPanelAdd);

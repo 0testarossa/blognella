@@ -32,6 +32,7 @@ const LoginForgetForm = (props) => {
     const [login, setLogin] = react_1.useState("");
     const [password, setPassword] = react_1.useState("");
     const [email, setEmail] = react_1.useState("");
+    const lang = localStorage.getItem("blognellaLang");
     const updateUserPassword = (user) => {
         const updatedSser = {
             _id: user._id,
@@ -58,20 +59,20 @@ const LoginForgetForm = (props) => {
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(LoginForm_styles_1.StyledLoginForm, null,
             react_1.default.createElement(LoginForm_styles_1.FormItem, null,
-                react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Email", style: { margin: 8 }, placeholder: "Please type in your email here", fullWidth: true, margin: "normal", InputLabelProps: {
+                react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Email", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your email here" : "Proszę wpisz swój email", fullWidth: true, margin: "normal", InputLabelProps: {
                         shrink: true,
                     }, onChange: (input) => setEmail(input.target.value) })),
             react_1.default.createElement(LoginForm_styles_1.FormItem, null,
-                react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Login", style: { margin: 8 }, placeholder: "Please type in your login here", fullWidth: true, margin: "normal", InputLabelProps: {
+                react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Login", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your login here" : "Proszę wpisz swój login", fullWidth: true, margin: "normal", InputLabelProps: {
                         shrink: true,
                     }, onChange: (input) => setLogin(input.target.value) })),
             react_1.default.createElement(LoginForm_styles_1.FormItem, null,
-                react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "New Password", style: { margin: 8 }, placeholder: "Please type in your new password here", fullWidth: true, margin: "normal", InputLabelProps: {
+                react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: lang === "en" ? "New Password" : "Nowe hasło", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your new password here" : "Proszę wpisz swoje nowe hasło", fullWidth: true, margin: "normal", InputLabelProps: {
                         shrink: true,
                     }, onChange: (input) => setPassword(input.target.value) })),
             react_1.default.createElement(LoginForm_styles_1.LogicControls, null,
                 react_1.default.createElement("div", null),
-                react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onSubmit }, "Update Password")))));
+                react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onSubmit }, lang === "en" ? "Update Password" : "Aktualizuj Hasło")))));
 };
 exports.default = react_router_dom_1.withRouter(LoginForgetForm);
 //# sourceMappingURL=LoginForgetForm.js.map

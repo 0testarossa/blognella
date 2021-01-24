@@ -6,6 +6,7 @@ import { deleteUser, getUsers, UserProps } from "../../APIRequests/User";
 
 const UsersPanel = () => {
     const [allUsers, setAllUsers] = useState([]);
+    const lang = localStorage.getItem("blognellaLang");
 
     const fetchAllUsers = () => {
         getUsers()
@@ -54,7 +55,7 @@ const UsersPanel = () => {
 
             <div>
 
-            <Link to={"/panel/users/add"}>Add User</Link>
+            <Link to={"/panel/users/add"}>{lang === "en" ? "Add User" : "Dodaj użytkownika"}</Link>
             </div>
         </>
     )
