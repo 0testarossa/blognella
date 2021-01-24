@@ -33,13 +33,6 @@ export default function BasicExample() {
       <Router>
           <Switch>
              <Route exact path="/"> <App page={MainViewPage} /> </Route>
-             {/* <Route
-              exact path='/'
-              render={(props) => (
-                <App page={MainViewPage} />
-              )}
-            /> */}
-
              <Route path="/register"><App page={RegisterPage} /></Route>
              <Route path="/login/forget"><App page={LoginForgetPage}/></Route>
              <Route path="/login"><App page={LoginPage}/></Route>

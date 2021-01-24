@@ -28,7 +28,6 @@ const ChaptersList = (props) => {
     const FilterAndSetMainPosts = (posts) => {
         const mainPosts = posts.filter((post) => post.content[0].title === "Main");
         const mainTitles = mainPosts.map((post) => post.title);
-        console.log(mainTitles);
         setMainPosts(mainTitles);
     };
     const fetchAllPosts = () => {

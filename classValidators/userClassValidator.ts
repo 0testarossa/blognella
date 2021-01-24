@@ -27,6 +27,7 @@ import { USER_ROLES } from './ValidationEnums';
     @IsNotEmpty()
     @IsString()
     @NotContains(' ')
+    @MinLength(2)
     login: string;
   
     @IsNotEmpty()
@@ -39,6 +40,9 @@ import { USER_ROLES } from './ValidationEnums';
     role: string;
   
     @IsEmail()
+    @NotContains(' ')
+    @IsString()
+    @IsNotEmpty()
     email: string;
   }
   

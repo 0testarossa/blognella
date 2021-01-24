@@ -37,8 +37,10 @@ const DefaultViewAbout = () => {
         })
             .catch((err) => console.log(err));
     };
-    if (aboutPost.length === 0)
-        fetchAllPosts();
+    react_1.useEffect(() => {
+        if (aboutPost.length === 0)
+            fetchAllPosts();
+    }, []);
     return (react_1.default.createElement(DefaultView_styles_1.AboutSection, null, aboutPost.length > 0 ? react_1.default.createElement(PostAboutComponent_1.default, { post: aboutPost[0] }) : react_1.default.createElement("div", null, lang === "en" ? "There is no About post" : "Brak wpisu o mnie")));
 };
 exports.default = DefaultViewAbout;

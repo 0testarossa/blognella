@@ -43,7 +43,11 @@ const MainView = () => {
     react_1.useEffect(() => {
         fetchNewestPost();
     }, []);
-    return (react_1.default.createElement(react_1.default.Fragment, null, newestPost ? react_1.default.createElement(PostComponent_1.default, { post: newestPost, postChapters: [] }) : react_1.default.createElement(react_1.default.Fragment, null)));
+    const shouldShowPost = () => {
+        const customNewPost = newestPost || { content: [] };
+        return customNewPost.content && customNewPost.content.length > 0;
+    };
+    return (react_1.default.createElement(react_1.default.Fragment, null, shouldShowPost() ? react_1.default.createElement(PostComponent_1.default, { post: newestPost, postChapters: [] }) : react_1.default.createElement(react_1.default.Fragment, null)));
 };
 exports.default = MainView;
 //# sourceMappingURL=MainView.js.map

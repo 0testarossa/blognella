@@ -27,7 +27,7 @@ const react_1 = __importStar(require("react"));
 const Delete_1 = __importDefault(require("@material-ui/icons/Delete"));
 const react_router_dom_1 = require("react-router-dom");
 const Post_1 = require("../../APIRequests/Post");
-const PostsPanelList = () => {
+const PostsPanelList = (props) => {
     const [allPosts, setAllPosts] = react_1.useState([]);
     const lang = localStorage.getItem("blognellaLang");
     const fetchAllPosts = () => {
@@ -37,7 +37,7 @@ const PostsPanelList = () => {
     };
     react_1.useEffect(() => {
         fetchAllPosts();
-    }, []);
+    }, [props]);
     const onPostDelete = (post) => {
         Post_1.deletePost(post._id || "")
             .then(({ status }) => {
@@ -66,5 +66,5 @@ const PostsPanelList = () => {
         react_1.default.createElement(core_1.List, null, getListItems()),
         react_1.default.createElement(react_router_dom_1.Link, { to: "/panel/posts/add" }, lang === "en" ? "Add Post" : "Dodaj Wpis")));
 };
-exports.default = PostsPanelList;
+exports.default = react_router_dom_1.withRouter(PostsPanelList);
 //# sourceMappingURL=PostsPanelList.js.map

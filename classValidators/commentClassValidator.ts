@@ -1,4 +1,5 @@
 import {
+    IsDateString,
     IsNotEmpty,
       IsString,
     } from 'class-validator';
@@ -9,12 +10,9 @@ import {
         this.text = comment.text;
         this.user = comment.user;
       }
-    //   @IsAlphanumeric()
-      @IsNotEmpty()
-      @IsString()
+      @IsDateString()
       date: string;
 
-    //   @IsAlphanumeric()
       @IsNotEmpty()
       @IsString()
       text: string[];

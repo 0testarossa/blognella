@@ -42,7 +42,7 @@ const useStyles = makeStyles(() => ({
 const PostsPanel = (props) => {
     const classes = useStyles();
     const theme = useTheme();
-    const [data, setData] = useState('<p>React is really <em>nice</em>!</p>');
+    const [data, setData] = useState('<p>...</p>');
     const [title, setTitle] = useState("");
     const [tags, setTags] = useState([]);
     const [contentId, setContentId] = useState(undefined)

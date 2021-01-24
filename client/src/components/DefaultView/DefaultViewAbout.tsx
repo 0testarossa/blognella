@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getPosts, PostProps } from "../../APIRequests/Post";
 import PostAboutComponent from "../PostComponent/PostAboutComponent";
 import { AboutSection } from "./DefaultView.styles";
@@ -17,7 +17,9 @@ const DefaultViewAbout = () => {
         .catch((err: Error) => console.log(err))
     }
 
-    if(aboutPost.length === 0) fetchAllPosts();
+    useEffect(() => {
+        if(aboutPost.length === 0) fetchAllPosts();
+    }, [])
 
     return (
         <AboutSection>

@@ -19,7 +19,7 @@ const userSchema = new mongoose_1.Schema({
         unique: true
     },
     password: {
-        type: String,
+        type: Object,
         required: true
     },
     role: {

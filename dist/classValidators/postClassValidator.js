@@ -19,9 +19,11 @@ class PostValidator {
     }
 }
 __decorate([
-    class_validator_1.IsNotEmpty(),
-    class_validator_1.IsString()
+    class_validator_1.IsDateString()
 ], PostValidator.prototype, "date", void 0);
+__decorate([
+    class_validator_1.IsArray()
+], PostValidator.prototype, "tags", void 0);
 __decorate([
     class_validator_1.IsNotEmpty(),
     class_validator_1.IsString()

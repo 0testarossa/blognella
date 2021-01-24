@@ -9,7 +9,6 @@ const ChaptersList = (props) => {
     const FilterAndSetMainPosts = (posts:PostProps[]) => {
         const mainPosts = posts.filter((post:PostProps) => post.content[0].title === "Main");
         const mainTitles = mainPosts.map((post) => post.title)
-        console.log(mainTitles);
         setMainPosts(mainTitles);
     }
 

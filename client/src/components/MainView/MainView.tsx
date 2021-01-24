@@ -22,9 +22,14 @@ const MainView = () => {
         fetchNewestPost()
     }, [])
 
+    const shouldShowPost = () => {
+        const customNewPost = newestPost || {content: []};
+        return customNewPost.content && customNewPost.content.length > 0;
+    }
+
     return (
         <>
-            {newestPost ? <PostComponent post={newestPost} postChapters={[]}/> : <></>}
+            {shouldShowPost() ? <PostComponent post={newestPost} postChapters={[]}/> : <></>}
         </>
     )
 }

@@ -61,7 +61,7 @@ function getStyles(name, personName, theme) {
 const PostsPanel = (props) => {
     const classes = useStyles();
     const theme = core_1.useTheme();
-    const [data, setData] = react_1.useState('<p>React is really <em>nice</em>!</p>');
+    const [data, setData] = react_1.useState('<p>...</p>');
     const [title, setTitle] = react_1.useState("");
     const [tags, setTags] = react_1.useState([]);
     const [contentId, setContentId] = react_1.useState(undefined);

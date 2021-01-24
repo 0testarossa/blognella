@@ -1,13 +1,25 @@
 import User from '../models/user';
+import Comment from '../models/comment';
 import UserValidator from '../classValidators/userClassValidator';
 import { validateOrRejectExample } from '../classValidators/validation';
+import { decrypt, encrypt } from '../crypto/crypto';
 
 // const User = require('../models/user');
 
 const getUsers = async (req, res) => {
     try {
         const users = await User.find()
-        res.status(200).json({ users })
+        const decryptedUsers = users.map((user) => {
+            return {
+                _id: user.id,
+                nick: user.nick,
+                login: user.login,
+                password: decrypt(user.password),
+                role: user.role,
+                email: user.email
+            }
+        })
+        res.status(200).json({users: decryptedUsers })
     } catch (error) {
         console.log("myerror");
         console.log(error);
@@ -25,7 +37,16 @@ const getUser = async (req, res) => {
             res.status(404).json("Id doesn't exist");
             return;
         }
-        res.status(200).json({ user })
+        const decryptedUser = {
+                _id: user.id,
+                nick: user.nick,
+                login: user.login,
+                password: decrypt(user.password),
+                role: user.role,
+                email: user.email
+            }
+
+        res.status(200).json({user: decryptedUser })
     } catch (error) {
         console.log("myerror");
         console.log(error);
@@ -48,8 +69,16 @@ const addUser = async (req, res) => {
         const userValidator = new UserValidator(user);
         await validateOrRejectExample(userValidator);
 
-        const newUser = await user.save()
-        const allUsers = await User.find()
+        const encryptedUser = new User({
+            nick: body.nick,
+            login: body.login,
+            password: encrypt(body.password),
+            role: body.role,
+            email: body.email
+        }) 
+
+        const newUser = await encryptedUser.save()
+        // const allUsers = await User.find()
 
         // res.status(201).json({ message: 'User added', user: newUser, users: allUsers })
         res.status(201).json({ user: newUser })
@@ -78,7 +107,7 @@ const updateUser = async (req, res) => {
 
         const updateUser = await User.findByIdAndUpdate(
             { _id: id },
-            body
+            {...body, password: encrypt(body.password)}
         )
         //const allUsers = await User.find()
 
@@ -103,6 +132,14 @@ const deleteUser = async (req, res) => {
             res.status(404).json("Id doesn't exist");
             return;
         }
+        const comments = await Comment.find();
+            comments.map(async (comment) => {
+                if(comment.user === user.nick) {
+                    const deletedComment = await Comment.findByIdAndRemove(
+                        comment._id
+                    )
+                }        
+            })
 
         const deletedUser = await User.findByIdAndRemove(
             // req.params.id

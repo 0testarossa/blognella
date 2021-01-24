@@ -20,8 +20,12 @@ const PostComponent = (props) => {
     // const actualDate = new Date().toDateString()
     // console.log(customoldData > customnewData); //true
     // console.log(customoldData > actualDate)
-    const date = new Date(props.post.date).toDateString();
+    // const date = new Date(props.post.date).toDateString();
     const lang = localStorage.getItem("blognellaLang");
+    const options = { weekday: 'long', year: "numeric", month: "long", day: "numeric", };
+    const date = new Date(props.post.date).toLocaleDateString(lang === "en" ? "en-GB" : "pl-GB", options);
+    // console.log(new Date(props.post.date).toLocaleDateString('en-GB', options));
+    // console.log(new Date(props.post.date).toLocaleDateString('pl-GB', options));
     const getTags = () => {
         return props.post.tags.map((tag) => react_1.default.createElement("span", { key: tag }, tag));
     };

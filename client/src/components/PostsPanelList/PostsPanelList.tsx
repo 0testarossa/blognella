@@ -1,10 +1,10 @@
 import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from "@material-ui/core";
 import React, {useState, useEffect} from "react";
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { deletePost, getPosts, PostProps } from "../../APIRequests/Post";
 
-const PostsPanelList = () => {
+const PostsPanelList = (props) => {
     const [allPosts, setAllPosts] = useState([]);
     const lang = localStorage.getItem("blognellaLang");
 
@@ -16,7 +16,7 @@ const PostsPanelList = () => {
 
     useEffect(() => {
         fetchAllPosts()
-    }, [])
+    }, [props])
 
       const onPostDelete = (post:PostProps) => {
         deletePost(post._id || "")
@@ -65,4 +65,4 @@ const PostsPanelList = () => {
     )
 }
 
-export default PostsPanelList;
+export default withRouter(PostsPanelList);
