@@ -8,10 +8,10 @@ export const StyledSearch = styled.div`
         color: #dfdfdf;
     }
     button{
-        height: 30%;
+        height: 30px;
+        margin-top: 25px;
     }
     
     display: flex;
     flex-direction: row;
-    align-items: center;
 `

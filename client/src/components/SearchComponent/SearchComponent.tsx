@@ -21,7 +21,7 @@ const SearchComponent = (props) => {
                     id="standard-full-width"
                     label={lang === "en" ? "Search" : "Wyszukaj"}
                     style={{ margin: 8 }}
-                    placeholder={lang === "en" ? "Please type in tag or title here" : "Proszę wpisz etykietę lub tytuł"}
+                    placeholder={lang === "en" ? "Type in tag or title here" : "Wpisz etykietę lub tytuł"}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{

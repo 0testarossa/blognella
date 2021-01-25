@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { createComment } from "../../APIRequests/Comment";
 import { updatePost } from "../../APIRequests/Post";
 import { getUser, UserProps } from "../../APIRequests/User";
-import { StyledComponentTetField } from "./PostComment.styles";
+import { StyledComponentTextField } from "./PostComment.styles";
 import PostCommentComponent from "./PostCommentComponent";
 
 const PostCommentList = (props) => {
@@ -95,7 +95,7 @@ const PostCommentList = (props) => {
     <>
     {props.post.comment.length < 1 ? <div>{lang === "en" ? "No comments" : "Brak komentarzy"}</div> : getComments()}
     
-    <StyledComponentTetField>
+    <StyledComponentTextField>
         <TextField
                         id="standard-full-width"
                         label={lang === "en" ? "Add Comment" : "Dodaj komentarz"}
@@ -112,7 +112,7 @@ const PostCommentList = (props) => {
         <Button variant="contained" color="primary" onClick={onNewCommentSave}>
             {lang === "en" ? "Add Comment" : "Dodaj Komentarz"}
         </Button>
-    </StyledComponentTetField>
+    </StyledComponentTextField>
     </>
     )
 }

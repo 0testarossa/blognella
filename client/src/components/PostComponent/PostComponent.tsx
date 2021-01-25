@@ -2,7 +2,7 @@ import React from "react";
 import PostCommentList from "./PostCommentList";
 import PostLinkComponent from "./PostLinkComponent";
 import {StyledDate, StyledText, StyledTitle, StyledChapters,
-    StyledTags, StyledTagsLabel, StyledAuthor} from "./PostComponent.styles";
+    StyledTags, StyledTagsLabel, StyledAuthor, StyledChaptersContainer, StyledBottomPageContainer, StyledAuthorContainer} from "./PostComponent.styles";
 // import DatePicker from 'react-date-picker';
 
 const PostComponent = (props) => {
@@ -30,7 +30,7 @@ const PostComponent = (props) => {
     // console.log(new Date(props.post.date).toLocaleDateString('pl-GB', options));
 
     const getTags = () => {
-        return props.post.tags.map((tag) => <span key={tag}>{tag}</span>)
+        return props.post.tags.map((tag) => <span key={tag} style={{marginRight: "1.2rem"}}>{tag}</span>)
     }
 
     const getPostChapters = () => {
@@ -47,17 +47,25 @@ const PostComponent = (props) => {
             <StyledDate>{date}</StyledDate>
             <StyledTitle>{props.post.title}</StyledTitle>
             <StyledText dangerouslySetInnerHTML={{ __html: props.post.content[0].text }} />
+            
+            <StyledChaptersContainer>
+                {props.postChapters.length > 0 ? <StyledChapters>{lang === "en" ? "Chapters" : "Rozdziały"}</StyledChapters> : <></>}
+                {getPostChapters()}
+            </StyledChaptersContainer>
 
-            <StyledChapters>{lang === "en" ? "Chapters" : "Rozdziały"}</StyledChapters>
-            {getPostChapters()}
-
-            <StyledTags>
-                <StyledTagsLabel>{lang === "en" ? "Tags: " : "Etykiety: "}</StyledTagsLabel>
-                {getTags()}
-            </StyledTags>
-            <StyledAuthor>{lang === "en" ? "Added by " : "Dodane przez "}{props.post.user}</StyledAuthor>
-            <PostCommentList post={props.post}/>
-            </>
+            <StyledBottomPageContainer>
+                <StyledTags>
+                    <StyledTagsLabel>{lang === "en" ? "Tags: " : "Etykiety: "}</StyledTagsLabel>
+                    {getTags()}
+                </StyledTags>
+            </StyledBottomPageContainer>
+                <StyledAuthorContainer>{lang === "en" ? "Added by " : "Dodane przez "}<StyledAuthor>{props.post.user}</StyledAuthor></StyledAuthorContainer>
+            <StyledBottomPageContainer>
+                <PostCommentList post={props.post}/>
+            </StyledBottomPageContainer>
+                
+            
+        </>
         
     )
 }

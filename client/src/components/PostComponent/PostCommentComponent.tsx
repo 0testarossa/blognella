@@ -3,7 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { deleteComment, updateComment } from "../../APIRequests/Comment";
-import { StyledComponentTetField } from "./PostComment.styles";
+import { StyledComponentTextField, StyledCommentAuthor, StyledCommentButton} from "./PostComment.styles";
 
 const PostCommentComponent = (props) => {
     const [isEditingMode, setIsEditingMode] = useState(false);
@@ -49,11 +49,11 @@ const PostCommentComponent = (props) => {
     return (
         <>
             <div>
-                {props.comment.user} {new Date(props.comment.date).toDateString()}
-                {canEdit ? <><span onClick={onEdit}>Edit</span><span onClick={onDelete}>Delete</span></> : <></>}
+                <StyledCommentAuthor>{props.comment.user} </StyledCommentAuthor> {new Date(props.comment.date).toDateString()}
+                {canEdit ? <><StyledCommentButton onClick={onEdit}>Edit</StyledCommentButton><StyledCommentButton onClick={onDelete}>Delete</StyledCommentButton></> : <></>}
             </div>
             {/* <div>{props.comment.text}</div> */}
-            <StyledComponentTetField>
+            <StyledComponentTextField>
                 <TextField
                         id="standard-full-width"
                         label=""
@@ -74,7 +74,7 @@ const PostCommentComponent = (props) => {
                 <Button variant="contained" color="primary" onClick={onSaveEditedComment}>
                     {lang === "en" ? "Save Comment" : "Zapisz Komentarz"}
                 </Button> : <></>}
-            </StyledComponentTetField>
+            </StyledComponentTextField>
         </>
     )
 }
