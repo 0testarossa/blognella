@@ -25,6 +25,16 @@ const Post_1 = require("../../APIRequests/Post");
 const ChaptersList = (props) => {
     const [mainPosts, setMainPosts] = react_1.useState([]);
     const [postTitle, setPostTitle] = react_1.useState("");
+    const FilterAndSetMainPosts = (posts) => {
+        const mainPosts = posts.filter((post) => post.content[0].title === "Main");
+        const mainTitles = mainPosts.map((post) => post.title);
+        setMainPosts(mainTitles);
+    };
+    const fetchAllPosts = () => {
+        Post_1.getPosts()
+            .then(({ data: { posts } }) => FilterAndSetMainPosts(posts))
+            .catch((err) => console.log(err));
+    };
     react_1.useEffect(() => {
         fetchAllPosts();
     }, []);
@@ -33,17 +43,6 @@ const ChaptersList = (props) => {
             setPostTitle(props.storyTitle);
         }
     }, [props.storyTitle]);
-    const fetchAllPosts = () => {
-        Post_1.getPosts()
-            .then(({ data: { posts } }) => FilterAndSetMainPosts(posts))
-            .catch((err) => console.log(err));
-    };
-    const FilterAndSetMainPosts = (posts) => {
-        const mainPosts = posts.filter((post) => post.content[0].title === "Main");
-        const mainTitles = mainPosts.map((post) => post.title);
-        console.log(mainTitles);
-        setMainPosts(mainTitles);
-    };
     const handlePostTitle = (event) => {
         setPostTitle(event.target.value);
         props.setPostTitle(event.target.value);

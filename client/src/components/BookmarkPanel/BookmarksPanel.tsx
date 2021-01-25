@@ -2,10 +2,11 @@ import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } fro
 import React, {useState, useEffect} from "react";
 import DeleteIcon from '@material-ui/icons/Delete';
 import { BookmarkProps, deleteBookmark, getBookmarks } from "../../APIRequests/Bookmark";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
-const BookmarksPanel = () => {
+const BookmarksPanel = (props) => {
     const [allBookmarks, setAllBookmarks] = useState([]);
+    const lang = localStorage.getItem("blognellaLang");
 
     const fetchAllBookmarks = () => {
         getBookmarks()
@@ -15,7 +16,7 @@ const BookmarksPanel = () => {
 
     useEffect(() => {
         fetchAllBookmarks()
-    }, [])
+    }, [props])
 
       const onBookmarkDelete = (bookmark:BookmarkProps) => {
         deleteBookmark(bookmark._id || "")
@@ -56,10 +57,10 @@ const BookmarksPanel = () => {
 
             <div>
 
-            <Link to={"/panel/bookmarks/add"}>Add Bookmark</Link>
+            <Link to={"/panel/bookmarks/add"}>{lang === "en" ? "Add Bookmark" : "Dodaj Zakładkę"}</Link>
             </div>
         </>
     )
 }
 
-export default BookmarksPanel;
+export default withRouter(BookmarksPanel);

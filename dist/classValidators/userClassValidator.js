@@ -28,7 +28,8 @@ __decorate([
     class_validator_1.IsAlphanumeric(),
     class_validator_1.IsNotEmpty(),
     class_validator_1.IsString(),
-    class_validator_1.NotContains(' ')
+    class_validator_1.NotContains(' '),
+    class_validator_1.MinLength(2)
 ], UserValidator.prototype, "login", void 0);
 __decorate([
     class_validator_1.IsNotEmpty(),
@@ -40,7 +41,10 @@ __decorate([
     class_validator_1.IsEnum(ValidationEnums_1.USER_ROLES)
 ], UserValidator.prototype, "role", void 0);
 __decorate([
-    class_validator_1.IsEmail()
+    class_validator_1.IsEmail(),
+    class_validator_1.NotContains(' '),
+    class_validator_1.IsString(),
+    class_validator_1.IsNotEmpty()
 ], UserValidator.prototype, "email", void 0);
 exports.UserValidator = UserValidator;
 exports.default = UserValidator;

@@ -27,8 +27,9 @@ const react_1 = __importStar(require("react"));
 const Delete_1 = __importDefault(require("@material-ui/icons/Delete"));
 const Bookmark_1 = require("../../APIRequests/Bookmark");
 const react_router_dom_1 = require("react-router-dom");
-const BookmarksPanel = () => {
+const BookmarksPanel = (props) => {
     const [allBookmarks, setAllBookmarks] = react_1.useState([]);
+    const lang = localStorage.getItem("blognellaLang");
     const fetchAllBookmarks = () => {
         Bookmark_1.getBookmarks()
             .then(({ data: { bookmarks } }) => setAllBookmarks(bookmarks))
@@ -36,7 +37,7 @@ const BookmarksPanel = () => {
     };
     react_1.useEffect(() => {
         fetchAllBookmarks();
-    }, []);
+    }, [props]);
     const onBookmarkDelete = (bookmark) => {
         Bookmark_1.deleteBookmark(bookmark._id || "")
             .then(({ status }) => {
@@ -63,7 +64,7 @@ const BookmarksPanel = () => {
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(core_1.List, null, getListItems()),
         react_1.default.createElement("div", null,
-            react_1.default.createElement(react_router_dom_1.Link, { to: "/panel/bookmarks/add" }, "Add Bookmark"))));
+            react_1.default.createElement(react_router_dom_1.Link, { to: "/panel/bookmarks/add" }, lang === "en" ? "Add Bookmark" : "Dodaj Zakładkę"))));
 };
-exports.default = BookmarksPanel;
+exports.default = react_router_dom_1.withRouter(BookmarksPanel);
 //# sourceMappingURL=BookmarksPanel.js.map

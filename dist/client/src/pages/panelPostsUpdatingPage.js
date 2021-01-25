@@ -31,6 +31,7 @@ const PanelPostsUpdatingPage = (props) => {
     const [postType, setPostType] = react_1.useState("");
     const [storyTitle, setStoryTitle] = react_1.useState("");
     const [editedPost, setEditedPost] = react_1.useState();
+    const lang = localStorage.getItem("blognellaLang");
     const fetchEditedPost = () => {
         Post_1.getPost(props.match.params.id)
             .then(({ data: { post } }) => {
@@ -47,8 +48,7 @@ const PanelPostsUpdatingPage = (props) => {
     }, []);
     const contentTitle = postType === "Main" || postType === "About" ? postType : storyTitle;
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement("div", null, "UPDATE PAGE"),
-        react_1.default.createElement("div", null, postType === "Main" ? "STORY" : postType === "About" ? "ABOUT" : "CHAPTER"),
+        react_1.default.createElement("div", null, postType === "Main" ? (lang === "en" ? "STORY" : "WPIS") : postType === "About" ? (lang === "en" ? "ABOUT" : "O MNIE") : (lang === "en" ? "CHAPTER" : "ROZDZIAŁ")),
         postType === "Chapter" ? react_1.default.createElement(ChaptersList_1.default, { storyTitle: storyTitle, setPostTitle: setStoryTitle }) : react_1.default.createElement(react_1.default.Fragment, null),
         (postType === "Main" || postType === "About" || storyTitle) && editedPost ?
             react_1.default.createElement(UpdatePostsPanel_1.default, { contentTitle: contentTitle, post: editedPost }) : react_1.default.createElement(react_1.default.Fragment, null)));

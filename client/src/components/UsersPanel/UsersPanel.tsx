@@ -1,11 +1,24 @@
 import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from "@material-ui/core";
 import React, {useState, useEffect} from "react";
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { deleteUser, getUsers, UserProps } from "../../APIRequests/User";
 
-const UsersPanel = () => {
+const UsersPanel = (props) => {
     const [allUsers, setAllUsers] = useState([]);
+    const lang = localStorage.getItem("blognellaLang");
+    const [actualAdminNick, setActualAdminNick] = useState("");
+    
+    
+    const getBlognellaUser = () => {
+        if(allUsers.length > 0) {
+            const blognellaUser = localStorage.getItem("blognellaId");
+            const actualAdmin:any = allUsers.find((user:any) => user._id === blognellaUser);
+            if(actualAdmin) {
+                setActualAdminNick(actualAdmin.nick || "");
+            }
+        }
+    }
 
     const fetchAllUsers = () => {
         getUsers()
@@ -14,8 +27,12 @@ const UsersPanel = () => {
     }
 
     useEffect(() => {
+        getBlognellaUser()
+    }, [allUsers])
+
+    useEffect(() => {
         fetchAllUsers()
-    }, [])
+    }, [props])
 
       const onUserDelete = (user:UserProps) => {
         deleteUser(user._id || "")
@@ -38,9 +55,11 @@ const UsersPanel = () => {
             }}> {user.nick} </Link> }
           />
           <ListItemSecondaryAction>
+            {user.nick !== actualAdminNick ? 
             <IconButton edge="end" aria-label="delete" onClick={() => onUserDelete(user)}>
               <DeleteIcon/>
             </IconButton>
+            : <div/>}
           </ListItemSecondaryAction>
         </ListItem>
         );
@@ -54,10 +73,10 @@ const UsersPanel = () => {
 
             <div>
 
-            <Link to={"/panel/users/add"}>Add User</Link>
+            <Link to={"/panel/users/add"}>{lang === "en" ? "Add User" : "Dodaj użytkownika"}</Link>
             </div>
         </>
     )
 }
 
-export default UsersPanel;
+export default withRouter(UsersPanel);

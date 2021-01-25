@@ -31,6 +31,7 @@ const User_1 = require("../../APIRequests/User");
 const LoginForm = (props) => {
     const [login, setLogin] = react_1.useState("");
     const [password, setPassword] = react_1.useState("");
+    const lang = localStorage.getItem("blognellaLang");
     const onSubmit = () => {
         User_1.getUsers()
             .then(({ data: { users } }) => {
@@ -45,16 +46,18 @@ const LoginForm = (props) => {
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(LoginForm_styles_1.StyledLoginForm, null,
             react_1.default.createElement(LoginForm_styles_1.FormItem, null,
-                react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Login", style: { margin: 8 }, placeholder: "Please type in your login here", fullWidth: true, margin: "normal", InputLabelProps: {
+                react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Login", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your login here" : "Proszę wpisz swój login", fullWidth: true, margin: "normal", InputLabelProps: {
                         shrink: true,
                     }, onChange: (input) => setLogin(input.target.value) })),
             react_1.default.createElement(LoginForm_styles_1.FormItem, null,
-                react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Password", style: { margin: 8 }, placeholder: "Please type in your password here", fullWidth: true, margin: "normal", InputLabelProps: {
+                react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: lang === "en" ? "Password" : "Hasło", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your password here" : "Proszę wpisz swoje hasło", fullWidth: true, margin: "normal", InputLabelProps: {
                         shrink: true,
                     }, onChange: (input) => setPassword(input.target.value) })),
             react_1.default.createElement(LoginForm_styles_1.LogicControls, null,
-                react_1.default.createElement("div", null, "Zapomniales hasla?"),
-                react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onSubmit }, "Login")))));
+                react_1.default.createElement("div", null,
+                    lang === "en" ? "Forgot password? Click " : "Zapomniałes hasła? Kliknij ",
+                    react_1.default.createElement(react_router_dom_1.Link, { to: "/login/forget" }, lang === "en" ? "here" : "tutaj")),
+                react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onSubmit }, lang === "en" ? "Login" : "Zaloguj")))));
 };
 exports.default = react_router_dom_1.withRouter(LoginForm);
 //# sourceMappingURL=LoginForm.js.map

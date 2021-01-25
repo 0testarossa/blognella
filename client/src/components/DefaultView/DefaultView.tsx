@@ -3,7 +3,7 @@ import { LinksContainer, Logo, LogoContainer } from "./DefaultView.styles";
 import DefaultViewLinks from "./DefaultViewLinks";
 // import { LinksContainer, Logo, LogoContainer } from "./DefaultView.styles";
 
-const DefaultView = () => {
+const DefaultView = (props) => {
     return (
         <>
         <LogoContainer>
@@ -15,7 +15,7 @@ const DefaultView = () => {
                     </div>
             </LinksContainer>
         </LogoContainer>
-        <DefaultViewLinks/>
+        <DefaultViewLinks {...props}/>
         </>
     )
 }

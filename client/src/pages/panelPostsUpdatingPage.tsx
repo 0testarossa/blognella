@@ -8,6 +8,7 @@ const PanelPostsUpdatingPage = (props) => {
     const [postType, setPostType] = useState("");
     const [storyTitle, setStoryTitle] = useState("");
     const [editedPost, setEditedPost] = useState<PostProps>();
+    const lang = localStorage.getItem("blognellaLang");
 
     const fetchEditedPost = () => {
         getPost(props.match.params.id)
@@ -29,7 +30,7 @@ const PanelPostsUpdatingPage = (props) => {
 
     return (
         <>
-        <div>UPDATE PAGE</div>
+        {/* <div>UPDATE PAGE</div> */}
          {/* <Select
           value={postType}
           onChange={handlePostType}
@@ -38,7 +39,7 @@ const PanelPostsUpdatingPage = (props) => {
           <MenuItem value="Chapter">Chapter</MenuItem>
           <MenuItem value="About">About</MenuItem>
         </Select> */}
-        <div>{postType === "Main" ? "STORY" : postType === "About" ? "ABOUT" : "CHAPTER"}</div>
+        <div>{postType === "Main" ? (lang === "en" ? "STORY" : "WPIS") : postType === "About" ? (lang === "en" ? "ABOUT" : "O MNIE") : (lang === "en" ? "CHAPTER" : "ROZDZIAŁ")}</div>
         {postType === "Chapter" ? <ChaptersList storyTitle={storyTitle} setPostTitle={setStoryTitle}/> : <></>}
 
         {(postType === "Main" || postType === "About" || storyTitle) && editedPost ? 

@@ -11,7 +11,6 @@ const App_1 = __importDefault(require("./App"));
 const loginPage_1 = __importDefault(require("./pages/loginPage"));
 const mainViewPage_1 = __importDefault(require("./pages/mainViewPage"));
 const registerPage_1 = __importDefault(require("./pages/registerPage"));
-const testPage_1 = __importDefault(require("./pages/testPage"));
 const panelTagsPage_1 = __importDefault(require("./pages/panelTagsPage"));
 const panelPostsAddingPage_1 = __importDefault(require("./pages/panelPostsAddingPage"));
 const panelPostsPage_1 = __importDefault(require("./pages/panelPostsPage"));
@@ -22,6 +21,9 @@ const panelBookmarkUpdatingPage_1 = __importDefault(require("./pages/panelBookma
 const panelUsersPage_1 = __importDefault(require("./pages/panelUsersPage"));
 const panelUsersAddingPage_1 = __importDefault(require("./pages/panelUsersAddingPage"));
 const panelUsersUpdatingPage_1 = __importDefault(require("./pages/panelUsersUpdatingPage"));
+const postPage_1 = __importDefault(require("./pages/postPage"));
+const loginForgetPage_1 = __importDefault(require("./pages/loginForgetPage"));
+const searchPage_1 = __importDefault(require("./pages/searchPage"));
 // export default <Router history={hashHistory}>
 //   <Route path="/" component={App}>
 //     <IndexRoute component={AppSplash}/>
@@ -37,10 +39,14 @@ function BasicExample() {
                 " "),
             react_1.default.createElement(react_router_dom_1.Route, { path: "/register" },
                 react_1.default.createElement(App_1.default, { page: registerPage_1.default })),
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/login/forget" },
+                react_1.default.createElement(App_1.default, { page: loginForgetPage_1.default })),
             react_1.default.createElement(react_router_dom_1.Route, { path: "/login" },
                 react_1.default.createElement(App_1.default, { page: loginPage_1.default })),
-            react_1.default.createElement(react_router_dom_1.Route, { path: "/test" },
-                react_1.default.createElement(App_1.default, { page: testPage_1.default })),
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/search" },
+                react_1.default.createElement(App_1.default, { page: searchPage_1.default })),
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/post/:id" },
+                react_1.default.createElement(App_1.default, { page: postPage_1.default })),
             react_1.default.createElement(react_router_dom_1.Route, { path: "/panel/tags" },
                 react_1.default.createElement(App_1.default, { page: panelTagsPage_1.default })),
             react_1.default.createElement(react_router_dom_1.Route, { path: "/panel/posts/add" },

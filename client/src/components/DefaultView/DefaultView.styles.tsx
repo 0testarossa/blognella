@@ -37,10 +37,42 @@ export const LinkElement = styled.div`
     }
 `;
 
+export const LinkLoginElement = styled.div`
+    color: #ffffff;
+    padding: 1rem;
+    float: left;
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
+    border-left: 1px solid #404040;
+    border-right: 0 solid #404040;
+    height: fit-content;
+
+    &:hover{
+        color: #ffffff;
+        background-color: #000000;
+        text-decoration: none;
+    }
+
+    &>a:hover{
+        color: #ffffff;
+    }
+`;
+
+export const SearchElement = styled.div`
+    color: #ffffff;
+    padding: 1rem;
+    float: left;
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
+    border-left: 1px solid #404040;
+    border-right: 0 solid #404040;
+`;
+
 export const LoginRegisterContainer = styled.div`
     display:flex;
     justify-content: flex-end;
     background: #333333;
+    align-items: flex-end;
 `;
 
 export const MainViewTabsContainer = styled.div`
@@ -76,4 +108,10 @@ export const MainContentContainer = styled.div`
     justify-content: space-between;
     flex-grow: 1;
     padding-top: 1rem;
+`;
+
+export const StyledAdminPanelContainer = styled.div`
+    display:flex;
+    height: 100%;
+    /* flex-direction: column; */
 `;

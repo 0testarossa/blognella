@@ -21,12 +21,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@material-ui/core");
 const react_1 = __importStar(require("react"));
+const react_router_dom_1 = require("react-router-dom");
 const Bookmark_1 = require("../../APIRequests/Bookmark");
 const Post_1 = require("../../APIRequests/Post");
 const BookmarkPanelUpdate = (props) => {
-    const [postId, setPostId] = react_1.useState(props.bookmark.post[0]._id || "");
+    const [postId, setPostId] = react_1.useState(props.bookmark.post.length > 0 ? props.bookmark.post[0]._id : "");
     const [allPosts, setAllPosts] = react_1.useState([]);
     const [bookmarkTitle, setBookmarkTitle] = react_1.useState(props.bookmark.title || "");
+    const lang = localStorage.getItem("blognellaLang");
     const fetchAllPosts = () => {
         Post_1.getPosts()
             .then(({ data: { posts } }) => {
@@ -53,6 +55,7 @@ const BookmarkPanelUpdate = (props) => {
                 throw new Error('Error! Bookmark not saved');
             }
         });
+        props.history.push("/panel/bookmarks");
     };
     const getPostsTitles = () => {
         return allPosts.map((post) => react_1.default.createElement(core_1.MenuItem, { key: post._id, value: post._id }, post.title));
@@ -60,10 +63,10 @@ const BookmarkPanelUpdate = (props) => {
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(core_1.Select, { value: postId, onChange: handlePostId }, getPostsTitles()),
         react_1.default.createElement("div", null),
-        react_1.default.createElement(core_1.TextField, { label: "Bookmark title", style: { margin: 8 }, placeholder: "Please type in your bookmark title here", fullWidth: true, margin: "normal", InputLabelProps: {
+        react_1.default.createElement(core_1.TextField, { label: lang === "en" ? "Bookmark title" : "Tytuł zakladki", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your bookmark title here" : "Proszę wpisz tytuł zakładki", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
             }, defaultValue: bookmarkTitle, onChange: (input) => setBookmarkTitle(input.target.value) }),
-        react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onBookmarkSave }, "Save Bookmark")));
+        react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onBookmarkSave }, lang === "en" ? "Save Bookmark" : "Zapisz Zakładkę")));
 };
-exports.default = BookmarkPanelUpdate;
+exports.default = react_router_dom_1.withRouter(BookmarkPanelUpdate);
 //# sourceMappingURL=BookmarkPanelUpdate.js.map

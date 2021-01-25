@@ -40,7 +40,8 @@ const createBookmark = (bookmark) => __awaiter(void 0, void 0, void 0, function*
         return savedBookmark;
     }
     catch (error) {
-        throw new Error(error);
+        //   throw new Error(error)
+        return { data: [], status: 403 };
     }
 });
 exports.createBookmark = createBookmark;
@@ -50,7 +51,8 @@ const updateBookmark = (bookmark) => __awaiter(void 0, void 0, void 0, function*
         return updatedBookmark;
     }
     catch (error) {
-        throw new Error(error);
+        //   throw new Error(error)
+        return { data: [], status: 403 };
     }
 });
 exports.updateBookmark = updateBookmark;

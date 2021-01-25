@@ -27,16 +27,30 @@ const react_1 = __importStar(require("react"));
 const Delete_1 = __importDefault(require("@material-ui/icons/Delete"));
 const react_router_dom_1 = require("react-router-dom");
 const User_1 = require("../../APIRequests/User");
-const UsersPanel = () => {
+const UsersPanel = (props) => {
     const [allUsers, setAllUsers] = react_1.useState([]);
+    const lang = localStorage.getItem("blognellaLang");
+    const [actualAdminNick, setActualAdminNick] = react_1.useState("");
+    const getBlognellaUser = () => {
+        if (allUsers.length > 0) {
+            const blognellaUser = localStorage.getItem("blognellaId");
+            const actualAdmin = allUsers.find((user) => user._id === blognellaUser);
+            if (actualAdmin) {
+                setActualAdminNick(actualAdmin.nick || "");
+            }
+        }
+    };
     const fetchAllUsers = () => {
         User_1.getUsers()
             .then(({ data: { users } }) => setAllUsers(users))
             .catch((err) => console.log(err));
     };
     react_1.useEffect(() => {
+        getBlognellaUser();
+    }, [allUsers]);
+    react_1.useEffect(() => {
         fetchAllUsers();
-    }, []);
+    }, [props]);
     const onUserDelete = (user) => {
         User_1.deleteUser(user._id || "")
             .then(({ status }) => {
@@ -56,14 +70,15 @@ const UsersPanel = () => {
                     " ",
                     user.nick,
                     " ") }),
-            react_1.default.createElement(core_1.ListItemSecondaryAction, null,
+            react_1.default.createElement(core_1.ListItemSecondaryAction, null, user.nick !== actualAdminNick ?
                 react_1.default.createElement(core_1.IconButton, { edge: "end", "aria-label": "delete", onClick: () => onUserDelete(user) },
-                    react_1.default.createElement(Delete_1.default, null)))));
+                    react_1.default.createElement(Delete_1.default, null))
+                : react_1.default.createElement("div", null))));
     };
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(core_1.List, null, getListItems()),
         react_1.default.createElement("div", null,
-            react_1.default.createElement(react_router_dom_1.Link, { to: "/panel/users/add" }, "Add User"))));
+            react_1.default.createElement(react_router_dom_1.Link, { to: "/panel/users/add" }, lang === "en" ? "Add User" : "Dodaj użytkownika"))));
 };
-exports.default = UsersPanel;
+exports.default = react_router_dom_1.withRouter(UsersPanel);
 //# sourceMappingURL=UsersPanel.js.map

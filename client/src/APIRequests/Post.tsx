@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 export interface PostProps {
     _id?: string;
@@ -6,6 +6,7 @@ export interface PostProps {
     tags: string[];
     title: string;
     content: any;
+    user: string;
 }
 
 export const getPosts = async () => {
@@ -34,29 +35,31 @@ export const getPosts = async () => {
 
 export const createPost = async (
     post: PostProps
-  ): Promise<AxiosResponse<ApiDataType>> => {
+  ) => {
     try {
-      const savedPost: AxiosResponse<ApiDataType> = await axios.post(
+      const savedPost = await axios.post(
         `/post`,
         post
       )
       return savedPost
     } catch (error) {
-      throw new Error(error)
+    //   throw new Error(error)
+    return {data: [], status: 403}
     }
   }
 
   export const updatePost = async (
     post: PostProps
-  ): Promise<AxiosResponse<ApiDataType>> => {
+  ) => {
     try {
-      const updatedPost: AxiosResponse<ApiDataType> = await axios.put(
+      const updatedPost = await axios.put(
         `/post/${post._id}`,
         post
       )
       return updatedPost;
     } catch (error) {
-      throw new Error(error)
+    //   throw new Error(error)
+        return {data: [], status: 403}
     }
   }
 

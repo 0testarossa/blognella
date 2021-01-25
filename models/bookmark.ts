@@ -1,9 +1,11 @@
 import { model, Schema } from 'mongoose'
+import uniqueValidator from 'mongoose-unique-validator';
 
 const bookmarkSchema = new Schema({
     title: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
 
     post: [
@@ -14,4 +16,4 @@ const bookmarkSchema = new Schema({
       ]
 }, { timestamps: true })
 
-export default model('Bookmark', bookmarkSchema)
+export default model('Bookmark', bookmarkSchema.plugin(uniqueValidator));

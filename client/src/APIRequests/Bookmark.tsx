@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 export interface BookmarkProps {
     _id?: string;
@@ -32,29 +32,31 @@ export const getBookmarks = async () => {
 
 export const createBookmark = async (
     bookmark: BookmarkProps
-  ): Promise<AxiosResponse<ApiDataType>> => {
+  ) => {
     try {
-      const savedBookmark: AxiosResponse<ApiDataType> = await axios.post(
+      const savedBookmark = await axios.post(
         `/bookmark`,
         bookmark
       )
       return savedBookmark
     } catch (error) {
-      throw new Error(error)
+    //   throw new Error(error)
+    return {data: [], status: 403}
     }
   }
 
   export const updateBookmark = async (
     bookmark: BookmarkProps
-  ): Promise<AxiosResponse<ApiDataType>> => {
+  ) => {
     try {
-      const updatedBookmark: AxiosResponse<ApiDataType> = await axios.put(
+      const updatedBookmark = await axios.put(
         `/bookmark/${bookmark._id}`,
         bookmark
       )
       return updatedBookmark;
     } catch (error) {
-      throw new Error(error)
+    //   throw new Error(error)
+    return {data: [], status: 403}
     }
   }
 

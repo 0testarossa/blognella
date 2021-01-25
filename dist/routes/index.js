@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const bookmark_1 = require("../controllers/bookmark");
+const commentController_1 = require("../controllers/commentController");
 const contentController_1 = require("../controllers/contentController");
 const imageController_1 = require("../controllers/imageController");
 const postController_1 = require("../controllers/postController");
@@ -55,6 +56,11 @@ router.get('/bookmark/:id', bookmark_1.getBookmark);
 router.post('/bookmark', bookmark_1.addBookmark);
 router.put('/bookmark/:id', bookmark_1.updateBookmark);
 router.delete('/bookmark/:id', bookmark_1.deleteBookmark);
+router.get('/comments', commentController_1.getComments);
+router.get('/comment/:id', commentController_1.getComment);
+router.post('/comment', commentController_1.addComment);
+router.put('/comment/:id', commentController_1.updateComment);
+router.delete('/comment/:id', commentController_1.deleteComment);
 exports.default = router;
 // module.exports = router;
 //# sourceMappingURL=index.js.map

@@ -5,6 +5,7 @@ import { BookmarkProps, getBookmarks } from "../../APIRequests/Bookmark";
 
 const DefaultViewTabs = () => {
     const [allBookmarks, setAllBookmarks] = useState<BookmarkProps[]>([]);
+    const lang = localStorage.getItem("blognellaLang");
 
     const fetchAllBookmarks = () => {
         getBookmarks()
@@ -15,13 +16,13 @@ const DefaultViewTabs = () => {
     if(allBookmarks.length === 0) fetchAllBookmarks();
 
     const getAllLinks = () => {
-        return allBookmarks.map((bookmark) => <LinkElement key={bookmark._id}><Link to={"/"}>{bookmark.title}</Link></LinkElement>) || []
+        return allBookmarks.map((bookmark) => <LinkElement key={bookmark._id}><Link to={bookmark.post.length > 0 ? `/post/${bookmark.post[0]._id}` : '/'}>{bookmark.title}</Link></LinkElement>) || []
     }
 
     return (
         <MainViewTabsContainerWrapper>
             <MainViewTabsContainer>
-                <LinkElement><Link to={"/"}>Home</Link></LinkElement>
+                <LinkElement><Link to={"/"}>{lang === "en" ? "Home" : "Główna"}</Link></LinkElement>
                 {getAllLinks()}
                 {/* <LinkElement><Link to={"/"}>Home</Link></LinkElement> */}
             </MainViewTabsContainer>

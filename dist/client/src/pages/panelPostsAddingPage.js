@@ -29,14 +29,15 @@ const PostsPanel_1 = __importDefault(require("../components/PostsPanel/PostsPane
 const PanelPostsAddingPage = () => {
     const [postType, setPostType] = react_1.useState("");
     const [storyTitle, setStoryTitle] = react_1.useState("");
+    const lang = localStorage.getItem("blognellaLang");
     const handlePostType = (event) => {
         setPostType(event.target.value);
     };
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(core_1.Select, { value: postType, onChange: handlePostType },
-            react_1.default.createElement(core_1.MenuItem, { value: "Main" }, "Main"),
-            react_1.default.createElement(core_1.MenuItem, { value: "Chapter" }, "Chapter"),
-            react_1.default.createElement(core_1.MenuItem, { value: "About" }, "About")),
+            react_1.default.createElement(core_1.MenuItem, { value: "Main" }, lang === "en" ? "Main" : "Wpis"),
+            react_1.default.createElement(core_1.MenuItem, { value: "Chapter" }, lang === "en" ? "Chapter" : "Rozdział"),
+            react_1.default.createElement(core_1.MenuItem, { value: "About" }, lang === "en" ? "About" : "O mnie")),
         react_1.default.createElement("div", null),
         postType === "Chapter" ? react_1.default.createElement(ChaptersList_1.default, { setPostTitle: setStoryTitle }) : react_1.default.createElement(react_1.default.Fragment, null),
         postType === "Main" || postType === "About" || storyTitle ? react_1.default.createElement(PostsPanel_1.default, { contentTitle: storyTitle || postType }) : react_1.default.createElement(react_1.default.Fragment, null)));

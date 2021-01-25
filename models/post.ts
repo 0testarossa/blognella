@@ -1,4 +1,5 @@
-import { model, Schema } from 'mongoose'
+import { model, Schema } from 'mongoose';
+import uniqueValidator from 'mongoose-unique-validator';
 
 const postSchema = new Schema({
     date: {
@@ -13,7 +14,8 @@ const postSchema = new Schema({
 
     title: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
 
     content: [
@@ -21,8 +23,21 @@ const postSchema = new Schema({
           type: Schema.Types.ObjectId,
           ref: "Content"
         }
-      ]
+      ],
+
+    comment: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "Comment"
+        }
+      ],
+    
+    user: {
+        type: String,
+        required: true
+    },
+      
 
 }, { timestamps: true })
 
-export default model('Post', postSchema)
+export default model('Post', postSchema.plugin(uniqueValidator));

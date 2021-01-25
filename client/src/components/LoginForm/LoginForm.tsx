@@ -2,12 +2,13 @@ import React, {useState} from "react";
 import { FormItem, LogicControls, StyledLoginForm } from "./LoginForm.styles";
 import TextField from '@material-ui/core/TextField';
 import { Button } from "@material-ui/core";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { getUsers, UserProps } from "../../APIRequests/User";
 
 const LoginForm = (props) => {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
+    const lang = localStorage.getItem("blognellaLang");
 
     const onSubmit = () => {
         getUsers()
@@ -29,7 +30,7 @@ const LoginForm = (props) => {
                     id="standard-full-width"
                     label="Login"
                     style={{ margin: 8 }}
-                    placeholder="Please type in your login here"
+                    placeholder={lang === "en" ? "Please type in your login here" : "Proszę wpisz swój login"}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -41,9 +42,9 @@ const LoginForm = (props) => {
                 <FormItem>
                 <TextField
                     id="standard-full-width"
-                    label="Password"
+                    label={lang === "en" ? "Password" : "Hasło"}
                     style={{ margin: 8 }}
-                    placeholder="Please type in your password here"
+                    placeholder={lang === "en" ? "Please type in your password here" : "Proszę wpisz swoje hasło"}
                     fullWidth
                     margin="normal"
                     InputLabelProps={{
@@ -53,9 +54,9 @@ const LoginForm = (props) => {
                     />
                 </FormItem>
                 <LogicControls>
-                    <div>Zapomniales hasla?</div>
+                    <div>{lang === "en" ? "Forgot password? Click " : "Zapomniałes hasła? Kliknij "}<Link to={"/login/forget"}>{lang === "en" ? "here" : "tutaj"}</Link></div>
                     <Button variant="contained" color="primary" onClick={onSubmit}>
-                    Login
+                        {lang === "en" ? "Login" : "Zaloguj"}
                     </Button>
                 </LogicControls>
             </StyledLoginForm>

@@ -14,16 +14,24 @@ class PostValidator {
         this.tags = post.tags;
         this.title = post.title;
         this.content = post.content;
+        this.comment = post.comment;
+        this.user = post.user;
     }
 }
 __decorate([
-    class_validator_1.IsNotEmpty(),
-    class_validator_1.IsString()
+    class_validator_1.IsDateString()
 ], PostValidator.prototype, "date", void 0);
+__decorate([
+    class_validator_1.IsArray()
+], PostValidator.prototype, "tags", void 0);
 __decorate([
     class_validator_1.IsNotEmpty(),
     class_validator_1.IsString()
 ], PostValidator.prototype, "title", void 0);
+__decorate([
+    class_validator_1.IsNotEmpty(),
+    class_validator_1.IsString()
+], PostValidator.prototype, "user", void 0);
 exports.PostValidator = PostValidator;
 exports.default = PostValidator;
 //# sourceMappingURL=postClassValidator.js.map

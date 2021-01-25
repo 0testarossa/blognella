@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 export interface UserProps {
     _id?: string;
@@ -35,29 +35,31 @@ export const getUsers = async () => {
 
 export const createUser = async (
     user: UserProps
-  ): Promise<AxiosResponse<ApiDataType>> => {
+  ) => {
     try {
-      const savedUser: AxiosResponse<ApiDataType> = await axios.post(
+      const savedUser = await axios.post(
         `/user`,
         user
       )
       return savedUser
     } catch (error) {
-      throw new Error(error)
+    //   throw new Error(error)
+    return {data: [], status: 403}
     }
   }
 
   export const updateUser = async (
     user: UserProps
-  ): Promise<AxiosResponse<ApiDataType>> => {
+  ) => {
     try {
-      const updatedUser: AxiosResponse<ApiDataType> = await axios.put(
+      const updatedUser = await axios.put(
         `/user/${user._id}`,
         user
       )
       return updatedUser;
     } catch (error) {
-      throw new Error(error)
+    //   throw new Error(error)
+    return {data: [], status: 403}
     }
   }
 

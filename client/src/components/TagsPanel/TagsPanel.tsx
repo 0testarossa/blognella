@@ -4,10 +4,13 @@ import TextField from "@material-ui/core/TextField";
 import React, {useState, useEffect} from "react";
 import { createTag, deleteTag, getTags, TagProps } from "../../APIRequests/Tag";
 import DeleteIcon from '@material-ui/icons/Delete';
+import { withRouter } from "react-router-dom";
+import { StyledTagsPanel } from "./TagsPanel.styled";
 
-const TagsPanel = () => {
+const TagsPanel = (props) => {
     const [tag, setTag] = useState("");
     const [allTags, setAllTags] = useState([]);
+    const lang = localStorage.getItem("blognellaLang");
 
     const fetchAllTags = () => {
         getTags()
@@ -24,6 +27,7 @@ const TagsPanel = () => {
                 }
                 fetchAllTags();
         })
+        props.history.push("/panel/tags");
     }
 
     useEffect(() => {
@@ -59,16 +63,16 @@ const TagsPanel = () => {
 
 
     return (
-        <>
+        <StyledTagsPanel>
              <List>
               {getListItems()}
             </List>
 
             <div>
             <TextField
-            label="Tag"
-            style={{ margin: 8 }}
-            placeholder="Please type in your tag here"
+            label={lang === "en" ? "Tag" : "Etykieta"}
+            style={{ margin: 8}}
+            placeholder={lang === "en" ? "Please type in your tag here" : "Proszę wpisz etykietę"}
             fullWidth
             margin="normal"
             InputLabelProps={{
@@ -77,11 +81,11 @@ const TagsPanel = () => {
             onChange={(input) => setTag(input.target.value)}
             />
             <Button variant="contained" color="primary" onClick={onTagSave}>
-                    Add Tag
+                    {lang === "en" ? "Add Tag" : "Dodaj etykietę"}
             </Button>
             </div>
-        </>
+        </StyledTagsPanel>
     )
 }
 
-export default TagsPanel;
+export default withRouter(TagsPanel);
