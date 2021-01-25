@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom';
 import { getUser, UserProps } from './APIRequests/User';
-import { StyledMain } from './App.styles';
+import { StyledMain, StyledPanelContent } from './App.styles';
 import AdminPanel from './components/AdminPanel/AdminPanel';
 import DefaultView from './components/DefaultView/DefaultView'
 import { MainContentContainer, StyledAdminPanelContainer } from './components/DefaultView/DefaultView.styles';
@@ -50,7 +50,7 @@ const App: React.FC = (props:any) => {
           {role && 
             <>
            {!availablePages.includes(props.match.path) ? <AdminPanel/> : <></>}
-           <div><Content/></div>
+           <StyledPanelContent><Content/></StyledPanelContent>
            </>
            }
           </StyledAdminPanelContainer>

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { createComment } from "../../APIRequests/Comment";
 import { updatePost } from "../../APIRequests/Post";
 import { getUser, UserProps } from "../../APIRequests/User";
+import { StyledComponentTextField } from "./PostComment.styles";
 import PostCommentComponent from "./PostCommentComponent";
 
 const PostCommentList = (props) => {
@@ -93,23 +94,25 @@ const PostCommentList = (props) => {
     return (
     <>
     {props.post.comment.length < 1 ? <div>{lang === "en" ? "No comments" : "Brak komentarzy"}</div> : getComments()}
-
-    <TextField
-                    id="standard-full-width"
-                    label={lang === "en" ? "Add Comment" : "Dodaj komentarz"}
-                    style={{ margin: 8 }}
-                    placeholder={lang === "en" ? "Please type in your comment here" : "Proszę wpisz komentarz"}
-                    fullWidth
-                    margin="normal"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    defaultValue={newComment}
-                    onChange={(input) => setNewComment(input.target.value)}
-    />
-    <Button variant="contained" color="primary" onClick={onNewCommentSave}>
-        {lang === "en" ? "Add Comment" : "Dodaj Komentarz"}
-    </Button>
+    
+    <StyledComponentTextField>
+        <TextField
+                        id="standard-full-width"
+                        label={lang === "en" ? "Add Comment" : "Dodaj komentarz"}
+                        style={{ margin: 8 }}
+                        placeholder={lang === "en" ? "Please type in your comment here" : "Proszę wpisz komentarz"}
+                        fullWidth
+                        margin="normal"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        defaultValue={newComment}
+                        onChange={(input) => setNewComment(input.target.value)}
+        />
+        <Button variant="contained" color="primary" onClick={onNewCommentSave}>
+            {lang === "en" ? "Add Comment" : "Dodaj Komentarz"}
+        </Button>
+    </StyledComponentTextField>
     </>
     )
 }

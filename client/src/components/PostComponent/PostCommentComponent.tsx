@@ -3,6 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { deleteComment, updateComment } from "../../APIRequests/Comment";
+import { StyledComponentTextField, StyledCommentAuthor, StyledCommentButton} from "./PostComment.styles";
 
 const PostCommentComponent = (props) => {
     const [isEditingMode, setIsEditingMode] = useState(false);
@@ -48,30 +49,32 @@ const PostCommentComponent = (props) => {
     return (
         <>
             <div>
-                {props.comment.user} {new Date(props.comment.date).toDateString()}
-                {canEdit ? <><span onClick={onEdit}>Edit</span><span onClick={onDelete}>Delete</span></> : <></>}
+                <StyledCommentAuthor>{props.comment.user} </StyledCommentAuthor> {new Date(props.comment.date).toDateString()}
+                {canEdit ? <><StyledCommentButton onClick={onEdit}>Edit</StyledCommentButton><StyledCommentButton onClick={onDelete}>Delete</StyledCommentButton></> : <></>}
             </div>
             {/* <div>{props.comment.text}</div> */}
-            <TextField
-                    id="standard-full-width"
-                    label=""
-                    style={{ margin: 8 }}
-                    placeholder={lang === "en" ? "Please type in your comment here" : "Proszę wpisz komentarz"}
-                    fullWidth
-                    margin="normal"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    InputProps={{
-                        readOnly: !isEditingMode,
-                      }}
-                    defaultValue={commentText}
-                    onChange={(input) => setCommentText(input.target.value)}
-            />
-            {isEditingMode ? 
-            <Button variant="contained" color="primary" onClick={onSaveEditedComment}>
-                {lang === "en" ? "Save Comment" : "Zapisz Komentarz"}
-            </Button> : <></>}
+            <StyledComponentTextField>
+                <TextField
+                        id="standard-full-width"
+                        label=""
+                        style={{ margin: 8 }}
+                        placeholder={lang === "en" ? "Please type in your comment here" : "Proszę wpisz komentarz"}
+                        fullWidth
+                        margin="normal"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        InputProps={{
+                            readOnly: !isEditingMode,
+                        }}
+                        defaultValue={commentText}
+                        onChange={(input) => setCommentText(input.target.value)}
+                />
+                {isEditingMode ? 
+                <Button variant="contained" color="primary" onClick={onSaveEditedComment}>
+                    {lang === "en" ? "Save Comment" : "Zapisz Komentarz"}
+                </Button> : <></>}
+            </StyledComponentTextField>
         </>
     )
 }

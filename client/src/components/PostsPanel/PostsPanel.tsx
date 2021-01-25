@@ -8,6 +8,7 @@ import { createPost } from '../../APIRequests/Post';
 import DatePicker from 'react-date-picker';
 import { getUser, UserProps } from '../../APIRequests/User';
 import { withRouter } from 'react-router-dom';
+import { StyledPanel } from './PostsPanel.styles';
 
 const useStyles = makeStyles(() => ({
     chips: {
@@ -118,7 +119,7 @@ const PostsPanel = (props) => {
         };
 
     return (
-        <>
+        <StyledPanel>
          <TextField
                     id="standard-full-width"
                     label={lang === "en" ? "Title" : "Tytuł"}
@@ -188,7 +189,7 @@ const PostsPanel = (props) => {
         <Button variant="contained" color="primary" onClick={onContentSave}>
                     {lang === "en" ? "Save Post" : "Zapisz Wpis"}
          </Button>
-      </>
+      </StyledPanel>
 
 
     )

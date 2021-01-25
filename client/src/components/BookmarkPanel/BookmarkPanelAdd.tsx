@@ -1,8 +1,10 @@
 import { Button, MenuItem, Select, TextField } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
+import styled from "styled-components";
 import { createBookmark } from "../../APIRequests/Bookmark";
 import { getPosts, PostProps } from "../../APIRequests/Post";
+import { StyledPanel } from "./BookmarkPanel.Styles";
 
 const BookmarkPanelAdd = (props) => {
     const [postId, setPostId] = useState("");
@@ -40,30 +42,39 @@ const BookmarkPanelAdd = (props) => {
         return allPosts.map((post) => <MenuItem key={post._id} value={post._id}>{post.title}</MenuItem>)
     }
 
+    const StyledSelect = styled.div`
+    .MuiInputBase-root{
+        color: white;
+      }
+    `
+
     return (
-        <>
-         <Select
-          value={postId}
-          onChange={handlePostId}
-        >
-            {getPostsTitles()}
-        </Select>
-        <div></div>
-        <TextField
-            label={lang === "en" ? "Bookmark title" : "Tytuł zakładki"}
-            style={{ margin: 8 }}
-            placeholder={lang === "en" ? "Please type in your bookmark title here" : "Proszę wpisz tytuł zakładki"}
-            fullWidth
-            margin="normal"
-            InputLabelProps={{
-                shrink: true,
-            }}
-            onChange={(input) => setBookmarkTitle(input.target.value)}
-            />
-        <Button variant="contained" color="primary" onClick={onBookmarkSave}>
-            {lang === "en" ? "Save Bookmark" : "Zapisz Zakładkę"}
-        </Button>
-        </>
+        <StyledPanel>
+            <StyledSelect>
+                <Select
+                value={postId}
+                onChange={handlePostId}
+                >
+                    {getPostsTitles()}
+                </Select>
+            </StyledSelect>
+        
+            <div></div>
+            <TextField
+                label={lang === "en" ? "Bookmark title" : "Tytuł zakładki"}
+                style={{ margin: 8 }}
+                placeholder={lang === "en" ? "Please type in your bookmark title here" : "Proszę wpisz tytuł zakładki"}
+                fullWidth
+                margin="normal"
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                onChange={(input) => setBookmarkTitle(input.target.value)}
+                />
+            <Button variant="contained" color="primary" onClick={onBookmarkSave}>
+                {lang === "en" ? "Save Bookmark" : "Zapisz Zakładkę"}
+            </Button>
+        </StyledPanel>
     )
 }
 

@@ -14,3 +14,9 @@ export const StyledAdminPanelItem = styled.div`
 export const StyledText = styled.span`
     border-bottom: 1px solid black;
 `;
+
+export const CenteredSpan = styled.span`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;

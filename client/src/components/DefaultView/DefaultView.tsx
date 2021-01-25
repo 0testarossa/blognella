@@ -7,7 +7,7 @@ const DefaultView = (props) => {
     return (
         <>
         <LogoContainer>
-            <Logo>Kiranella</Logo>
+            <Logo>Blognella</Logo>
             <LinksContainer>
                     <div>
                     {/* <LinkElement><Link color="white" to={"/login"}>Login</Link></LinkElement>

@@ -2,6 +2,7 @@ import { Button, MenuItem, Select, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { createUser } from "../../APIRequests/User";
+import { StyledPanel } from "./UserPanel.styles";
 
 const allUsersRoles = ["loggedUser", "admin"];
 
@@ -34,64 +35,64 @@ const UserPanelAdd = (props) => {
     }
 
     return (
-        <>
-        <TextField
-            label="Nick"
-            style={{ margin: 8 }}
-            placeholder={lang === "en" ? "Please type in your nickname here" : "Proszę wpisz nick"}
-            fullWidth
-            margin="normal"
-            InputLabelProps={{
-                shrink: true,
-            }}
-            onChange={(input) => setNick(input.target.value)}
-        />
-        <TextField
-            label="Login"
-            style={{ margin: 8 }}
-            placeholder={lang === "en" ? "Please type in your login here" : "Proszę wpisz swój login"}
-            fullWidth
-            margin="normal"
-            InputLabelProps={{
-                shrink: true,
-            }}
-            onChange={(input) => setLogin(input.target.value)}
-        />
-        <TextField
-            label={lang === "en" ? "Password" : "Hasło"}
-            style={{ margin: 8 }}
-            placeholder={lang === "en" ? "Please type in your password here" : "Proszę wpisz swoje hasło"}
-            fullWidth
-            margin="normal"
-            InputLabelProps={{
-                shrink: true,
-            }}
-            onChange={(input) => setPassword(input.target.value)}
-        />
-        <Select
-          value={role}
-          onChange={handleUserRole}
-        >
-            {getUsersRoles()}
-        </Select>
+        <StyledPanel>
+            <TextField
+                label="Nick"
+                style={{ margin: 8 }}
+                placeholder={lang === "en" ? "Please type in your nickname here" : "Proszę wpisz nick"}
+                fullWidth
+                margin="normal"
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                onChange={(input) => setNick(input.target.value)}
+            />
+            <TextField
+                label="Login"
+                style={{ margin: 8 }}
+                placeholder={lang === "en" ? "Please type in your login here" : "Proszę wpisz swój login"}
+                fullWidth
+                margin="normal"
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                onChange={(input) => setLogin(input.target.value)}
+            />
+            <TextField
+                label={lang === "en" ? "Password" : "Hasło"}
+                style={{ margin: 8 }}
+                placeholder={lang === "en" ? "Please type in your password here" : "Proszę wpisz swoje hasło"}
+                fullWidth
+                margin="normal"
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                onChange={(input) => setPassword(input.target.value)}
+            />
+            <Select
+            value={role}
+            onChange={handleUserRole}
+            >
+                {getUsersRoles()}
+            </Select>
 
-        <div></div>
-        <TextField
-            label="Email"
-            style={{ margin: 8 }}
-            placeholder={lang === "en" ? "Please type in your email here" : "Proszę wpisz swój email"}
-            fullWidth
-            margin="normal"
-            InputLabelProps={{
-                shrink: true,
-            }}
-            onChange={(input) => setEmail(input.target.value)}
-        />
+            <div></div>
+            <TextField
+                label="Email"
+                style={{ margin: 8 }}
+                placeholder={lang === "en" ? "Please type in your email here" : "Proszę wpisz swój email"}
+                fullWidth
+                margin="normal"
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                onChange={(input) => setEmail(input.target.value)}
+            />
 
-        <Button variant="contained" color="primary" onClick={onUserSave}>
-            {lang === "en" ? "Save User" : "Zapisz Użytkownika"}
-        </Button>
-        </>
+            <Button variant="contained" color="primary" onClick={onUserSave}>
+                {lang === "en" ? "Save User" : "Zapisz Użytkownika"}
+            </Button>
+        </StyledPanel>
     )
 }
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { LinkElement, LoginRegisterContainer } from "../DefaultView/DefaultView.styles";
+import { LinkElement, LinkLoginElement, LoginRegisterContainer, SearchElement } from "../DefaultView/DefaultView.styles";
 import { Link } from "react-router-dom";
 import { getUser, UserProps } from "../../APIRequests/User";
 import DefaultViewTabs from "./DefaultViewTabs";
@@ -35,12 +35,12 @@ const DefaultViewLinks = (props) => {
     return (
         <>
             <LoginRegisterContainer>
-                <LinkElement><SearchComponent/></LinkElement>
+                <SearchElement><SearchComponent/></SearchElement>
                 {availablePages.includes(props.pageName) && role === "admin" ? <LinkElement><Link to={"/panel/posts"}>Panel</Link></LinkElement> : <></>}
-                { nick ? <LinkElement onClick={onLogout} ><Link to={"/"}>{lang === "en" ? "Logout" : "Wyloguj"} {nick}</Link></LinkElement> : 
-                <LinkElement ><Link to={"/login"}>{lang === "en" ? "Login" : "Zaloguj"}</Link></LinkElement> }
-                <LinkElement><Link to={"/register"}>{lang === "en" ? "Register" : "Zarejestruj"}</Link></LinkElement>
-                <LinkElement onClick={changeLanguage}>{localStorage.getItem('blognellaLang') || "en"}</LinkElement>
+                { nick ? <LinkElement onClick={onLogout} ><Link to={"/"}>{lang === "en" ? "Logout" : "Wyloguj"} <span style={{fontWeight: "bold"}}>{nick}</span></Link></LinkElement> : 
+                <LinkLoginElement ><Link to={"/login"}>{lang === "en" ? "Login" : "Zaloguj"}</Link></LinkLoginElement> } 
+                { !nick ? <LinkLoginElement><Link to={"/register"}>{lang === "en" ? "Register" : "Zarejestruj"}</Link></LinkLoginElement> : <></>}
+                <LinkElement onClick={changeLanguage}><a>{localStorage.getItem('blognellaLang') || "en"}</a></LinkElement>
             </LoginRegisterContainer>
             <DefaultViewTabs/>
         </>

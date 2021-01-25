@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { MenuItem, Select } from "@material-ui/core";
 import { getPosts, PostProps } from "../../APIRequests/Post";
+import styled from "styled-components";
 
 const ChaptersList = (props) => {
     const [mainPosts, setMainPosts] = useState<String[]>([]);
@@ -37,15 +38,21 @@ const ChaptersList = (props) => {
         return mainPosts.map((postTitle:any) => <MenuItem key={postTitle} value={postTitle}>{postTitle}</MenuItem>)
     }
 
+    const StyledSelect = styled.div`
+    .MuiInputBase-root{
+        color: white;
+      }
+    `
+
     return (
-        <>
+        <StyledSelect>
             <Select
             value={postTitle}
             onChange={handlePostTitle}
             >
             {getTitleList()}
             </Select>
-        </>
+        </StyledSelect>
     )
 }
 

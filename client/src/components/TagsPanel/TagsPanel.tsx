@@ -5,6 +5,7 @@ import React, {useState, useEffect} from "react";
 import { createTag, deleteTag, getTags, TagProps } from "../../APIRequests/Tag";
 import DeleteIcon from '@material-ui/icons/Delete';
 import { withRouter } from "react-router-dom";
+import { StyledTagsPanel } from "./TagsPanel.styled";
 
 const TagsPanel = (props) => {
     const [tag, setTag] = useState("");
@@ -62,7 +63,7 @@ const TagsPanel = (props) => {
 
 
     return (
-        <>
+        <StyledTagsPanel>
              <List>
               {getListItems()}
             </List>
@@ -70,7 +71,7 @@ const TagsPanel = (props) => {
             <div>
             <TextField
             label={lang === "en" ? "Tag" : "Etykieta"}
-            style={{ margin: 8 }}
+            style={{ margin: 8}}
             placeholder={lang === "en" ? "Please type in your tag here" : "Proszę wpisz etykietę"}
             fullWidth
             margin="normal"
@@ -83,7 +84,7 @@ const TagsPanel = (props) => {
                     {lang === "en" ? "Add Tag" : "Dodaj etykietę"}
             </Button>
             </div>
-        </>
+        </StyledTagsPanel>
     )
 }
 
