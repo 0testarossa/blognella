@@ -7,6 +7,7 @@ import { getTags, TagProps } from '../../APIRequests/Tag';
 import { updatePost } from '../../APIRequests/Post';
 import DatePicker from 'react-date-picker';
 import { withRouter } from 'react-router-dom';
+import { StyledPanel } from './PostsPanel.styles';
 
 const useStyles = makeStyles(() => ({
     chips: {
@@ -106,7 +107,7 @@ const UpdatePostsPanel = (props) => {
         };
 
     return (
-        <>
+        <StyledPanel>
          <TextField
                     id="standard-full-width"
                     label={lang === "en" ? "Title" : "Tytuł"}
@@ -178,7 +179,7 @@ const UpdatePostsPanel = (props) => {
         <Button variant="contained" color="primary" onClick={onContentSave}>
                     {lang === "en" ? "Save Post" : "Zapisz post"}
          </Button>
-      </>
+      </StyledPanel>
     )
 }
 

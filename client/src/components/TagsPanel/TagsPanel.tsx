@@ -52,7 +52,7 @@ const TagsPanel = (props) => {
             primary={tag.name}
           />
           <ListItemSecondaryAction>
-            <IconButton edge="end" aria-label="delete" onClick={() => onTagDelete(tag)}>
+            <IconButton style={{color: "white"}} edge="end" aria-label="delete" onClick={() => onTagDelete(tag)}>
               <DeleteIcon/>
             </IconButton>
           </ListItemSecondaryAction>
