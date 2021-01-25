@@ -46,7 +46,7 @@ const PostComponent = (props) => {
             <div>{props.post.title}</div>
             <div dangerouslySetInnerHTML={{ __html: props.post.content[0].text }} />
 
-            <div>{lang === "en" ? "Chapters" : "Rozdziały"}</div>
+            {props.postChapters.length > 0 ? <div>{lang === "en" ? "Chapters" : "Rozdziały"}</div> : <></>}
             {getPostChapters()}
 
             <div><span>{lang === "en" ? "Tags: " : "Etykiety: "}</span>{getTags()}</div>
