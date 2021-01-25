@@ -71,7 +71,7 @@ const UsersPanel = (props) => {
                     user.nick,
                     " ") }),
             react_1.default.createElement(core_1.ListItemSecondaryAction, null, user.nick !== actualAdminNick ?
-                react_1.default.createElement(core_1.IconButton, { edge: "end", "aria-label": "delete", onClick: () => onUserDelete(user) },
+                react_1.default.createElement(core_1.IconButton, { style: { color: "white" }, edge: "end", "aria-label": "delete", onClick: () => onUserDelete(user) },
                     react_1.default.createElement(Delete_1.default, null))
                 : react_1.default.createElement("div", null))));
     };

@@ -58,7 +58,7 @@ const BookmarksPanel = (props) => {
                     bookmark.title,
                     " ") }),
             react_1.default.createElement(core_1.ListItemSecondaryAction, null,
-                react_1.default.createElement(core_1.IconButton, { edge: "end", "aria-label": "delete", onClick: () => onBookmarkDelete(bookmark) },
+                react_1.default.createElement(core_1.IconButton, { style: { color: "white" }, edge: "end", "aria-label": "delete", onClick: () => onBookmarkDelete(bookmark) },
                     react_1.default.createElement(Delete_1.default, null)))));
     };
     return (react_1.default.createElement(react_1.default.Fragment, null,

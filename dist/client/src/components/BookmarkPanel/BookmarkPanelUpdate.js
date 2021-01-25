@@ -24,6 +24,7 @@ const react_1 = __importStar(require("react"));
 const react_router_dom_1 = require("react-router-dom");
 const Bookmark_1 = require("../../APIRequests/Bookmark");
 const Post_1 = require("../../APIRequests/Post");
+const BookmarkPanel_Styles_1 = require("./BookmarkPanel.Styles");
 const BookmarkPanelUpdate = (props) => {
     const [postId, setPostId] = react_1.useState(props.bookmark.post.length > 0 ? props.bookmark.post[0]._id : "");
     const [allPosts, setAllPosts] = react_1.useState([]);
@@ -60,7 +61,7 @@ const BookmarkPanelUpdate = (props) => {
     const getPostsTitles = () => {
         return allPosts.map((post) => react_1.default.createElement(core_1.MenuItem, { key: post._id, value: post._id }, post.title));
     };
-    return (react_1.default.createElement(react_1.default.Fragment, null,
+    return (react_1.default.createElement(BookmarkPanel_Styles_1.StyledPanel, null,
         react_1.default.createElement(core_1.Select, { value: postId, onChange: handlePostId }, getPostsTitles()),
         react_1.default.createElement("div", null),
         react_1.default.createElement(core_1.TextField, { label: lang === "en" ? "Bookmark title" : "Tytuł zakladki", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your bookmark title here" : "Proszę wpisz tytuł zakładki", fullWidth: true, margin: "normal", InputLabelProps: {

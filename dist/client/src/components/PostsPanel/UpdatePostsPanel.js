@@ -31,6 +31,7 @@ const Tag_1 = require("../../APIRequests/Tag");
 const Post_1 = require("../../APIRequests/Post");
 const react_date_picker_1 = __importDefault(require("react-date-picker"));
 const react_router_dom_1 = require("react-router-dom");
+const PostsPanel_styles_1 = require("./PostsPanel.styles");
 const useStyles = core_1.makeStyles(() => ({
     chips: {
         display: 'flex',
@@ -115,7 +116,7 @@ const UpdatePostsPanel = (props) => {
     const handleChange = (event) => {
         setTags(event.target.value);
     };
-    return (react_1.default.createElement(react_1.default.Fragment, null,
+    return (react_1.default.createElement(PostsPanel_styles_1.StyledPanel, null,
         react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: lang === "en" ? "Title" : "Tytuł", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your post title here" : "Proszę wpisz tytuł wpisu", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
             }, defaultValue: title, onChange: (input) => setTitle(input.target.value) }),

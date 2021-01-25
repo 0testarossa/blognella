@@ -67,7 +67,7 @@ const TagsPanel = (props) => {
         return allTags.map((tag) => react_1.default.createElement(core_1.ListItem, { key: tag.name },
             react_1.default.createElement(core_1.ListItemText, { primary: tag.name }),
             react_1.default.createElement(core_1.ListItemSecondaryAction, null,
-                react_1.default.createElement(core_1.IconButton, { edge: "end", "aria-label": "delete", onClick: () => onTagDelete(tag) },
+                react_1.default.createElement(core_1.IconButton, { style: { color: "white" }, edge: "end", "aria-label": "delete", onClick: () => onTagDelete(tag) },
                     react_1.default.createElement(Delete_1.default, null)))));
     };
     return (react_1.default.createElement(TagsPanel_styled_1.StyledTagsPanel, null,
