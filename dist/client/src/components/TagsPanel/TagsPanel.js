@@ -29,6 +29,7 @@ const react_1 = __importStar(require("react"));
 const Tag_1 = require("../../APIRequests/Tag");
 const Delete_1 = __importDefault(require("@material-ui/icons/Delete"));
 const react_router_dom_1 = require("react-router-dom");
+const TagsPanel_styled_1 = require("./TagsPanel.styled");
 const TagsPanel = (props) => {
     const [tag, setTag] = react_1.useState("");
     const [allTags, setAllTags] = react_1.useState([]);
@@ -69,7 +70,7 @@ const TagsPanel = (props) => {
                 react_1.default.createElement(core_1.IconButton, { edge: "end", "aria-label": "delete", onClick: () => onTagDelete(tag) },
                     react_1.default.createElement(Delete_1.default, null)))));
     };
-    return (react_1.default.createElement(react_1.default.Fragment, null,
+    return (react_1.default.createElement(TagsPanel_styled_1.StyledTagsPanel, null,
         react_1.default.createElement(core_1.List, null, getListItems()),
         react_1.default.createElement("div", null,
             react_1.default.createElement(TextField_1.default, { label: lang === "en" ? "Tag" : "Etykieta", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your tag here" : "Proszę wpisz etykietę", fullWidth: true, margin: "normal", InputLabelProps: {

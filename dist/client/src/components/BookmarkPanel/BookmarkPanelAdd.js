@@ -18,12 +18,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@material-ui/core");
 const react_1 = __importStar(require("react"));
 const react_router_dom_1 = require("react-router-dom");
+const styled_components_1 = __importDefault(require("styled-components"));
 const Bookmark_1 = require("../../APIRequests/Bookmark");
 const Post_1 = require("../../APIRequests/Post");
+const BookmarkPanel_Styles_1 = require("./BookmarkPanel.Styles");
 const BookmarkPanelAdd = (props) => {
     const [postId, setPostId] = react_1.useState("");
     const [allPosts, setAllPosts] = react_1.useState([]);
@@ -54,8 +59,14 @@ const BookmarkPanelAdd = (props) => {
     const getPostsTitles = () => {
         return allPosts.map((post) => react_1.default.createElement(core_1.MenuItem, { key: post._id, value: post._id }, post.title));
     };
-    return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(core_1.Select, { value: postId, onChange: handlePostId }, getPostsTitles()),
+    const StyledSelect = styled_components_1.default.div `
+    .MuiInputBase-root{
+        color: white;
+      }
+    `;
+    return (react_1.default.createElement(BookmarkPanel_Styles_1.StyledPanel, null,
+        react_1.default.createElement(StyledSelect, null,
+            react_1.default.createElement(core_1.Select, { value: postId, onChange: handlePostId }, getPostsTitles())),
         react_1.default.createElement("div", null),
         react_1.default.createElement(core_1.TextField, { label: lang === "en" ? "Bookmark title" : "Tytuł zakładki", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your bookmark title here" : "Proszę wpisz tytuł zakładki", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,

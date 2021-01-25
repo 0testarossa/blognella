@@ -23,6 +23,7 @@ const core_1 = require("@material-ui/core");
 const react_1 = __importStar(require("react"));
 const react_router_dom_1 = require("react-router-dom");
 const User_1 = require("../../APIRequests/User");
+const UserPanel_styles_1 = require("./UserPanel.styles");
 const allUsersRoles = ["loggedUser", "admin"];
 const UserPanelUpdate = (props) => {
     const [nick, setNick] = react_1.useState(props.user.nick);
@@ -49,7 +50,7 @@ const UserPanelUpdate = (props) => {
     const getUsersRoles = () => {
         return allUsersRoles.map((role) => react_1.default.createElement(core_1.MenuItem, { key: role, value: role }, role));
     };
-    return (react_1.default.createElement(react_1.default.Fragment, null,
+    return (react_1.default.createElement(UserPanel_styles_1.StyledPanel, null,
         react_1.default.createElement(core_1.TextField, { label: "Nick", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your nickname here" : "Proszę wpisz nick", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
             }, defaultValue: nick, onChange: (input) => setNick(input.target.value) }),

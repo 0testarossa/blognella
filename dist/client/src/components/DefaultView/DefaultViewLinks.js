@@ -57,7 +57,7 @@ const DefaultViewLinks = (props) => {
     };
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(DefaultView_styles_1.LoginRegisterContainer, null,
-            react_1.default.createElement(DefaultView_styles_1.LinkElement, null,
+            react_1.default.createElement(DefaultView_styles_1.SearchElement, null,
                 react_1.default.createElement(SearchComponent_1.default, null)),
             App_1.availablePages.includes(props.pageName) && role === "admin" ? react_1.default.createElement(DefaultView_styles_1.LinkElement, null,
                 react_1.default.createElement(react_router_dom_1.Link, { to: "/panel/posts" }, "Panel")) : react_1.default.createElement(react_1.default.Fragment, null),
@@ -65,12 +65,13 @@ const DefaultViewLinks = (props) => {
                 react_1.default.createElement(react_router_dom_1.Link, { to: "/" },
                     lang === "en" ? "Logout" : "Wyloguj",
                     " ",
-                    nick)) :
-                react_1.default.createElement(DefaultView_styles_1.LinkElement, null,
+                    react_1.default.createElement("span", { style: { fontWeight: "bold" } }, nick))) :
+                react_1.default.createElement(DefaultView_styles_1.LinkLoginElement, null,
                     react_1.default.createElement(react_router_dom_1.Link, { to: "/login" }, lang === "en" ? "Login" : "Zaloguj")),
-            react_1.default.createElement(DefaultView_styles_1.LinkElement, null,
-                react_1.default.createElement(react_router_dom_1.Link, { to: "/register" }, lang === "en" ? "Register" : "Zarejestruj")),
-            react_1.default.createElement(DefaultView_styles_1.LinkElement, { onClick: changeLanguage }, localStorage.getItem('blognellaLang') || "en")),
+            !nick ? react_1.default.createElement(DefaultView_styles_1.LinkLoginElement, null,
+                react_1.default.createElement(react_router_dom_1.Link, { to: "/register" }, lang === "en" ? "Register" : "Zarejestruj")) : react_1.default.createElement(react_1.default.Fragment, null),
+            react_1.default.createElement(DefaultView_styles_1.LinkElement, { onClick: changeLanguage },
+                react_1.default.createElement("a", null, localStorage.getItem('blognellaLang') || "en"))),
         react_1.default.createElement(DefaultViewTabs_1.default, null)));
 };
 exports.default = DefaultViewLinks;

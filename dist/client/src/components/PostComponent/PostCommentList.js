@@ -28,6 +28,7 @@ const react_1 = __importStar(require("react"));
 const Comment_1 = require("../../APIRequests/Comment");
 const Post_1 = require("../../APIRequests/Post");
 const User_1 = require("../../APIRequests/User");
+const PostComment_styles_1 = require("./PostComment.styles");
 const PostCommentComponent_1 = __importDefault(require("./PostCommentComponent"));
 const PostCommentList = (props) => {
     const [nick, setNick] = react_1.useState("Guest");
@@ -108,10 +109,11 @@ const PostCommentList = (props) => {
     };
     return (react_1.default.createElement(react_1.default.Fragment, null,
         props.post.comment.length < 1 ? react_1.default.createElement("div", null, lang === "en" ? "No comments" : "Brak komentarzy") : getComments(),
-        react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: lang === "en" ? "Add Comment" : "Dodaj komentarz", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your comment here" : "Proszę wpisz komentarz", fullWidth: true, margin: "normal", InputLabelProps: {
-                shrink: true,
-            }, defaultValue: newComment, onChange: (input) => setNewComment(input.target.value) }),
-        react_1.default.createElement(Button_1.default, { variant: "contained", color: "primary", onClick: onNewCommentSave }, lang === "en" ? "Add Comment" : "Dodaj Komentarz")));
+        react_1.default.createElement(PostComment_styles_1.StyledComponentTextField, null,
+            react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: lang === "en" ? "Add Comment" : "Dodaj komentarz", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your comment here" : "Proszę wpisz komentarz", fullWidth: true, margin: "normal", InputLabelProps: {
+                    shrink: true,
+                }, defaultValue: newComment, onChange: (input) => setNewComment(input.target.value) }),
+            react_1.default.createElement(Button_1.default, { variant: "contained", color: "primary", onClick: onNewCommentSave }, lang === "en" ? "Add Comment" : "Dodaj Komentarz"))));
 };
 exports.default = PostCommentList;
 //# sourceMappingURL=PostCommentList.js.map

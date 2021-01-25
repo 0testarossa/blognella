@@ -26,6 +26,7 @@ const Button_1 = __importDefault(require("@material-ui/core/Button"));
 const TextField_1 = __importDefault(require("@material-ui/core/TextField"));
 const react_1 = __importStar(require("react"));
 const react_router_dom_1 = require("react-router-dom");
+const SearchComponent_styles_1 = require("./SearchComponent.styles");
 const SearchComponent = (props) => {
     const [searchValue, setSearchValue] = react_1.useState("");
     const lang = localStorage.getItem("blognellaLang");
@@ -35,8 +36,8 @@ const SearchComponent = (props) => {
             state: { search: searchValue }
         });
     };
-    return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: lang === "en" ? "Search" : "Wyszukaj", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in tag or title here" : "Proszę wpisz etykietę lub tytuł", fullWidth: true, margin: "normal", InputLabelProps: {
+    return (react_1.default.createElement(SearchComponent_styles_1.StyledSearch, null,
+        react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: lang === "en" ? "Search" : "Wyszukaj", style: { margin: 8 }, placeholder: lang === "en" ? "Type in tag or title here" : "Wpisz etykietę lub tytuł", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
             }, onChange: (input) => setSearchValue(input.target.value) }),
         react_1.default.createElement(Button_1.default, { variant: "contained", color: "primary", onClick: onSearch }, lang === "en" ? "Search" : "Wyszukaj")));

@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importDefault(require("react"));
 const PostCommentList_1 = __importDefault(require("./PostCommentList"));
 const PostLinkComponent_1 = __importDefault(require("./PostLinkComponent"));
+const PostComponent_styles_1 = require("./PostComponent.styles");
 // import DatePicker from 'react-date-picker';
 const PostComponent = (props) => {
     // const [value, onChange] = useState<any>(new Date());
@@ -27,7 +28,7 @@ const PostComponent = (props) => {
     // console.log(new Date(props.post.date).toLocaleDateString('en-GB', options));
     // console.log(new Date(props.post.date).toLocaleDateString('pl-GB', options));
     const getTags = () => {
-        return props.post.tags.map((tag) => react_1.default.createElement("span", { key: tag }, tag));
+        return props.post.tags.map((tag) => react_1.default.createElement("span", { key: tag, style: { marginRight: "1.2rem" } }, tag));
     };
     const getPostChapters = () => {
         return props.postChapters.map((postChapter) => react_1.default.createElement("div", { key: postChapter._id },
@@ -37,18 +38,21 @@ const PostComponent = (props) => {
         lang === "en" ? "It will be avaiable soon - " : "Dostępne wkrótce - ",
         date) :
         react_1.default.createElement(react_1.default.Fragment, null,
-            react_1.default.createElement("div", null, date),
-            react_1.default.createElement("div", null, props.post.title),
-            react_1.default.createElement("div", { dangerouslySetInnerHTML: { __html: props.post.content[0].text } }),
-            react_1.default.createElement("div", null, lang === "en" ? "Chapters" : "Rozdziały"),
-            getPostChapters(),
-            react_1.default.createElement("div", null,
-                react_1.default.createElement("span", null, lang === "en" ? "Tags: " : "Etykiety: "),
-                getTags()),
-            react_1.default.createElement("div", null,
+            react_1.default.createElement(PostComponent_styles_1.StyledDate, null, date),
+            react_1.default.createElement(PostComponent_styles_1.StyledTitle, null, props.post.title),
+            react_1.default.createElement(PostComponent_styles_1.StyledText, { dangerouslySetInnerHTML: { __html: props.post.content[0].text } }),
+            react_1.default.createElement(PostComponent_styles_1.StyledChaptersContainer, null,
+                props.postChapters.length > 0 ? react_1.default.createElement(PostComponent_styles_1.StyledChapters, null, lang === "en" ? "Chapters" : "Rozdziały") : react_1.default.createElement(react_1.default.Fragment, null),
+                getPostChapters()),
+            react_1.default.createElement(PostComponent_styles_1.StyledBottomPageContainer, null,
+                react_1.default.createElement(PostComponent_styles_1.StyledTags, null,
+                    react_1.default.createElement(PostComponent_styles_1.StyledTagsLabel, null, lang === "en" ? "Tags: " : "Etykiety: "),
+                    getTags())),
+            react_1.default.createElement(PostComponent_styles_1.StyledAuthorContainer, null,
                 lang === "en" ? "Added by " : "Dodane przez ",
-                props.post.user),
-            react_1.default.createElement(PostCommentList_1.default, { post: props.post })));
+                react_1.default.createElement(PostComponent_styles_1.StyledAuthor, null, props.post.user)),
+            react_1.default.createElement(PostComponent_styles_1.StyledBottomPageContainer, null,
+                react_1.default.createElement(PostCommentList_1.default, { post: props.post }))));
 };
 exports.default = PostComponent;
 //# sourceMappingURL=PostComponent.js.map

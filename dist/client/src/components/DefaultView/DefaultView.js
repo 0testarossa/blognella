@@ -10,7 +10,7 @@ const DefaultViewLinks_1 = __importDefault(require("./DefaultViewLinks"));
 const DefaultView = (props) => {
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(DefaultView_styles_1.LogoContainer, null,
-            react_1.default.createElement(DefaultView_styles_1.Logo, null, "Kiranella"),
+            react_1.default.createElement(DefaultView_styles_1.Logo, null, "Blognella"),
             react_1.default.createElement(DefaultView_styles_1.LinksContainer, null,
                 react_1.default.createElement("div", null))),
         react_1.default.createElement(DefaultViewLinks_1.default, Object.assign({}, props))));

@@ -26,6 +26,7 @@ const core_1 = require("@material-ui/core");
 const react_1 = __importStar(require("react"));
 const ChaptersList_1 = __importDefault(require("../components/ChaptersList/ChaptersList"));
 const PostsPanel_1 = __importDefault(require("../components/PostsPanel/PostsPanel"));
+const styled_components_1 = __importDefault(require("styled-components"));
 const PanelPostsAddingPage = () => {
     const [postType, setPostType] = react_1.useState("");
     const [storyTitle, setStoryTitle] = react_1.useState("");
@@ -33,11 +34,17 @@ const PanelPostsAddingPage = () => {
     const handlePostType = (event) => {
         setPostType(event.target.value);
     };
+    const StyledSelect = styled_components_1.default.div `
+    .MuiInputBase-root{
+        color: white;
+      }
+    `;
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(core_1.Select, { value: postType, onChange: handlePostType },
-            react_1.default.createElement(core_1.MenuItem, { value: "Main" }, lang === "en" ? "Main" : "Wpis"),
-            react_1.default.createElement(core_1.MenuItem, { value: "Chapter" }, lang === "en" ? "Chapter" : "Rozdział"),
-            react_1.default.createElement(core_1.MenuItem, { value: "About" }, lang === "en" ? "About" : "O mnie")),
+        react_1.default.createElement(StyledSelect, null,
+            react_1.default.createElement(core_1.Select, { value: postType, onChange: handlePostType },
+                react_1.default.createElement(core_1.MenuItem, { value: "Main" }, lang === "en" ? "Main" : "Wpis"),
+                react_1.default.createElement(core_1.MenuItem, { value: "Chapter" }, lang === "en" ? "Chapter" : "Rozdział"),
+                react_1.default.createElement(core_1.MenuItem, { value: "About" }, lang === "en" ? "About" : "O mnie"))),
         react_1.default.createElement("div", null),
         postType === "Chapter" ? react_1.default.createElement(ChaptersList_1.default, { setPostTitle: setStoryTitle }) : react_1.default.createElement(react_1.default.Fragment, null),
         postType === "Main" || postType === "About" || storyTitle ? react_1.default.createElement(PostsPanel_1.default, { contentTitle: storyTitle || postType }) : react_1.default.createElement(react_1.default.Fragment, null)));

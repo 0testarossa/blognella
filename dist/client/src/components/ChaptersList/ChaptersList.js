@@ -18,10 +18,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
 const core_1 = require("@material-ui/core");
 const Post_1 = require("../../APIRequests/Post");
+const styled_components_1 = __importDefault(require("styled-components"));
 const ChaptersList = (props) => {
     const [mainPosts, setMainPosts] = react_1.useState([]);
     const [postTitle, setPostTitle] = react_1.useState("");
@@ -50,7 +54,12 @@ const ChaptersList = (props) => {
     const getTitleList = () => {
         return mainPosts.map((postTitle) => react_1.default.createElement(core_1.MenuItem, { key: postTitle, value: postTitle }, postTitle));
     };
-    return (react_1.default.createElement(react_1.default.Fragment, null,
+    const StyledSelect = styled_components_1.default.div `
+    .MuiInputBase-root{
+        color: white;
+      }
+    `;
+    return (react_1.default.createElement(StyledSelect, null,
         react_1.default.createElement(core_1.Select, { value: postTitle, onChange: handlePostTitle }, getTitleList())));
 };
 exports.default = ChaptersList;

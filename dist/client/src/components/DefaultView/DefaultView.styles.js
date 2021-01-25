@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StyledAdminPanelContainer = exports.MainContentContainer = exports.AboutSection = exports.MainViewTabsContainerWrapper = exports.MainViewTabsContainer = exports.LoginRegisterContainer = exports.LinkElement = exports.LinksContainer = exports.LogoContainer = exports.Logo = void 0;
+exports.StyledAdminPanelContainer = exports.MainContentContainer = exports.AboutSection = exports.MainViewTabsContainerWrapper = exports.MainViewTabsContainer = exports.LoginRegisterContainer = exports.SearchElement = exports.LinkLoginElement = exports.LinkElement = exports.LinksContainer = exports.LogoContainer = exports.Logo = void 0;
 const styled_components_1 = __importDefault(require("styled-components"));
 exports.Logo = styled_components_1.default.div `
     font-family: Roboto;
@@ -28,6 +28,31 @@ exports.LinkElement = styled_components_1.default.div `
     border-left: 1px solid #404040;
     border-right: 0 solid #404040;
 
+    a{
+        text-decoration: underline;
+    }
+
+    &:hover{
+        color: #ffffff;
+        background-color: #000000;
+        text-decoration: none;
+    }
+
+    &>a:hover{
+        color: #ffffff;
+        cursor: pointer;
+    }
+`;
+exports.LinkLoginElement = styled_components_1.default.div `
+    color: #ffffff;
+    padding: 1rem;
+    float: left;
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
+    border-left: 1px solid #404040;
+    border-right: 0 solid #404040;
+    height: fit-content;
+
     &:hover{
         color: #ffffff;
         background-color: #000000;
@@ -38,10 +63,20 @@ exports.LinkElement = styled_components_1.default.div `
         color: #ffffff;
     }
 `;
+exports.SearchElement = styled_components_1.default.div `
+    color: #ffffff;
+    padding: 1rem;
+    float: left;
+    padding-bottom: 0rem;
+    padding-top: 0.5rem;
+    border-left: 1px solid #404040;
+    border-right: 0 solid #404040;
+`;
 exports.LoginRegisterContainer = styled_components_1.default.div `
     display:flex;
     justify-content: flex-end;
     background: #333333;
+    align-items: flex-end;
 `;
 exports.MainViewTabsContainer = styled_components_1.default.div `
     display:flex;
@@ -73,10 +108,17 @@ exports.MainContentContainer = styled_components_1.default.div `
     justify-content: space-between;
     flex-grow: 1;
     padding-top: 1rem;
+    padding-bottom: 2rem;
 `;
 exports.StyledAdminPanelContainer = styled_components_1.default.div `
     display:flex;
     height: 100%;
     /* flex-direction: column; */
+    a{
+        text-decoration:none;
+    }
+    a:hover{
+        color: #00cccb;
+    }
 `;
 //# sourceMappingURL=DefaultView.styles.js.map
