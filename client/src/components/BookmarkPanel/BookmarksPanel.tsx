@@ -39,7 +39,7 @@ const BookmarksPanel = (props) => {
             }}> {bookmark.title} </Link> }
           />
           <ListItemSecondaryAction>
-            <IconButton edge="end" aria-label="delete" onClick={() => onBookmarkDelete(bookmark)}>
+            <IconButton style={{color: "white"}} edge="end" aria-label="delete" onClick={() => onBookmarkDelete(bookmark)}>
               <DeleteIcon/>
             </IconButton>
           </ListItemSecondaryAction>

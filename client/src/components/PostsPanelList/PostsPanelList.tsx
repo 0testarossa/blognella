@@ -40,7 +40,7 @@ const PostsPanelList = (props) => {
                 }}> {post.title} </Link> }
           />
           <ListItemSecondaryAction>
-            <IconButton edge="end" aria-label="delete" onClick={() => onPostDelete(post)}>
+            <IconButton style={{color: "white"}} edge="end" aria-label="delete" onClick={() => onPostDelete(post)}>
               <DeleteIcon/>
             </IconButton>
           </ListItemSecondaryAction>

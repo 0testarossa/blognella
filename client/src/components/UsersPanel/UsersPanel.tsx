@@ -56,7 +56,7 @@ const UsersPanel = (props) => {
           />
           <ListItemSecondaryAction>
             {user.nick !== actualAdminNick ? 
-            <IconButton edge="end" aria-label="delete" onClick={() => onUserDelete(user)}>
+            <IconButton style={{color: "white"}} edge="end" aria-label="delete" onClick={() => onUserDelete(user)}>
               <DeleteIcon/>
             </IconButton>
             : <div/>}

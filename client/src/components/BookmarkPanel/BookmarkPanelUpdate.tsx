@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { updateBookmark } from "../../APIRequests/Bookmark";
 import { getPosts, PostProps } from "../../APIRequests/Post";
+import { StyledPanel } from "./BookmarkPanel.Styles";
 
 const BookmarkPanelUpdate = (props) => {
     const [postId, setPostId] = useState(props.bookmark.post.length > 0 ? props.bookmark.post[0]._id : "");
@@ -47,7 +48,7 @@ const BookmarkPanelUpdate = (props) => {
     }
 
     return (
-        <>
+        <StyledPanel>
          <Select
           value={postId}
           onChange={handlePostId}
@@ -70,7 +71,7 @@ const BookmarkPanelUpdate = (props) => {
         <Button variant="contained" color="primary" onClick={onBookmarkSave}>
             {lang === "en" ? "Save Bookmark" : "Zapisz Zakładkę"}
         </Button>
-        </>
+        </StyledPanel>
     )
 }
 
