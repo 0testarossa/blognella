@@ -37,7 +37,7 @@ export default function BasicExample() {
              <Route path="/login/forget"><App page={LoginForgetPage}/></Route>
              <Route path="/login"><App page={LoginPage}/></Route>
              <Route path="/search"><App page={SearchPage}/></Route>
-             <Route path="/post/:id"><App page={PostPage}/></Route>
+             <Route path="/ui/post/:id"><App page={PostPage}/></Route>
              <Route path="/panel/tags"><App page={PanelTagsPage}/></Route>
              <Route path="/panel/posts/add"><App page={PanelPostsAddingPage}/></Route>
              <Route path="/panel/posts/:id"><App page={PanelPostsUpdatingPage}/></Route>

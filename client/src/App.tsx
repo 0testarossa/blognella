@@ -10,7 +10,7 @@ import DefaultViewAbout from './components/DefaultView/DefaultViewAbout';
 import './components/globalStyles/globalStyles.css';
 import { MainViewContainer } from './components/MainView/MainView.styles';
 
-export const availablePages = ["/register", "/login/forget", "/login", "/post/:id", "/search", "/"]
+export const availablePages = ["/register", "/login/forget", "/login", "/ui/post/:id", "/search", "/"]
 
 const App: React.FC = (props:any) => {
   const [role, setRole] = useState("");

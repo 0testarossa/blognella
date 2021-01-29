@@ -40,7 +40,7 @@ const SearchList = (props) => {
     const getListItems = () => {
         return allPosts.map((post) => react_1.default.createElement(core_1.ListItem, { key: post._id },
             react_1.default.createElement(core_1.ListItemText, { primary: react_1.default.createElement(react_router_dom_1.Link, { to: {
-                        pathname: `/post/${post._id}`,
+                        pathname: `/ui/post/${post._id}`,
                     } },
                     " ",
                     post.title,

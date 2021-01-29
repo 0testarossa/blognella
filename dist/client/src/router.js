@@ -45,7 +45,7 @@ function BasicExample() {
                 react_1.default.createElement(App_1.default, { page: loginPage_1.default })),
             react_1.default.createElement(react_router_dom_1.Route, { path: "/search" },
                 react_1.default.createElement(App_1.default, { page: searchPage_1.default })),
-            react_1.default.createElement(react_router_dom_1.Route, { path: "/post/:id" },
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/ui/post/:id" },
                 react_1.default.createElement(App_1.default, { page: postPage_1.default })),
             react_1.default.createElement(react_router_dom_1.Route, { path: "/panel/tags" },
                 react_1.default.createElement(App_1.default, { page: panelTagsPage_1.default })),

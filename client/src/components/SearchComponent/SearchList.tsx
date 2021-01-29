@@ -25,7 +25,7 @@ const SearchList = (props) => {
         <ListItem key={post._id}>
         <ListItemText
            primary={ <Link to={{
-            pathname: `/post/${post._id}`,
+            pathname: `/ui/post/${post._id}`,
             }}> {post.title} </Link> }
         />
       </ListItem>

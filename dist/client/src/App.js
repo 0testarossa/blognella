@@ -33,7 +33,7 @@ const DefaultView_styles_1 = require("./components/DefaultView/DefaultView.style
 const DefaultViewAbout_1 = __importDefault(require("./components/DefaultView/DefaultViewAbout"));
 require("./components/globalStyles/globalStyles.css");
 const MainView_styles_1 = require("./components/MainView/MainView.styles");
-exports.availablePages = ["/register", "/login/forget", "/login", "/post/:id", "/search", "/"];
+exports.availablePages = ["/register", "/login/forget", "/login", "/ui/post/:id", "/search", "/"];
 const App = (props) => {
     const [role, setRole] = react_1.useState("");
     const fetchUser = () => {
