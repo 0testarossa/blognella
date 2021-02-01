@@ -60,7 +60,8 @@ const addTag = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     catch (error) {
         console.log("myerror");
         console.log(error);
-        res.status(403).json("Fordidden");
+        // res.status(403).json("Fordidden");
+        res.status(403).json(error);
     }
 });
 exports.addTag = addTag;
@@ -80,7 +81,8 @@ const updateTag = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     catch (error) {
         console.log("myerror");
         console.log(error);
-        res.status(403).json("Fordidden");
+        // res.status(403).json("Fordidden");
+        res.status(403).json(error);
     }
 });
 exports.updateTag = updateTag;

@@ -40,8 +40,12 @@ const createUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
         return savedUser;
     }
     catch (error) {
-        //   throw new Error(error)
-        return { data: [], status: 403 };
+        if (error.response.status === 403) {
+            return { data: error.response.data.errors, status: 403 };
+        }
+        else {
+            return { data: {}, status: 500 };
+        }
     }
 });
 exports.createUser = createUser;
@@ -52,7 +56,12 @@ const updateUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
     }
     catch (error) {
         //   throw new Error(error)
-        return { data: [], status: 403 };
+        if (error.response.status === 403) {
+            return { data: error.response.data.keyValue, status: 403 };
+        }
+        else {
+            return { data: {}, status: 500 };
+        }
     }
 });
 exports.updateUser = updateUser;

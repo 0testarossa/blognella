@@ -41,7 +41,17 @@ const createPost = (post) => __awaiter(void 0, void 0, void 0, function* () {
     }
     catch (error) {
         //   throw new Error(error)
-        return { data: [], status: 403 };
+        if (error.response.status === 403) {
+            console.log("dat");
+            console.log(error.response);
+            return { data: error.response.data.errors, status: 403 };
+        }
+        else if (error.response.status === 409) {
+            return { data: {}, status: 409 };
+        }
+        else {
+            return { data: {}, status: 500 };
+        }
     }
 });
 exports.createPost = createPost;
@@ -52,7 +62,12 @@ const updatePost = (post) => __awaiter(void 0, void 0, void 0, function* () {
     }
     catch (error) {
         //   throw new Error(error)
-        return { data: [], status: 403 };
+        if (error.response.status === 403) {
+            return { data: error.response.data.keyValue, status: 403 };
+        }
+        else {
+            return { data: {}, status: 500 };
+        }
     }
 });
 exports.updatePost = updatePost;

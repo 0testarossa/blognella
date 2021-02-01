@@ -1,13 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import TextField from '@material-ui/core/TextField';
-import { Button, Chip, Input, makeStyles, MenuItem, Select, useTheme } from '@material-ui/core';
+import { Button, Chip, Input, makeStyles, MenuItem, Popover, Select, Typography, useTheme } from '@material-ui/core';
 import { updateContent } from '../../APIRequests/Content';
 import { getTags, TagProps } from '../../APIRequests/Tag';
 import { updatePost } from '../../APIRequests/Post';
 import DatePicker from 'react-date-picker';
 import { withRouter } from 'react-router-dom';
 import { StyledPanel } from './PostsPanel.styles';
+import { getUniqueValidatorMsg, getValidatorMsg } from '../validators/validatorMsg';
+import postValidate from '../validators/postValidator';
 
 const useStyles = makeStyles(() => ({
     chips: {
@@ -51,13 +53,16 @@ const UpdatePostsPanel = (props) => {
     // const [date, setDate] = useState<any>(props.post.date);
     const [user, setUser] = useState(props.post.user);
     const lang = localStorage.getItem("blognellaLang");
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [errorMsg, setErrorMsg] = useState<string[]>([])
 
 
     const handleEditorChange = (e) => {
         setData(e.target.getContent());
     }
 
-    const onContentSave = () => {
+    const onContentSave = (event) => {
+        event.persist();
         const content = {
             text: data,
             title: props.contentTitle,
@@ -69,6 +74,7 @@ const UpdatePostsPanel = (props) => {
                   throw new Error('Error! Content not saved')
                 }
                 // setContentId(data.content._id);
+                setAnchorEl(event.target);
                 onPostSave()
               })
     }
@@ -93,13 +99,24 @@ const UpdatePostsPanel = (props) => {
             user: user
         }
 
-        updatePost(post)
-        .then(({ status}) => {
-            if (status !== 200) {
-              throw new Error('Error! Post not saved')
+        postValidate(post, lang)
+        .then((data) => {
+            if(data.length > 0) {
+                setErrorMsg(data);
+            } else {
+                updatePost(post)
+                .then(({data, status}: any) => {
+                    if(status !== 403 && status !== 500) {
+                        props.history.push("/panel/posts");
+                    }
+                    else if(status === 403) {
+                        setErrorMsg(getUniqueValidatorMsg(data, lang))
+                    } else {
+                      setErrorMsg([lang === "en" ? "There are server problems" : "Wystąpiły problemy z serwerem"])
+                  }
+                });
             }
-          })
-        props.history.push("/panel/posts");
+        });
     }
 
     const handleChange = (event) => {
@@ -179,6 +196,22 @@ const UpdatePostsPanel = (props) => {
         <Button variant="contained" color="primary" onClick={onContentSave}>
                     {lang === "en" ? "Save Post" : "Zapisz post"}
          </Button>
+         <Popover
+                id={Boolean(anchorEl) ? 'simple-popover' : undefined}
+                open={Boolean(anchorEl)}
+                anchorEl={anchorEl}
+                onClose={() => {setAnchorEl(null); setErrorMsg([]);}}
+                anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+                }}
+                transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+                }}
+            >
+                <Typography>{getValidatorMsg(errorMsg)}</Typography>
+          </Popover>
       </StyledPanel>
     )
 }

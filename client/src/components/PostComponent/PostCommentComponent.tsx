@@ -1,14 +1,19 @@
+import { Popover, Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { deleteComment, updateComment } from "../../APIRequests/Comment";
+import commentValidate from "../validators/commentValidator";
+import { getUniqueValidatorMsg, getValidatorMsg } from "../validators/validatorMsg";
 import { StyledComponentTextField, StyledCommentAuthor, StyledCommentButton} from "./PostComment.styles";
 
 const PostCommentComponent = (props) => {
     const [isEditingMode, setIsEditingMode] = useState(false);
     const [commentText, setCommentText] = useState(props.comment.text);
     const lang = localStorage.getItem("blognellaLang");
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [errorMsg, setErrorMsg] = useState<string[]>([])
 
     const canEdit = props.role !== "guest" && (props.comment.user === props.nick || props.role === "admin" )
 
@@ -23,12 +28,13 @@ const PostCommentComponent = (props) => {
             if (status !== 200) {
                 throw new Error('Error! Comment not deleted')
             }
+            window.location.reload();
             })
             .catch((err) => console.log(err))
     }
 
-    const onSaveEditedComment = () => {
-        setIsEditingMode(!isEditingMode);
+    const onSaveEditedComment = (event) => {
+        event.persist();
 
         const comment = {
             _id: props.comment._id,
@@ -36,14 +42,38 @@ const PostCommentComponent = (props) => {
             text: commentText,
             user: props.comment.user
         }
-        updateComment(comment)
-        .then(({ status}) => {
-            if (status !== 200) {
-            throw new Error('Error! Comment not saved')
+        commentValidate(comment, lang)
+        .then((data) => {
+            if(data.length > 0) {
+                setErrorMsg(data);
+                setAnchorEl(event.target);
+            } else {
+                updateComment(comment)
+                .then(({data, status}: any) => {
+                    if(status !== 403 && status !== 500) {
+                        setIsEditingMode(!isEditingMode);
+                        window.location.reload();
+                    }
+                    else if(status === 403) {
+                        setErrorMsg(getUniqueValidatorMsg(data, lang))
+                        setAnchorEl(event.target);
+                    } else {
+                        setErrorMsg([lang === "en" ? "There are server problems" : "Wystąpiły problemy z serwerem"])
+                        setAnchorEl(event.target);
+                    }
+                });
             }
-        })
-        .catch((err) => console.log(err))
-        window.location.reload();
+        });
+
+
+        // updateComment(comment)
+        // .then(({ status}) => {
+        //     if (status !== 200) {
+        //     throw new Error('Error! Comment not saved')
+        //     }
+        // })
+        // .catch((err) => console.log(err))
+        // window.location.reload();
     }
 
     return (
@@ -74,6 +104,22 @@ const PostCommentComponent = (props) => {
                 <Button variant="contained" color="primary" onClick={onSaveEditedComment}>
                     {lang === "en" ? "Save Comment" : "Zapisz Komentarz"}
                 </Button> : <></>}
+                <Popover
+                id={Boolean(anchorEl) ? 'simple-popover' : undefined}
+                open={Boolean(anchorEl)}
+                anchorEl={anchorEl}
+                onClose={() => setAnchorEl(null)}
+                anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+                }}
+                transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+                }}
+                >
+                <Typography>{getValidatorMsg(errorMsg)}</Typography>
+                </Popover>
             </StyledComponentTextField>
         </>
     )

@@ -85,7 +85,8 @@ const addUser = async (req, res) => {
     } catch (error) {
         console.log("myerror");
         console.log(error);
-        res.status(403).json("Fordidden");
+        res.status(403).json(error);
+        // res.status(403).json("Fordidden");
     }
 }
 
@@ -120,7 +121,8 @@ const updateUser = async (req, res) => {
     } catch (error) {
         console.log("myerror");
         console.log(error);
-        res.status(403).json("Fordidden");
+        res.status(403).json(error);
+        // res.status(403).json("Fordidden");
     }
 }
 

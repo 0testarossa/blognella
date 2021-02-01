@@ -93,7 +93,8 @@ const addUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     catch (error) {
         console.log("myerror");
         console.log(error);
-        res.status(403).json("Fordidden");
+        res.status(403).json(error);
+        // res.status(403).json("Fordidden");
     }
 });
 exports.addUser = addUser;
@@ -119,7 +120,8 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     catch (error) {
         console.log("myerror");
         console.log(error);
-        res.status(403).json("Fordidden");
+        res.status(403).json(error);
+        // res.status(403).json("Fordidden");
     }
 });
 exports.updateUser = updateUser;

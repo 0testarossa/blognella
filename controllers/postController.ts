@@ -51,7 +51,7 @@ const addPost = async (req, res) => {
             const posts = await Post.find().populate("content");
             const aboutPost = posts.find((nextPost) => nextPost.content[0].title === "About");
             if(aboutPost) {
-                res.status(403).json("Fordidden");
+                res.status(409).json({data: "only one about post allowed"});
                 return;
             }
         }
@@ -74,7 +74,8 @@ const addPost = async (req, res) => {
     } catch (error) {
         console.log("myerror");
         console.log(error);
-        res.status(403).json("Fordidden");
+        // res.status(403).json("Fordidden");
+        res.status(403).json(error);
     }
 }
 
@@ -103,7 +104,8 @@ const updatePost = async (req, res) => {
     } catch (error) {
         console.log("myerror");
         console.log(error);
-        res.status(403).json("Fordidden");
+        // res.status(403).json("Fordidden");
+        res.status(403).json(error);
     }
 }
 

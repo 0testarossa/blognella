@@ -1,9 +1,11 @@
 import React, {useState} from "react";
 import TextField from '@material-ui/core/TextField';
-import { Button } from "@material-ui/core";
+import { Button, Popover, Typography } from "@material-ui/core";
 import { FormItem, LogicControls, StyledRegisterForm } from "./RegisterForm.styles";
 import { createUser } from "../../APIRequests/User";
 import { Link, withRouter } from "react-router-dom";
+import { getUniqueValidatorMsg, getValidatorMsg } from "../validators/validatorMsg";
+import userValidate from "../validators/userValidator";
 
 const RegisterForm = (props) => {
     const [nick, setNick] = useState("");
@@ -11,13 +13,12 @@ const RegisterForm = (props) => {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const lang = localStorage.getItem("blognellaLang");
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [errorMsg, setErrorMsg] = useState<string[]>([])
     
 
-    const onUserSave = () => {
-        console.log(nick);
-        console.log(login);
-        console.log(password);
-        console.log(email);
+    const onUserSave = (event) => {
+        event.persist();
         const user = {
             nick:nick,
             login:login,
@@ -25,17 +26,27 @@ const RegisterForm = (props) => {
             email:email,
             role:"loggedUser"
         }
-        createUser(user)
-        .then(({ status, data }) => {
-            console.log("zwrotna data");
-            console.log(data);
-            if (status !== 201) {
-              throw new Error('Error! User not saved')
+        userValidate(user, lang)
+        .then((data) => {
+            if(data.length > 0) {
+                setErrorMsg(data);
+                setAnchorEl(event.target);
+            } else {
+                createUser(user)
+                .then(({data, status}: any) => {
+                    if(status !== 403 && status !== 500) {
+                        props.history.push("/");
+                    }
+                    else if(status === 403) {
+                        setErrorMsg(getUniqueValidatorMsg(data, lang))
+                        setAnchorEl(event.target);
+                    } else {
+                        setErrorMsg([lang === "en" ? "There are server problems" : "Wystąpiły problemy z serwerem"])
+                        setAnchorEl(event.target);
+                    }
+                });
             }
-            // setTodos(data.todos)
-          })
-          .catch((err) => console.log(err))
-        props.history.push("/");
+        });
     }
 
     return (
@@ -98,12 +109,28 @@ const RegisterForm = (props) => {
                     />
                 </FormItem>
                 <LogicControls>
-                    <div>{lang === "en" ? "Have already account? " : "Masz już konto?"}
+                    <div>{lang === "en" ? "Have already account? " : "Masz już konto? "}
                     <Link to={"/login"}>{lang === "en" ? "Login" : "Zaloguj się"}</Link>
                     </div>
                     <Button variant="contained" color="primary" onClick={onUserSave}>
                         {lang === "en" ? "Register" : "Zarejestruj się"}
                     </Button>
+                    <Popover
+                    id={Boolean(anchorEl) ? 'simple-popover' : undefined}
+                    open={Boolean(anchorEl)}
+                    anchorEl={anchorEl}
+                    onClose={() => setAnchorEl(null)}
+                    anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                    }}
+                    transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                    }}
+                    >
+                        <Typography>{getValidatorMsg(errorMsg)}</Typography>
+                    </Popover>
                 </LogicControls>
             </StyledRegisterForm>
         </>

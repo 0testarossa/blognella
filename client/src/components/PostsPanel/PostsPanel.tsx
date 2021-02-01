@@ -1,14 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import TextField from '@material-ui/core/TextField';
-import { Button, Chip, Input, makeStyles, MenuItem, Select, useTheme } from '@material-ui/core';
-import { createContent } from '../../APIRequests/Content';
+import { Button, Chip, Input, makeStyles, MenuItem, Popover, Select, Typography, useTheme } from '@material-ui/core';
+import { createContent, deleteContent } from '../../APIRequests/Content';
 import { getTags, TagProps } from '../../APIRequests/Tag';
 import { createPost } from '../../APIRequests/Post';
 import DatePicker from 'react-date-picker';
 import { getUser, UserProps } from '../../APIRequests/User';
 import { withRouter } from 'react-router-dom';
 import { StyledPanel } from './PostsPanel.styles';
+import { getUniqueValidatorMsg, getValidatorMsg } from '../validators/validatorMsg';
+import postValidate from '../validators/postValidator';
 
 const useStyles = makeStyles(() => ({
     chips: {
@@ -51,13 +53,16 @@ const PostsPanel = (props) => {
     const [date, setDate] = useState<any>(new Date());
     const [user, setUser] = useState("");
     const lang = localStorage.getItem("blognellaLang");
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [errorMsg, setErrorMsg] = useState<string[]>([])
 
 
     const handleEditorChange = (e) => {
         setData(e.target.getContent());
     }
 
-    const onContentSave = () => {
+    const onContentSave = (event) => {
+        event.persist();
         const content = {
             text: data,
             title: props.contentTitle
@@ -66,9 +71,10 @@ const PostsPanel = (props) => {
         createContent(content)
         .then(({ status, data }) => {
                 if (status !== 201) {
-                  throw new Error('Error! Post not saved')
+                  throw new Error('Error! Content not saved')
                 }
                 setContentId(data.content._id);
+                setAnchorEl(event.target);
               })
     }
 
@@ -110,8 +116,30 @@ const PostsPanel = (props) => {
             content: contentId,
             user: user
         }
-        createPost(post);
-        props.history.push("/panel/posts");
+        postValidate(post, lang)
+        .then((data) => {
+            if(data.length > 0) {
+                setErrorMsg(data);
+                deleteContent(contentId || "")
+            } else {
+                createPost(post)
+                .then(({data, status}: any) => {
+                    if(status !== 403 && status !== 409 && status !== 500) {
+                        props.history.push("/panel/posts");
+                    }
+                    else if(status === 403) {
+                        setErrorMsg(getUniqueValidatorMsg(data, lang))
+                        deleteContent(contentId || "")
+                    } else if(status === 409){
+                        setErrorMsg([lang === "en" ? "Only one post of type 'About' is allowed" : "Tylko jeden wpis typu 'O mnie' jest dozwolony"])
+                        deleteContent(contentId || "")
+                    } else {
+                      setErrorMsg([lang === "en" ? "There are server problems" : "Wystąpiły problemy z serwerem"])
+                      deleteContent(contentId || "")
+                  }
+                });
+            }
+        });
     }
 
     const handleChange = (event) => {
@@ -189,6 +217,22 @@ const PostsPanel = (props) => {
         <Button variant="contained" color="primary" onClick={onContentSave}>
                     {lang === "en" ? "Save Post" : "Zapisz Wpis"}
          </Button>
+         <Popover
+                id={Boolean(anchorEl) ? 'simple-popover' : undefined}
+                open={Boolean(anchorEl)}
+                anchorEl={anchorEl}
+                onClose={() => {setAnchorEl(null); setErrorMsg([]);}}
+                anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+                }}
+                transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+                }}
+            >
+                <Typography>{getValidatorMsg(errorMsg)}</Typography>
+          </Popover>
       </StyledPanel>
 
 

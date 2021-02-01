@@ -1,7 +1,9 @@
-import { Button, MenuItem, Select, TextField } from "@material-ui/core";
+import { Button, MenuItem, Popover, Select, TextField, Typography } from "@material-ui/core";
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { createUser } from "../../APIRequests/User";
+import userValidate from "../validators/userValidator";
+import { getUniqueValidatorMsg, getValidatorMsg } from "../validators/validatorMsg";
 import { StyledPanel } from "./UserPanel.styles";
 
 const allUsersRoles = ["loggedUser", "admin"];
@@ -13,12 +15,14 @@ const UserPanelAdd = (props) => {
     const [role, setRole] = useState("");
     const [email, setEmail] = useState("");
     const lang = localStorage.getItem("blognellaLang");
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [errorMsg, setErrorMsg] = useState<string[]>([])
 
     const handleUserRole = (event) => {
         setRole(event.target.value);
     };
-
-    const onUserSave = () => {
+    const onUserSave = (event) => {
+        event.persist();
         const user = {
             nick: nick,
             login: login,
@@ -26,8 +30,27 @@ const UserPanelAdd = (props) => {
             role: role,
             email: email,
         }
-        createUser(user);
-        props.history.push("/panel/users");
+        userValidate(user, lang)
+        .then((data) => {
+            if(data.length > 0) {
+                setErrorMsg(data);
+                setAnchorEl(event.target);
+            } else {
+                createUser(user)
+                .then(({data, status}: any) => {
+                    if(status !== 403 && status !== 500) {
+                        props.history.push("/panel/users");
+                    }
+                    else if(status === 403) {
+                        setErrorMsg(getUniqueValidatorMsg(data, lang))
+                        setAnchorEl(event.target);
+                    } else {
+                        setErrorMsg([lang === "en" ? "There are server problems" : "Wystąpiły problemy z serwerem"])
+                        setAnchorEl(event.target);
+                    }
+                });
+            }
+        });
     }
 
     const getUsersRoles = () => {
@@ -92,6 +115,22 @@ const UserPanelAdd = (props) => {
             <Button variant="contained" color="primary" onClick={onUserSave}>
                 {lang === "en" ? "Save User" : "Zapisz Użytkownika"}
             </Button>
+            <Popover
+                id={Boolean(anchorEl) ? 'simple-popover' : undefined}
+                open={Boolean(anchorEl)}
+                anchorEl={anchorEl}
+                onClose={() => setAnchorEl(null)}
+                anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+                }}
+                transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+                }}
+            >
+                <Typography>{getValidatorMsg(errorMsg)}</Typography>
+            </Popover>
         </StyledPanel>
     )
 }

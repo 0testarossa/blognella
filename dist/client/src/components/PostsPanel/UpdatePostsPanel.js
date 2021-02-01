@@ -32,6 +32,8 @@ const Post_1 = require("../../APIRequests/Post");
 const react_date_picker_1 = __importDefault(require("react-date-picker"));
 const react_router_dom_1 = require("react-router-dom");
 const PostsPanel_styles_1 = require("./PostsPanel.styles");
+const validatorMsg_1 = require("../validators/validatorMsg");
+const postValidator_1 = __importDefault(require("../validators/postValidator"));
 const useStyles = core_1.makeStyles(() => ({
     chips: {
         display: 'flex',
@@ -70,10 +72,13 @@ const UpdatePostsPanel = (props) => {
     // const [date, setDate] = useState<any>(props.post.date);
     const [user, setUser] = react_1.useState(props.post.user);
     const lang = localStorage.getItem("blognellaLang");
+    const [anchorEl, setAnchorEl] = react_1.useState(null);
+    const [errorMsg, setErrorMsg] = react_1.useState([]);
     const handleEditorChange = (e) => {
         setData(e.target.getContent());
     };
-    const onContentSave = () => {
+    const onContentSave = (event) => {
+        event.persist();
         const content = {
             text: data,
             title: props.contentTitle,
@@ -85,6 +90,7 @@ const UpdatePostsPanel = (props) => {
                 throw new Error('Error! Content not saved');
             }
             // setContentId(data.content._id);
+            setAnchorEl(event.target);
             onPostSave();
         });
     };
@@ -105,13 +111,26 @@ const UpdatePostsPanel = (props) => {
             _id: props.post._id,
             user: user
         };
-        Post_1.updatePost(post)
-            .then(({ status }) => {
-            if (status !== 200) {
-                throw new Error('Error! Post not saved');
+        postValidator_1.default(post, lang)
+            .then((data) => {
+            if (data.length > 0) {
+                setErrorMsg(data);
+            }
+            else {
+                Post_1.updatePost(post)
+                    .then(({ data, status }) => {
+                    if (status !== 403 && status !== 500) {
+                        props.history.push("/panel/posts");
+                    }
+                    else if (status === 403) {
+                        setErrorMsg(validatorMsg_1.getUniqueValidatorMsg(data, lang));
+                    }
+                    else {
+                        setErrorMsg([lang === "en" ? "There are server problems" : "Wystąpiły problemy z serwerem"]);
+                    }
+                });
             }
         });
-        props.history.push("/panel/posts");
     };
     const handleChange = (event) => {
         setTags(event.target.value);
@@ -132,7 +151,15 @@ const UpdatePostsPanel = (props) => {
         react_1.default.createElement("div", null, lang === "en" ? "Add tags to post" : "Dodaj etykiety do wpisu"),
         react_1.default.createElement(core_1.Select, { labelId: "demo-mutiple-chip-label", multiple: true, value: tags, onChange: handleChange, input: react_1.default.createElement(core_1.Input, { id: "select-multiple-chip" }), renderValue: (selected) => (react_1.default.createElement("div", { className: classes.chips }, selected.map((value) => (react_1.default.createElement(core_1.Chip, { key: value, label: value, className: classes.chip }))))), MenuProps: MenuProps }, allTags.map((name) => (react_1.default.createElement(core_1.MenuItem, { key: name, value: name, style: getStyles(name, tags, theme) }, name)))),
         react_1.default.createElement("div", null),
-        react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onContentSave }, lang === "en" ? "Save Post" : "Zapisz post")));
+        react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onContentSave }, lang === "en" ? "Save Post" : "Zapisz post"),
+        react_1.default.createElement(core_1.Popover, { id: Boolean(anchorEl) ? 'simple-popover' : undefined, open: Boolean(anchorEl), anchorEl: anchorEl, onClose: () => { setAnchorEl(null); setErrorMsg([]); }, anchorOrigin: {
+                vertical: 'bottom',
+                horizontal: 'center',
+            }, transformOrigin: {
+                vertical: 'top',
+                horizontal: 'center',
+            } },
+            react_1.default.createElement(core_1.Typography, null, validatorMsg_1.getValidatorMsg(errorMsg)))));
 };
 exports.default = react_router_dom_1.withRouter(UpdatePostsPanel);
 //# sourceMappingURL=UpdatePostsPanel.js.map

@@ -49,7 +49,8 @@ const addTag = async (req, res) => {
     } catch (error) {
         console.log("myerror");
         console.log(error);
-        res.status(403).json("Fordidden");
+        // res.status(403).json("Fordidden");
+        res.status(403).json(error);
     }
 }
 
@@ -78,7 +79,8 @@ const updateTag = async (req, res) => {
     } catch (error) {
         console.log("myerror");
         console.log(error);
-        res.status(403).json("Fordidden");
+        // res.status(403).json("Fordidden");
+        res.status(403).json(error);
     }
 }
 

@@ -74,7 +74,8 @@ const addBookmark = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     catch (error) {
         console.log("myerror");
         console.log(error);
-        res.status(403).json("Fordidden");
+        // res.status(403).json("Fordidden");
+        res.status(403).json(error);
     }
 });
 exports.addBookmark = addBookmark;
@@ -94,7 +95,8 @@ const updateBookmark = (req, res) => __awaiter(void 0, void 0, void 0, function*
     catch (error) {
         console.log("myerror");
         console.log(error);
-        res.status(403).json("Fordidden");
+        // res.status(403).json("Fordidden");
+        res.status(403).json(error);
     }
 });
 exports.updateBookmark = updateBookmark;

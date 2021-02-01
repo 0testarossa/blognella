@@ -35,3 +35,16 @@ export const createContent = async (
         return {data: [], status: 403}
     }
   }
+
+  export const deleteContent = async (
+    _id: string
+  ) => {
+    try {
+      const deletedContent = await axios.delete(
+        `/content/${_id}`
+      )
+      return deletedContent
+    } catch (error) {
+      throw new Error(error)
+    }
+  }

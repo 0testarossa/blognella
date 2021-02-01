@@ -1,22 +1,29 @@
 import React, {useState} from "react";
 import { FormItem, LogicControls, StyledLoginForm } from "./LoginForm.styles";
 import TextField from '@material-ui/core/TextField';
-import { Button } from "@material-ui/core";
+import { Button, Popover, Typography } from "@material-ui/core";
 import { Link, withRouter } from "react-router-dom";
 import { getUsers, UserProps } from "../../APIRequests/User";
+import { getValidatorMsg } from "../validators/validatorMsg";
 
 const LoginForm = (props) => {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const lang = localStorage.getItem("blognellaLang");
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [errorMsg, setErrorMsg] = useState<string[]>([])
 
-    const onSubmit = () => {
+    const onSubmit = (event) => {
+        event.persist();
         getUsers()
         .then(({ data: { users } }: UserProps[] | any) => {
             const user = users.find((user) => user.login === login && user.password === password)
             if(user) {
                 localStorage.setItem('blognellaId', user._id);
                 props.history.push('/');
+            } else {
+                setErrorMsg([lang === "en" ? "Invalid login or password" : "Nieprawidłowy login lub hasło"])
+                setAnchorEl(event.target);
             }
         })
         .catch((err: Error) => console.log(err))
@@ -58,6 +65,22 @@ const LoginForm = (props) => {
                     <Button variant="contained" color="primary" onClick={onSubmit}>
                         {lang === "en" ? "Login" : "Zaloguj"}
                     </Button>
+                    <Popover
+                    id={Boolean(anchorEl) ? 'simple-popover' : undefined}
+                    open={Boolean(anchorEl)}
+                    anchorEl={anchorEl}
+                    onClose={() => setAnchorEl(null)}
+                    anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                    }}
+                    transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                    }}
+                    >
+                        <Typography>{getValidatorMsg(errorMsg)}</Typography>
+                    </Popover>
                 </LogicControls>
             </StyledLoginForm>
         </>

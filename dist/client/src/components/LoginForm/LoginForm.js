@@ -28,17 +28,25 @@ const TextField_1 = __importDefault(require("@material-ui/core/TextField"));
 const core_1 = require("@material-ui/core");
 const react_router_dom_1 = require("react-router-dom");
 const User_1 = require("../../APIRequests/User");
+const validatorMsg_1 = require("../validators/validatorMsg");
 const LoginForm = (props) => {
     const [login, setLogin] = react_1.useState("");
     const [password, setPassword] = react_1.useState("");
     const lang = localStorage.getItem("blognellaLang");
-    const onSubmit = () => {
+    const [anchorEl, setAnchorEl] = react_1.useState(null);
+    const [errorMsg, setErrorMsg] = react_1.useState([]);
+    const onSubmit = (event) => {
+        event.persist();
         User_1.getUsers()
             .then(({ data: { users } }) => {
             const user = users.find((user) => user.login === login && user.password === password);
             if (user) {
                 localStorage.setItem('blognellaId', user._id);
                 props.history.push('/');
+            }
+            else {
+                setErrorMsg([lang === "en" ? "Invalid login or password" : "Nieprawidłowy login lub hasło"]);
+                setAnchorEl(event.target);
             }
         })
             .catch((err) => console.log(err));
@@ -57,7 +65,15 @@ const LoginForm = (props) => {
                 react_1.default.createElement("div", null,
                     lang === "en" ? "Forgot password? Click " : "Zapomniałes hasła? Kliknij ",
                     react_1.default.createElement(react_router_dom_1.Link, { to: "/login/forget" }, lang === "en" ? "here" : "tutaj")),
-                react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onSubmit }, lang === "en" ? "Login" : "Zaloguj")))));
+                react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onSubmit }, lang === "en" ? "Login" : "Zaloguj"),
+                react_1.default.createElement(core_1.Popover, { id: Boolean(anchorEl) ? 'simple-popover' : undefined, open: Boolean(anchorEl), anchorEl: anchorEl, onClose: () => setAnchorEl(null), anchorOrigin: {
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                    }, transformOrigin: {
+                        vertical: 'top',
+                        horizontal: 'center',
+                    } },
+                    react_1.default.createElement(core_1.Typography, null, validatorMsg_1.getValidatorMsg(errorMsg)))))));
 };
 exports.default = react_router_dom_1.withRouter(LoginForm);
 //# sourceMappingURL=LoginForm.js.map

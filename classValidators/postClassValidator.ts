@@ -17,11 +17,7 @@ import {
 
       @IsDateString()
       date: string;
-    
-    //   @IsAlphanumeric()
-    //   @IsNotEmpty()
-    //   @IsString()
-      
+          
       @IsArray()
       tags: string[];
 

@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteComment = exports.updateComment = exports.addComment = exports.getComment = exports.getComments = void 0;
 const comment_1 = __importDefault(require("../models/comment"));
+const post_1 = __importDefault(require("../models/post"));
 const commentClassValidator_1 = __importDefault(require("../classValidators/commentClassValidator"));
 const validation_1 = require("../classValidators/validation");
 const getComments = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -61,7 +62,8 @@ const addComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     catch (error) {
         console.log("myerror");
         console.log(error);
-        res.status(403).json("Fordidden");
+        // res.status(403).json("Fordidden");
+        res.status(403).json(error);
     }
 });
 exports.addComment = addComment;
@@ -81,7 +83,8 @@ const updateComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     catch (error) {
         console.log("myerror");
         console.log(error);
-        res.status(403).json("Fordidden");
+        // res.status(403).json("Fordidden");
+        res.status(403).json(error);
     }
 });
 exports.updateComment = updateComment;
@@ -93,6 +96,22 @@ const deleteComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             res.status(404).json("Id doesn't exist");
             return;
         }
+        const posts = yield post_1.default.find();
+        posts.map((post) => {
+            const updatedCommentList = post.comment.filter((comment) => {
+                return comment !== id;
+            });
+            if (updatedCommentList.length !== post.comment.length) {
+                post_1.default.findByIdAndUpdate({ _id: post._id }, { tags: post.tags,
+                    content: post.content,
+                    comment: updatedCommentList,
+                    _id: post._id,
+                    date: post.date,
+                    title: post.title,
+                    user: post.user
+                });
+            }
+        });
         const deletedComment = yield comment_1.default.findByIdAndRemove(id);
         res.status(200).json({ comment: deletedComment });
     }

@@ -1,4 +1,5 @@
 import Comment from '../models/comment';
+import Post from '../models/post';
 import CommentValidator from '../classValidators/commentClassValidator';
 import { validateOrRejectExample } from '../classValidators/validation';
 
@@ -50,7 +51,8 @@ const addComment = async (req, res) => {
     } catch (error) {
         console.log("myerror");
         console.log(error);
-        res.status(403).json("Fordidden");
+        // res.status(403).json("Fordidden");
+        res.status(403).json(error);
     }
 }
 
@@ -79,7 +81,8 @@ const updateComment = async (req, res) => {
     } catch (error) {
         console.log("myerror");
         console.log(error);
-        res.status(403).json("Fordidden");
+        // res.status(403).json("Fordidden");
+        res.status(403).json(error);
     }
 }
 
@@ -91,6 +94,25 @@ const deleteComment = async (req, res) => {
             res.status(404).json("Id doesn't exist");
             return;
         }
+        const posts = await Post.find()
+        posts.map((post) => {
+            const updatedCommentList = post.comment.filter((comment) => {
+                return comment !== id;
+            })
+            if(updatedCommentList.length !== post.comment.length) {
+                Post.findByIdAndUpdate(
+                    { _id: post._id },
+                    {tags: post.tags,
+                    content: post.content,
+                    comment: updatedCommentList,
+                    _id: post._id,
+                    date: post.date,
+                    title: post.title,
+                    user: post.user
+                    }
+                )
+            }
+        })
 
         const deletedComment = await Comment.findByIdAndRemove(
             id

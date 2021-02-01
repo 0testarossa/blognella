@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateContent = exports.createContent = void 0;
+exports.deleteContent = exports.updateContent = exports.createContent = void 0;
 const axios_1 = __importDefault(require("axios"));
 const createContent = (content) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -36,4 +36,14 @@ const updateContent = (content) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.updateContent = updateContent;
+const deleteContent = (_id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const deletedContent = yield axios_1.default.delete(`/content/${_id}`);
+        return deletedContent;
+    }
+    catch (error) {
+        throw new Error(error);
+    }
+});
+exports.deleteContent = deleteContent;
 //# sourceMappingURL=Content.js.map

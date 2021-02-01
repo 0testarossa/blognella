@@ -28,12 +28,16 @@ const react_router_dom_1 = require("react-router-dom");
 const styled_components_1 = __importDefault(require("styled-components"));
 const Bookmark_1 = require("../../APIRequests/Bookmark");
 const Post_1 = require("../../APIRequests/Post");
+const bookmarkValidator_1 = __importDefault(require("../validators/bookmarkValidator"));
+const validatorMsg_1 = require("../validators/validatorMsg");
 const BookmarkPanel_Styles_1 = require("./BookmarkPanel.Styles");
 const BookmarkPanelAdd = (props) => {
     const [postId, setPostId] = react_1.useState("");
     const [allPosts, setAllPosts] = react_1.useState([]);
     const [bookmarkTitle, setBookmarkTitle] = react_1.useState("");
     const lang = localStorage.getItem("blognellaLang");
+    const [anchorEl, setAnchorEl] = react_1.useState(null);
+    const [errorMsg, setErrorMsg] = react_1.useState([]);
     const fetchAllPosts = () => {
         Post_1.getPosts()
             .then(({ data: { posts } }) => {
@@ -48,13 +52,35 @@ const BookmarkPanelAdd = (props) => {
     const handlePostId = (event) => {
         setPostId(event.target.value);
     };
-    const onBookmarkSave = () => {
+    const onBookmarkSave = (event) => {
+        event.persist();
         const bookmark = {
             title: bookmarkTitle,
             post: postId,
         };
-        Bookmark_1.createBookmark(bookmark);
-        props.history.push("/panel/bookmarks");
+        bookmarkValidator_1.default(bookmark, lang)
+            .then((data) => {
+            if (data.length > 0) {
+                setErrorMsg(data);
+                setAnchorEl(event.target);
+            }
+            else {
+                Bookmark_1.createBookmark(bookmark)
+                    .then(({ data, status }) => {
+                    if (status !== 403 && status !== 500) {
+                        props.history.push("/panel/bookmarks");
+                    }
+                    else if (status === 403) {
+                        setErrorMsg(validatorMsg_1.getUniqueValidatorMsg(data, lang));
+                        setAnchorEl(event.target);
+                    }
+                    else {
+                        setErrorMsg([lang === "en" ? "There are server problems" : "Wystąpiły problemy z serwerem"]);
+                        setAnchorEl(event.target);
+                    }
+                });
+            }
+        });
     };
     const getPostsTitles = () => {
         return allPosts.map((post) => react_1.default.createElement(core_1.MenuItem, { key: post._id, value: post._id }, post.title));
@@ -71,7 +97,15 @@ const BookmarkPanelAdd = (props) => {
         react_1.default.createElement(core_1.TextField, { label: lang === "en" ? "Bookmark title" : "Tytuł zakładki", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your bookmark title here" : "Proszę wpisz tytuł zakładki", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
             }, onChange: (input) => setBookmarkTitle(input.target.value) }),
-        react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onBookmarkSave }, lang === "en" ? "Save Bookmark" : "Zapisz Zakładkę")));
+        react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onBookmarkSave }, lang === "en" ? "Save Bookmark" : "Zapisz Zakładkę"),
+        react_1.default.createElement(core_1.Popover, { id: Boolean(anchorEl) ? 'simple-popover' : undefined, open: Boolean(anchorEl), anchorEl: anchorEl, onClose: () => setAnchorEl(null), anchorOrigin: {
+                vertical: 'bottom',
+                horizontal: 'center',
+            }, transformOrigin: {
+                vertical: 'top',
+                horizontal: 'center',
+            } },
+            react_1.default.createElement(core_1.Typography, null, validatorMsg_1.getValidatorMsg(errorMsg)))));
 };
 exports.default = react_router_dom_1.withRouter(BookmarkPanelAdd);
 //# sourceMappingURL=BookmarkPanelAdd.js.map

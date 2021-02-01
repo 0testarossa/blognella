@@ -27,7 +27,11 @@ export const getTags = async () => {
       return saveTag
     } catch (error) {
     //   throw new Error(error)
-    return {data: [], status: 403}
+        if(error.response.status === 403) {
+            return {data: error.response.data.errors, status: 403}
+        } else {
+            return {data: {}, status: 500}
+        }
     }
   }
 

@@ -1,4 +1,4 @@
-import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from "@material-ui/core";
+import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Popover, Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import React, {useState, useEffect} from "react";
@@ -6,11 +6,15 @@ import { createTag, deleteTag, getTags, TagProps } from "../../APIRequests/Tag";
 import DeleteIcon from '@material-ui/icons/Delete';
 import { withRouter } from "react-router-dom";
 import { StyledTagsPanel } from "./TagsPanel.styled";
+import { getUniqueValidatorMsg, getValidatorMsg } from "../validators/validatorMsg";
+import tagValidate from "../validators/tagValidator";
 
 const TagsPanel = (props) => {
     const [tag, setTag] = useState("");
     const [allTags, setAllTags] = useState([]);
     const lang = localStorage.getItem("blognellaLang");
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [errorMsg, setErrorMsg] = useState<string[]>([])
 
     const fetchAllTags = () => {
         getTags()
@@ -18,16 +22,38 @@ const TagsPanel = (props) => {
         .catch((err: Error) => console.log(err))
     }
 
-    const onTagSave = () => {
-        createTag({name: tag})
-        // .then(({ status, data }) => {
-        .then(({ status }) => {
-                if (status !== 201) {
-                  throw new Error('Error! Tag not saved')
-                }
-                fetchAllTags();
-        })
-        props.history.push("/panel/tags");
+    const onTagSave = (event) => {
+        event.persist();
+        tagValidate({name: tag}, lang)
+        .then((data) => {
+            if(data.length > 0) {
+                setErrorMsg(data);
+                setAnchorEl(event.target);
+            } else {
+                createTag({name: tag})
+                .then(({data, status}: any) => {
+                    if(status !== 403 && status !== 500) {
+                        fetchAllTags();
+                        props.history.push("/panel/tags");
+                    }
+                    else if(status === 403) {
+                        setErrorMsg(getUniqueValidatorMsg(data, lang))
+                        setAnchorEl(event.target);
+                    } else {
+                        setErrorMsg([lang === "en" ? "There are server problems" : "Wystąpiły problemy z serwerem"])
+                        setAnchorEl(event.target);
+                    }
+                });
+            }
+        });
+        // createTag({name: tag})
+        // .then(({ status }) => {
+        //         if (status !== 201) {
+        //           throw new Error('Error! Tag not saved')
+        //         }
+        //         fetchAllTags();
+        // })
+        // props.history.push("/panel/tags");
     }
 
     useEffect(() => {
@@ -60,8 +86,6 @@ const TagsPanel = (props) => {
         );
       }
 
-
-
     return (
         <StyledTagsPanel>
              <List>
@@ -83,6 +107,22 @@ const TagsPanel = (props) => {
             <Button variant="contained" color="primary" onClick={onTagSave}>
                     {lang === "en" ? "Add Tag" : "Dodaj etykietę"}
             </Button>
+            <Popover
+                id={Boolean(anchorEl) ? 'simple-popover' : undefined}
+                open={Boolean(anchorEl)}
+                anchorEl={anchorEl}
+                onClose={() => setAnchorEl(null)}
+                anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+                }}
+                transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+                }}
+            >
+                <Typography>{getValidatorMsg(errorMsg)}</Typography>
+            </Popover>
             </div>
         </StyledTagsPanel>
     )

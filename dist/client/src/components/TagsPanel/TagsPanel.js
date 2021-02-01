@@ -30,25 +30,53 @@ const Tag_1 = require("../../APIRequests/Tag");
 const Delete_1 = __importDefault(require("@material-ui/icons/Delete"));
 const react_router_dom_1 = require("react-router-dom");
 const TagsPanel_styled_1 = require("./TagsPanel.styled");
+const validatorMsg_1 = require("../validators/validatorMsg");
+const tagValidator_1 = __importDefault(require("../validators/tagValidator"));
 const TagsPanel = (props) => {
     const [tag, setTag] = react_1.useState("");
     const [allTags, setAllTags] = react_1.useState([]);
     const lang = localStorage.getItem("blognellaLang");
+    const [anchorEl, setAnchorEl] = react_1.useState(null);
+    const [errorMsg, setErrorMsg] = react_1.useState([]);
     const fetchAllTags = () => {
         Tag_1.getTags()
             .then(({ data: { tags } }) => setAllTags(tags))
             .catch((err) => console.log(err));
     };
-    const onTagSave = () => {
-        Tag_1.createTag({ name: tag })
-            // .then(({ status, data }) => {
-            .then(({ status }) => {
-            if (status !== 201) {
-                throw new Error('Error! Tag not saved');
+    const onTagSave = (event) => {
+        event.persist();
+        tagValidator_1.default({ name: tag }, lang)
+            .then((data) => {
+            if (data.length > 0) {
+                setErrorMsg(data);
+                setAnchorEl(event.target);
             }
-            fetchAllTags();
+            else {
+                Tag_1.createTag({ name: tag })
+                    .then(({ data, status }) => {
+                    if (status !== 403 && status !== 500) {
+                        fetchAllTags();
+                        props.history.push("/panel/tags");
+                    }
+                    else if (status === 403) {
+                        setErrorMsg(validatorMsg_1.getUniqueValidatorMsg(data, lang));
+                        setAnchorEl(event.target);
+                    }
+                    else {
+                        setErrorMsg([lang === "en" ? "There are server problems" : "Wystąpiły problemy z serwerem"]);
+                        setAnchorEl(event.target);
+                    }
+                });
+            }
         });
-        props.history.push("/panel/tags");
+        // createTag({name: tag})
+        // .then(({ status }) => {
+        //         if (status !== 201) {
+        //           throw new Error('Error! Tag not saved')
+        //         }
+        //         fetchAllTags();
+        // })
+        // props.history.push("/panel/tags");
     };
     react_1.useEffect(() => {
         fetchAllTags();
@@ -76,7 +104,15 @@ const TagsPanel = (props) => {
             react_1.default.createElement(TextField_1.default, { label: lang === "en" ? "Tag" : "Etykieta", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your tag here" : "Proszę wpisz etykietę", fullWidth: true, margin: "normal", InputLabelProps: {
                     shrink: true,
                 }, onChange: (input) => setTag(input.target.value) }),
-            react_1.default.createElement(Button_1.default, { variant: "contained", color: "primary", onClick: onTagSave }, lang === "en" ? "Add Tag" : "Dodaj etykietę"))));
+            react_1.default.createElement(Button_1.default, { variant: "contained", color: "primary", onClick: onTagSave }, lang === "en" ? "Add Tag" : "Dodaj etykietę"),
+            react_1.default.createElement(core_1.Popover, { id: Boolean(anchorEl) ? 'simple-popover' : undefined, open: Boolean(anchorEl), anchorEl: anchorEl, onClose: () => setAnchorEl(null), anchorOrigin: {
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                }, transformOrigin: {
+                    vertical: 'top',
+                    horizontal: 'center',
+                } },
+                react_1.default.createElement(core_1.Typography, null, validatorMsg_1.getValidatorMsg(errorMsg))))));
 };
 exports.default = react_router_dom_1.withRouter(TagsPanel);
 //# sourceMappingURL=TagsPanel.js.map

@@ -28,17 +28,18 @@ const core_1 = require("@material-ui/core");
 const RegisterForm_styles_1 = require("./RegisterForm.styles");
 const User_1 = require("../../APIRequests/User");
 const react_router_dom_1 = require("react-router-dom");
+const validatorMsg_1 = require("../validators/validatorMsg");
+const userValidator_1 = __importDefault(require("../validators/userValidator"));
 const RegisterForm = (props) => {
     const [nick, setNick] = react_1.useState("");
     const [login, setLogin] = react_1.useState("");
     const [password, setPassword] = react_1.useState("");
     const [email, setEmail] = react_1.useState("");
     const lang = localStorage.getItem("blognellaLang");
-    const onUserSave = () => {
-        console.log(nick);
-        console.log(login);
-        console.log(password);
-        console.log(email);
+    const [anchorEl, setAnchorEl] = react_1.useState(null);
+    const [errorMsg, setErrorMsg] = react_1.useState([]);
+    const onUserSave = (event) => {
+        event.persist();
         const user = {
             nick: nick,
             login: login,
@@ -46,17 +47,40 @@ const RegisterForm = (props) => {
             email: email,
             role: "loggedUser"
         };
-        User_1.createUser(user)
-            .then(({ status, data }) => {
-            console.log("zwrotna data");
-            console.log(data);
-            if (status !== 201) {
-                throw new Error('Error! User not saved');
+        userValidator_1.default(user, lang)
+            .then((data) => {
+            if (data.length > 0) {
+                setErrorMsg(data);
+                setAnchorEl(event.target);
             }
-            // setTodos(data.todos)
-        })
-            .catch((err) => console.log(err));
-        props.history.push("/");
+            else {
+                User_1.createUser(user)
+                    .then(({ data, status }) => {
+                    if (status !== 403 && status !== 500) {
+                        props.history.push("/");
+                    }
+                    else if (status === 403) {
+                        setErrorMsg(validatorMsg_1.getUniqueValidatorMsg(data, lang));
+                        setAnchorEl(event.target);
+                    }
+                    else {
+                        setErrorMsg([lang === "en" ? "There are server problems" : "Wystąpiły problemy z serwerem"]);
+                        setAnchorEl(event.target);
+                    }
+                });
+            }
+        });
+        // createUser(user)
+        // .then(({ status, data }) => {
+        //     console.log("zwrotna data");
+        //     console.log(data);
+        //     if (status !== 201) {
+        //       throw new Error('Error! User not saved')
+        //     }
+        //     // setTodos(data.todos)
+        //   })
+        //   .catch((err) => console.log(err))
+        // props.history.push("/");
     };
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(RegisterForm_styles_1.StyledRegisterForm, null,
@@ -78,9 +102,17 @@ const RegisterForm = (props) => {
                     }, onChange: (input) => setEmail(input.target.value) })),
             react_1.default.createElement(RegisterForm_styles_1.LogicControls, null,
                 react_1.default.createElement("div", null,
-                    lang === "en" ? "Have already account? " : "Masz już konto?",
+                    lang === "en" ? "Have already account? " : "Masz już konto? ",
                     react_1.default.createElement(react_router_dom_1.Link, { to: "/login" }, lang === "en" ? "Login" : "Zaloguj się")),
-                react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onUserSave }, lang === "en" ? "Register" : "Zarejestruj się")))));
+                react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onUserSave }, lang === "en" ? "Register" : "Zarejestruj się"),
+                react_1.default.createElement(core_1.Popover, { id: Boolean(anchorEl) ? 'simple-popover' : undefined, open: Boolean(anchorEl), anchorEl: anchorEl, onClose: () => setAnchorEl(null), anchorOrigin: {
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                    }, transformOrigin: {
+                        vertical: 'top',
+                        horizontal: 'center',
+                    } },
+                    react_1.default.createElement(core_1.Typography, null, validatorMsg_1.getValidatorMsg(errorMsg)))))));
 };
 exports.default = react_router_dom_1.withRouter(RegisterForm);
 //# sourceMappingURL=RegisterForm.js.map

@@ -1,8 +1,10 @@
-import { Button, MenuItem, Select, TextField } from "@material-ui/core";
+import { Button, MenuItem, Popover, Select, TextField, Typography } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { updateBookmark } from "../../APIRequests/Bookmark";
 import { getPosts, PostProps } from "../../APIRequests/Post";
+import bookmarkValidate from "../validators/bookmarkValidator";
+import { getUniqueValidatorMsg, getValidatorMsg } from "../validators/validatorMsg";
 import { StyledPanel } from "./BookmarkPanel.Styles";
 
 const BookmarkPanelUpdate = (props) => {
@@ -10,6 +12,8 @@ const BookmarkPanelUpdate = (props) => {
     const [allPosts, setAllPosts] = useState<PostProps[]>([]);
     const [bookmarkTitle, setBookmarkTitle] = useState(props.bookmark.title || "");
     const lang = localStorage.getItem("blognellaLang");
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [errorMsg, setErrorMsg] = useState<string[]>([])
 
     const fetchAllPosts = () => {
         getPosts()
@@ -28,19 +32,34 @@ const BookmarkPanelUpdate = (props) => {
         setPostId(event.target.value);
     };
 
-    const onBookmarkSave = () => {
+    const onBookmarkSave = (event) => {
+        event.persist();
         const bookmark = {
             _id: props.bookmark._id,
             title: bookmarkTitle,
             post: postId,
         }
-        updateBookmark(bookmark)
-        .then(({ status}) => {
-            if (status !== 200) {
-              throw new Error('Error! Bookmark not saved')
+        bookmarkValidate(bookmark, lang)
+        .then((data) => {
+            if(data.length > 0) {
+                setErrorMsg(data);
+                setAnchorEl(event.target);
+            } else {
+                updateBookmark(bookmark)
+                .then(({data, status}: any) => {
+                    if(status !== 403 && status !== 500) {
+                        props.history.push("/panel/bookmarks");
+                    }
+                    else if(status === 403) {
+                        setErrorMsg(getUniqueValidatorMsg(data, lang))
+                        setAnchorEl(event.target);
+                    } else {
+                        setErrorMsg([lang === "en" ? "There are server problems" : "Wystąpiły problemy z serwerem"])
+                        setAnchorEl(event.target);
+                    }
+                });
             }
-          })
-        props.history.push("/panel/bookmarks");
+        });
     }
 
     const getPostsTitles = () => {
@@ -71,6 +90,22 @@ const BookmarkPanelUpdate = (props) => {
         <Button variant="contained" color="primary" onClick={onBookmarkSave}>
             {lang === "en" ? "Save Bookmark" : "Zapisz Zakładkę"}
         </Button>
+        <Popover
+                id={Boolean(anchorEl) ? 'simple-popover' : undefined}
+                open={Boolean(anchorEl)}
+                anchorEl={anchorEl}
+                onClose={() => setAnchorEl(null)}
+                anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+                }}
+                transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+                }}
+            >
+                <Typography>{getValidatorMsg(errorMsg)}</Typography>
+        </Popover>
         </StyledPanel>
     )
 }

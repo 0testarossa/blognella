@@ -62,7 +62,7 @@ const addPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             const posts = yield post_1.default.find().populate("content");
             const aboutPost = posts.find((nextPost) => nextPost.content[0].title === "About");
             if (aboutPost) {
-                res.status(403).json("Fordidden");
+                res.status(409).json({ data: "only one about post allowed" });
                 return;
             }
         }
@@ -82,7 +82,8 @@ const addPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     catch (error) {
         console.log("myerror");
         console.log(error);
-        res.status(403).json("Fordidden");
+        // res.status(403).json("Fordidden");
+        res.status(403).json(error);
     }
 });
 exports.addPost = addPost;
@@ -102,7 +103,8 @@ const updatePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     catch (error) {
         console.log("myerror");
         console.log(error);
-        res.status(403).json("Fordidden");
+        // res.status(403).json("Fordidden");
+        res.status(403).json(error);
     }
 });
 exports.updatePost = updatePost;

@@ -1,5 +1,4 @@
 import {
-    IsArray,
     IsNotEmpty,
       IsString,
     } from 'class-validator';
