@@ -165,7 +165,8 @@ const PostsPanel = (props) => {
         initialValue={data}
         init={{
           plugins: 'link image code',
-          toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
+          toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code',
+          height: 450
         }}
         onChange={(e) => handleEditorChange(e)}
       />

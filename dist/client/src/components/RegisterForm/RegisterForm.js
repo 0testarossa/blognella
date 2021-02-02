@@ -70,17 +70,6 @@ const RegisterForm = (props) => {
                 });
             }
         });
-        // createUser(user)
-        // .then(({ status, data }) => {
-        //     console.log("zwrotna data");
-        //     console.log(data);
-        //     if (status !== 201) {
-        //       throw new Error('Error! User not saved')
-        //     }
-        //     // setTodos(data.todos)
-        //   })
-        //   .catch((err) => console.log(err))
-        // props.history.push("/");
     };
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(RegisterForm_styles_1.StyledRegisterForm, null,

@@ -141,7 +141,8 @@ const UpdatePostsPanel = (props) => {
             }, defaultValue: title, onChange: (input) => setTitle(input.target.value) }),
         react_1.default.createElement(tinymce_react_1.Editor, { initialValue: data, init: {
                 plugins: 'link image code',
-                toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
+                toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code',
+                height: 450
             }, onChange: (e) => handleEditorChange(e) }),
         react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Nick", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your nick here" : "Proszę wpisz nick", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
