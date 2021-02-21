@@ -100,6 +100,8 @@ exports.AboutSection = styled_components_1.default.div `
     flex-direction: column;
     padding: 0rem 1rem;
     color: #00cccb;
+    overflow: auto;
+    overflow-wrap: break-word;
 `;
 exports.MainContentContainer = styled_components_1.default.div `
     display: flex;

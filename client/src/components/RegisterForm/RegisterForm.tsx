@@ -91,6 +91,7 @@ const RegisterForm = (props) => {
                     InputLabelProps={{
                         shrink: true,
                     }}
+                    type="password"
                     onChange={(input) => setPassword(input.target.value)}
                     />
                 </FormItem>

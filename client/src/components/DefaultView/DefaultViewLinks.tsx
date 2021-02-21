@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { LinkElement, LinkLoginElement, LoginRegisterContainer, SearchElement } from "../DefaultView/DefaultView.styles";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { getUser, UserProps } from "../../APIRequests/User";
 import DefaultViewTabs from "./DefaultViewTabs";
 import { availablePages } from "../../App";
@@ -22,6 +22,7 @@ const DefaultViewLinks = (props) => {
 
     const onLogout = () => {
         localStorage.removeItem('blognellaId');
+        props.history.push('/');
     }
 
     if(localStorage.getItem('blognellaId')) fetchUser();
@@ -47,4 +48,4 @@ const DefaultViewLinks = (props) => {
     )
 }
 
-export default DefaultViewLinks;
+export default withRouter(DefaultViewLinks);

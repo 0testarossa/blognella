@@ -60,7 +60,7 @@ const LoginForm = (props) => {
             react_1.default.createElement(LoginForm_styles_1.FormItem, null,
                 react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: lang === "en" ? "Password" : "Hasło", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your password here" : "Proszę wpisz swoje hasło", fullWidth: true, margin: "normal", InputLabelProps: {
                         shrink: true,
-                    }, onChange: (input) => setPassword(input.target.value) })),
+                    }, type: "password", onChange: (input) => setPassword(input.target.value) })),
             react_1.default.createElement(LoginForm_styles_1.LogicControls, null,
                 react_1.default.createElement("div", null,
                     lang === "en" ? "Forgot password? Click " : "Zapomniałes hasła? Kliknij ",

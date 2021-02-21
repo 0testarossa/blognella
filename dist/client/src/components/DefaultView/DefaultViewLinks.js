@@ -47,6 +47,7 @@ const DefaultViewLinks = (props) => {
     };
     const onLogout = () => {
         localStorage.removeItem('blognellaId');
+        props.history.push('/');
     };
     if (localStorage.getItem('blognellaId'))
         fetchUser();
@@ -74,5 +75,5 @@ const DefaultViewLinks = (props) => {
                 react_1.default.createElement("a", null, localStorage.getItem('blognellaLang') || "en"))),
         react_1.default.createElement(DefaultViewTabs_1.default, null)));
 };
-exports.default = DefaultViewLinks;
+exports.default = react_router_dom_1.withRouter(DefaultViewLinks);
 //# sourceMappingURL=DefaultViewLinks.js.map

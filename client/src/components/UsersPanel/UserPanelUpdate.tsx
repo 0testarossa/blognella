@@ -94,6 +94,7 @@ const UserPanelUpdate = (props) => {
                 InputLabelProps={{
                     shrink: true,
                 }}
+                type="password"
                 defaultValue={password}
                 onChange={(input) => setPassword(input.target.value)}
             />

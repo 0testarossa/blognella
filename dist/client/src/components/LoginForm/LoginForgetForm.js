@@ -77,7 +77,7 @@ const LoginForgetForm = (props) => {
             react_1.default.createElement(LoginForm_styles_1.FormItem, null,
                 react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: lang === "en" ? "New Password" : "Nowe hasło", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your new password here" : "Proszę wpisz swoje nowe hasło", fullWidth: true, margin: "normal", InputLabelProps: {
                         shrink: true,
-                    }, onChange: (input) => setPassword(input.target.value) })),
+                    }, type: "password", onChange: (input) => setPassword(input.target.value) })),
             react_1.default.createElement(LoginForm_styles_1.LogicControls, null,
                 react_1.default.createElement("div", null),
                 react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onSubmit }, lang === "en" ? "Update Password" : "Aktualizuj Hasło"),

@@ -62,7 +62,7 @@ const PostCommentList = (props) => {
     const onNewCommentSave = (event) => {
         event.persist();
         const comment = {
-            text: newComment,
+            text: newComment.trim(),
             date: new Date().toISOString(),
             user: nick
         }

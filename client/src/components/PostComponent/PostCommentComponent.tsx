@@ -18,6 +18,9 @@ const PostCommentComponent = (props) => {
     const canEdit = props.role !== "guest" && (props.comment.user === props.nick || props.role === "admin" )
 
     const onEdit = () => {
+        if(isEditingMode){
+            setCommentText(props.comment.text);
+        }
         setIsEditingMode(!isEditingMode);
     }
 
@@ -39,7 +42,7 @@ const PostCommentComponent = (props) => {
         const comment = {
             _id: props.comment._id,
             date: props.comment.date,
-            text: commentText,
+            text: commentText.trim(),
             user: props.comment.user
         }
         commentValidate(comment, lang)
@@ -80,11 +83,32 @@ const PostCommentComponent = (props) => {
         <>
             <div>
                 <StyledCommentAuthor>{props.comment.user} </StyledCommentAuthor> {new Date(props.comment.date).toDateString()}
-                {canEdit ? <><StyledCommentButton onClick={onEdit}>Edit</StyledCommentButton><StyledCommentButton onClick={onDelete}>Delete</StyledCommentButton></> : <></>}
+                {canEdit ? <><StyledCommentButton onClick={onEdit}>{lang === "en" ? "Edit" : "Edytuj"}</StyledCommentButton><StyledCommentButton onClick={onDelete}>{lang === "en" ? "Delete" : "Usuń"}</StyledCommentButton></> : <></>}
             </div>
             {/* <div>{props.comment.text}</div> */}
             <StyledComponentTextField>
-                <TextField
+                {isEditingMode ?
+                     <TextField
+                     id="standard-full-width"
+                     label=""
+                     style={{ margin: 8 }}
+                     placeholder={lang === "en" ? "Please type in your comment here" : "Proszę wpisz komentarz"}
+                     fullWidth
+                     margin="normal"
+                     InputLabelProps={{
+                         shrink: true,
+                     }}
+                     InputProps={{
+                         readOnly: !isEditingMode,
+                     }}
+                     defaultValue={commentText}
+                     onChange={(input) => setCommentText(input.target.value)}
+             /> : 
+             <div style={{padding: "1rem 0", backgroundColor: "#333333", borderBottom: "2px solid #404040", wordBreak: "break-word"}}>
+                {commentText}
+             </div>
+                }
+                {/* <TextField
                         id="standard-full-width"
                         label=""
                         style={{ margin: 8 }}
@@ -99,7 +123,7 @@ const PostCommentComponent = (props) => {
                         }}
                         defaultValue={commentText}
                         onChange={(input) => setCommentText(input.target.value)}
-                />
+                /> */}
                 {isEditingMode ? 
                 <Button variant="contained" color="primary" onClick={onSaveEditedComment}>
                     {lang === "en" ? "Save Comment" : "Zapisz Komentarz"}

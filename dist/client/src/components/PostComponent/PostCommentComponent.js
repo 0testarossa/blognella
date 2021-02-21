@@ -39,6 +39,9 @@ const PostCommentComponent = (props) => {
     const [errorMsg, setErrorMsg] = react_1.useState([]);
     const canEdit = props.role !== "guest" && (props.comment.user === props.nick || props.role === "admin");
     const onEdit = () => {
+        if (isEditingMode) {
+            setCommentText(props.comment.text);
+        }
         setIsEditingMode(!isEditingMode);
     };
     const onDelete = () => {
@@ -57,7 +60,7 @@ const PostCommentComponent = (props) => {
         const comment = {
             _id: props.comment._id,
             date: props.comment.date,
-            text: commentText,
+            text: commentText.trim(),
             user: props.comment.user
         };
         commentValidator_1.default(comment, lang)
@@ -101,14 +104,16 @@ const PostCommentComponent = (props) => {
             " ",
             new Date(props.comment.date).toDateString(),
             canEdit ? react_1.default.createElement(react_1.default.Fragment, null,
-                react_1.default.createElement(PostComment_styles_1.StyledCommentButton, { onClick: onEdit }, "Edit"),
-                react_1.default.createElement(PostComment_styles_1.StyledCommentButton, { onClick: onDelete }, "Delete")) : react_1.default.createElement(react_1.default.Fragment, null)),
+                react_1.default.createElement(PostComment_styles_1.StyledCommentButton, { onClick: onEdit }, lang === "en" ? "Edit" : "Edytuj"),
+                react_1.default.createElement(PostComment_styles_1.StyledCommentButton, { onClick: onDelete }, lang === "en" ? "Delete" : "Usuń")) : react_1.default.createElement(react_1.default.Fragment, null)),
         react_1.default.createElement(PostComment_styles_1.StyledComponentTextField, null,
-            react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your comment here" : "Proszę wpisz komentarz", fullWidth: true, margin: "normal", InputLabelProps: {
-                    shrink: true,
-                }, InputProps: {
-                    readOnly: !isEditingMode,
-                }, defaultValue: commentText, onChange: (input) => setCommentText(input.target.value) }),
+            isEditingMode ?
+                react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your comment here" : "Proszę wpisz komentarz", fullWidth: true, margin: "normal", InputLabelProps: {
+                        shrink: true,
+                    }, InputProps: {
+                        readOnly: !isEditingMode,
+                    }, defaultValue: commentText, onChange: (input) => setCommentText(input.target.value) }) :
+                react_1.default.createElement("div", { style: { padding: "1rem 0", backgroundColor: "#333333", borderBottom: "2px solid #404040", wordBreak: "break-word" } }, commentText),
             isEditingMode ?
                 react_1.default.createElement(Button_1.default, { variant: "contained", color: "primary", onClick: onSaveEditedComment }, lang === "en" ? "Save Comment" : "Zapisz Komentarz") : react_1.default.createElement(react_1.default.Fragment, null),
             react_1.default.createElement(core_1.Popover, { id: Boolean(anchorEl) ? 'simple-popover' : undefined, open: Boolean(anchorEl), anchorEl: anchorEl, onClose: () => setAnchorEl(null), anchorOrigin: {

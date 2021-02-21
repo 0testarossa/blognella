@@ -104,6 +104,8 @@ export const AboutSection = styled.div`
     flex-direction: column;
     padding: 0rem 1rem;
     color: #00cccb;
+    overflow: auto;
+    overflow-wrap: break-word;
 `;
 
 export const MainContentContainer = styled.div`

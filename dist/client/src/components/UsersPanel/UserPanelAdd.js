@@ -87,7 +87,7 @@ const UserPanelAdd = (props) => {
             }, onChange: (input) => setLogin(input.target.value) }),
         react_1.default.createElement(core_1.TextField, { label: lang === "en" ? "Password" : "Hasło", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your password here" : "Proszę wpisz swoje hasło", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
-            }, onChange: (input) => setPassword(input.target.value) }),
+            }, type: "password", onChange: (input) => setPassword(input.target.value) }),
         react_1.default.createElement(core_1.Select, { value: role, onChange: handleUserRole }, getUsersRoles()),
         react_1.default.createElement("div", null),
         react_1.default.createElement(core_1.TextField, { label: "Email", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your email here" : "Proszę wpisz swój email", fullWidth: true, margin: "normal", InputLabelProps: {
