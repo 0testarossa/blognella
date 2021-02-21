@@ -47,7 +47,12 @@ const DefaultViewLinks = (props) => {
     };
     const onLogout = () => {
         localStorage.removeItem('blognellaId');
-        props.history.push('/');
+        if (props.match.path === "/") {
+            window.location.reload();
+        }
+        else {
+            props.history.push('/');
+        }
     };
     if (localStorage.getItem('blognellaId'))
         fetchUser();
