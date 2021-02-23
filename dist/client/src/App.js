@@ -88,7 +88,7 @@ const App = (props) => {
     return (react_1.default.createElement(App_styles_1.StyledMain, { inputColor: App_styles_1.theme.inputText[layout], style: { backgroundColor: App_styles_1.theme.page[layout], color: App_styles_1.theme.text[layout] } },
         react_1.default.createElement(DefaultView_1.default, { pageName: props.match.path }),
         react_1.default.createElement(DefaultView_styles_1.MainContentContainer, null,
-            react_1.default.createElement(MainView_styles_1.MainViewContainer, { minWidth: exports.availablePages.includes(props.match.path) ? `${mainWidth * 9.3}px` : "unset", width: exports.availablePages.includes(props.match.path) ? `${mainWidth * 9.3}px` : "100%", isAbout: exports.availablePages.includes(props.match.path) },
+            react_1.default.createElement(MainView_styles_1.MainViewContainer, { minWidth: exports.availablePages.includes(props.match.path) ? `${mainWidth * 9.3}px` : "unset", width: exports.availablePages.includes(props.match.path) ? `${mainWidth * 9.3}px` : "100%", isAbout: exports.availablePages.includes(props.match.path), ratio: mainWidth * 9.3 / 730 },
                 react_1.default.createElement(DefaultView_styles_1.StyledAdminPanelContainer, { color: App_styles_1.theme.text[layout], decoratedColor: App_styles_1.theme.decoratedText[layout] }, role &&
                     react_1.default.createElement(react_1.default.Fragment, null,
                         !exports.availablePages.includes(props.match.path) ? react_1.default.createElement(AdminPanel_1.default, null) : react_1.default.createElement(react_1.default.Fragment, null),

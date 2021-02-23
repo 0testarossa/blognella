@@ -13,24 +13,19 @@ exports.MainViewContainer = styled_components_1.default.div `
     min-width: ${props => props.minWidth};
     width: ${props => props.width};
 
-    @media (max-width: 872px) {
-    width: ${props => props.isAbout ? "710px" : "100%"};
-    min-width: ${props => props.isAbout ? "710px" : "unset"};
+    @media (max-width: 825px) {
+        width: ${props => props.isAbout ? `calc(${props.width} - ${80 * props.ratio}px)` : "100%"};
+    min-width: ${props => props.isAbout ? `calc(${props.width} - ${80 * props.ratio}px)` : "unset"};
     }
 
-    @media (max-width: 791px) {
-        width: ${props => props.isAbout ? "550px" : "100%"};
-    min-width: ${props => props.isAbout ? "550px" : "unset"};
+    @media (max-width: 740px) {
+        width: ${props => props.isAbout ? `calc(${props.width} - ${240 * props.ratio}px)` : "100%"};
+    min-width: ${props => props.isAbout ? `calc(${props.width} - ${240 * props.ratio}px)` : "unset"};
     }
 
-    @media (max-width: 652px) {
-        width: ${props => props.isAbout ? "400px" : "100%"};
-    min-width: ${props => props.isAbout ? "400px" : "unset"};
-    }
-
-    @media (max-width: 513px) {
-        width: ${props => props.isAbout ? "250px" : "100%"};
-    min-width: ${props => props.isAbout ? "250px" : "unset"};
+    @media (max-width: 585px) {
+        width: ${props => props.isAbout ? `calc(${props.width} - ${350 * props.ratio}px)` : "100%"};
+    min-width: ${props => props.isAbout ? `calc(${props.width} - ${350 * props.ratio}px)` : "unset"};
     }
 `;
 //# sourceMappingURL=MainView.styles.js.map

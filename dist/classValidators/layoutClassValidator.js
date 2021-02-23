@@ -21,8 +21,8 @@ __decorate([
 __decorate([
     class_validator_1.IsNotEmpty(),
     class_validator_1.IsNumber(),
-    class_validator_1.Min(43),
-    class_validator_1.Max(85)
+    class_validator_1.Min(53),
+    class_validator_1.Max(79)
 ], LayoutValidator.prototype, "mainWidth", void 0);
 exports.LayoutValidator = LayoutValidator;
 exports.default = LayoutValidator;

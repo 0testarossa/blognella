@@ -65,7 +65,8 @@ const App: React.FC = (props:any) => {
       <DefaultView pageName={props.match.path}/>
       <MainContentContainer>
         <MainViewContainer minWidth={availablePages.includes(props.match.path) ? `${mainWidth*9.3}px` : "unset"}
-        width={availablePages.includes(props.match.path) ? `${mainWidth*9.3}px` : "100%"} isAbout={availablePages.includes(props.match.path)}>
+        width={availablePages.includes(props.match.path) ? `${mainWidth*9.3}px` : "100%"} isAbout={availablePages.includes(props.match.path)}
+        ratio={mainWidth*9.3/730}>
           <StyledAdminPanelContainer color={theme.text[layout]} decoratedColor={theme.decoratedText[layout]}>
 
           {role && 

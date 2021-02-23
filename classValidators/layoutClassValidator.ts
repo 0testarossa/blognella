@@ -17,8 +17,8 @@ import { LAYOUT_NAMES } from './ValidationEnums';
 
       @IsNotEmpty()
       @IsNumber()
-      @Min(43)
-      @Max(85)
+      @Min(53)
+      @Max(79)
       mainWidth: number;
     }
     

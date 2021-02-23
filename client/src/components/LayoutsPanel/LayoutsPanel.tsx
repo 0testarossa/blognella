@@ -14,15 +14,15 @@ const LayoutsPanel = () => {
     const layout = localStorage.getItem("blognellaTheme") || "default";
     const [anchorEl, setAnchorEl] = useState(null);
     const [errorMsg, setErrorMsg] = useState<string[]>([])
-    const [chosenLayout, setChosenLayout] = useState({_id: "", name: "", mainWidth: 400})
+    const [chosenLayout, setChosenLayout] = useState({_id: "", name: "", mainWidth: 500})
 
     const marks = [
         {
-          value: 500,
+          value: 560,
           label: lang === "en" ? `Main Post Width ${chosenLayout.mainWidth}px` : "Szerokość Głównego Wpisu",
         },
         {
-          value: 690,
+          value: 670,
           label: lang === "en" ? `About Post Width ${930 - chosenLayout.mainWidth}px` : "Szerokość Sekcji 'O mnie'",
         },
       ];
@@ -94,8 +94,8 @@ const LayoutsPanel = () => {
                     step={1}
                     valueLabelDisplay="auto"
                     marks={marks}
-                    min={400}
-                    max={790}
+                    min={500}
+                    max={730}
                     value={chosenLayout.mainWidth}
                     onChange={handleMainWidthChange}
             />
