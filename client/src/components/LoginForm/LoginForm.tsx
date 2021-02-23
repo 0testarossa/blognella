@@ -5,6 +5,9 @@ import { Button, Popover, Typography } from "@material-ui/core";
 import { Link, withRouter } from "react-router-dom";
 import { getUsers, UserProps } from "../../APIRequests/User";
 import { getValidatorMsg } from "../validators/validatorMsg";
+import userLoginValidate from "../fieldValidators/userLoginValidator";
+import userPasswordValidate from "../fieldValidators/userPasswordValidator";
+import { StyledErrorMessage } from "../fieldValidators/fieldValidators.styles";
 
 const LoginForm = (props) => {
     const [login, setLogin] = useState("");
@@ -12,6 +15,8 @@ const LoginForm = (props) => {
     const lang = localStorage.getItem("blognellaLang");
     const [anchorEl, setAnchorEl] = useState(null);
     const [errorMsg, setErrorMsg] = useState<string[]>([])
+    const [errors, setErrors] = useState({login: "", password: ""});
+    const [touched, setTouched] = useState<any>({});
 
     const onSubmit = (event) => {
         event.persist();
@@ -29,6 +34,22 @@ const LoginForm = (props) => {
         .catch((err: Error) => console.log(err))
     }
 
+    const onInputLogin = (value:string) => {
+    touched.login && userLoginValidate({login: value.trim()}, lang).then((data) => {setErrors({...errors, login: data})});
+    }
+
+    const onBlurLogin = (value:string) => {
+    userLoginValidate({login: value.trim()}, lang).then((data) => {setErrors({...errors, login: data}); setTouched({...touched, login: true})});
+    }
+    
+    const onInputPassword = (value:string) => {
+    touched.password && userPasswordValidate({password: value.trim()}, lang).then((data) => {setErrors({...errors, password: data})});
+    }
+
+    const onBlurPassword = (value:string) => {
+    userPasswordValidate({password: value.trim()}, lang).then((data) => {setErrors({...errors, password: data}); setTouched({...touched, password: true})});
+    }
+
     return (
         <>
             <StyledLoginForm>
@@ -44,8 +65,11 @@ const LoginForm = (props) => {
                         shrink: true,
                     }}
                     onChange={(input) => setLogin(input.target.value)}
+                    onInput={(input:any) => onInputLogin(input.target.value)}
+                    onBlur={(input:any) => onBlurLogin(input.target.value)}
                     />
                 </FormItem>
+                <StyledErrorMessage>{errors.login}</StyledErrorMessage>
                 <FormItem>
                 <TextField
                     id="standard-full-width"
@@ -59,8 +83,11 @@ const LoginForm = (props) => {
                     }}
                     type="password"
                     onChange={(input) => setPassword(input.target.value)}
+                    onInput={(input:any) => onInputPassword(input.target.value)}
+                    onBlur={(input:any) => onBlurPassword(input.target.value)}
                     />
                 </FormItem>
+                <StyledErrorMessage>{errors.password}</StyledErrorMessage>
                 <LogicControls>
                     <div>{lang === "en" ? "Forgot password? Click " : "Zapomniałes hasła? Kliknij "}<Link to={"/login/forget"}>{lang === "en" ? "here" : "tutaj"}</Link></div>
                     <Button variant="contained" color="primary" onClick={onSubmit}>

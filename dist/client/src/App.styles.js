@@ -22,6 +22,9 @@ exports.StyledPanelContent = styled_components_1.default.div `
     a{
         text-decoration: underline !important;
     }
+    .MuiFormControl-root label{
+        color: ${props => props.iconColor};
+    }
 `;
 exports.theme = {
     root: {

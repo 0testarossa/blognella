@@ -29,12 +29,17 @@ const core_1 = require("@material-ui/core");
 const react_router_dom_1 = require("react-router-dom");
 const User_1 = require("../../APIRequests/User");
 const validatorMsg_1 = require("../validators/validatorMsg");
+const userLoginValidator_1 = __importDefault(require("../fieldValidators/userLoginValidator"));
+const userPasswordValidator_1 = __importDefault(require("../fieldValidators/userPasswordValidator"));
+const fieldValidators_styles_1 = require("../fieldValidators/fieldValidators.styles");
 const LoginForm = (props) => {
     const [login, setLogin] = react_1.useState("");
     const [password, setPassword] = react_1.useState("");
     const lang = localStorage.getItem("blognellaLang");
     const [anchorEl, setAnchorEl] = react_1.useState(null);
     const [errorMsg, setErrorMsg] = react_1.useState([]);
+    const [errors, setErrors] = react_1.useState({ login: "", password: "" });
+    const [touched, setTouched] = react_1.useState({});
     const onSubmit = (event) => {
         event.persist();
         User_1.getUsers()
@@ -51,16 +56,30 @@ const LoginForm = (props) => {
         })
             .catch((err) => console.log(err));
     };
+    const onInputLogin = (value) => {
+        touched.login && userLoginValidator_1.default({ login: value.trim() }, lang).then((data) => { setErrors(Object.assign(Object.assign({}, errors), { login: data })); });
+    };
+    const onBlurLogin = (value) => {
+        userLoginValidator_1.default({ login: value.trim() }, lang).then((data) => { setErrors(Object.assign(Object.assign({}, errors), { login: data })); setTouched(Object.assign(Object.assign({}, touched), { login: true })); });
+    };
+    const onInputPassword = (value) => {
+        touched.password && userPasswordValidator_1.default({ password: value.trim() }, lang).then((data) => { setErrors(Object.assign(Object.assign({}, errors), { password: data })); });
+    };
+    const onBlurPassword = (value) => {
+        userPasswordValidator_1.default({ password: value.trim() }, lang).then((data) => { setErrors(Object.assign(Object.assign({}, errors), { password: data })); setTouched(Object.assign(Object.assign({}, touched), { password: true })); });
+    };
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(LoginForm_styles_1.StyledLoginForm, null,
             react_1.default.createElement(LoginForm_styles_1.FormItem, null,
                 react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Login", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your login here" : "Proszę wpisz swój login", fullWidth: true, margin: "normal", InputLabelProps: {
                         shrink: true,
-                    }, onChange: (input) => setLogin(input.target.value) })),
+                    }, onChange: (input) => setLogin(input.target.value), onInput: (input) => onInputLogin(input.target.value), onBlur: (input) => onBlurLogin(input.target.value) })),
+            react_1.default.createElement(fieldValidators_styles_1.StyledErrorMessage, null, errors.login),
             react_1.default.createElement(LoginForm_styles_1.FormItem, null,
                 react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: lang === "en" ? "Password" : "Hasło", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your password here" : "Proszę wpisz swoje hasło", fullWidth: true, margin: "normal", InputLabelProps: {
                         shrink: true,
-                    }, type: "password", onChange: (input) => setPassword(input.target.value) })),
+                    }, type: "password", onChange: (input) => setPassword(input.target.value), onInput: (input) => onInputPassword(input.target.value), onBlur: (input) => onBlurPassword(input.target.value) })),
+            react_1.default.createElement(fieldValidators_styles_1.StyledErrorMessage, null, errors.password),
             react_1.default.createElement(LoginForm_styles_1.LogicControls, null,
                 react_1.default.createElement("div", null,
                     lang === "en" ? "Forgot password? Click " : "Zapomniałes hasła? Kliknij ",

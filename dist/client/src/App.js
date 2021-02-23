@@ -60,7 +60,7 @@ const App = (props) => {
             const rootComponent = document.getElementById("root");
             if (layouts.length > 0) {
                 if (rootComponent !== null) {
-                    rootComponent.style.height = "100vh";
+                    rootComponent.style.minHeight = "100vh";
                     rootComponent.style.backgroundColor = App_styles_1.theme.root[layouts[0].name];
                     localStorage.setItem('blognellaTheme', layouts[0].name);
                     localStorage.setItem('blognellaWidth', layouts[0].mainWidth);

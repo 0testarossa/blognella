@@ -8,6 +8,8 @@ import { withRouter } from "react-router-dom";
 import { StyledTagsPanel } from "./TagsPanel.styled";
 import { getUniqueValidatorMsg, getValidatorMsg } from "../validators/validatorMsg";
 import tagValidate from "../validators/tagValidator";
+import tagNameValidate from "../fieldValidators/tagNameValidator";
+import { StyledErrorMessage } from "../fieldValidators/fieldValidators.styles";
 
 const TagsPanel = (props) => {
     const [tag, setTag] = useState("");
@@ -15,6 +17,8 @@ const TagsPanel = (props) => {
     const lang = localStorage.getItem("blognellaLang");
     const [anchorEl, setAnchorEl] = useState(null);
     const [errorMsg, setErrorMsg] = useState<string[]>([])
+    const [errors, setErrors] = useState({name: ""});
+    const [touched, setTouched] = useState<any>({});
 
     const fetchAllTags = () => {
         getTags()
@@ -24,7 +28,7 @@ const TagsPanel = (props) => {
 
     const onTagSave = (event) => {
         event.persist();
-        tagValidate({name: tag}, lang)
+        tagValidate({name: tag.trim()}, lang)
         .then((data) => {
             if(data.length > 0) {
                 setErrorMsg(data);
@@ -86,6 +90,14 @@ const TagsPanel = (props) => {
         );
       }
 
+    const onInputName = (value:string) => {
+    touched.name && tagNameValidate({name: value.trim()}, lang).then((data) => {setErrors({...errors, name: data})});
+    }
+
+    const onBlurName = (value:string) => {
+        tagNameValidate({name: value.trim()}, lang).then((data) => {setErrors({...errors, name: data}); setTouched({...touched, name: true})});
+    }
+
     return (
         <StyledTagsPanel>
              <List>
@@ -103,7 +115,11 @@ const TagsPanel = (props) => {
                 shrink: true,
             }}
             onChange={(input) => setTag(input.target.value)}
+            onInput={(input:any) => onInputName(input.target.value)}
+            onBlur={(input:any) => onBlurName(input.target.value)}
             />
+            <StyledErrorMessage>{errors.name}</StyledErrorMessage>
+
             <Button variant="contained" color="primary" onClick={onTagSave}>
                     {lang === "en" ? "Add Tag" : "Dodaj etykietę"}
             </Button>

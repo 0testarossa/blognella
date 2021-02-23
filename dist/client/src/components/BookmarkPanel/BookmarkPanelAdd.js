@@ -28,6 +28,8 @@ const react_router_dom_1 = require("react-router-dom");
 const styled_components_1 = __importDefault(require("styled-components"));
 const Bookmark_1 = require("../../APIRequests/Bookmark");
 const Post_1 = require("../../APIRequests/Post");
+const bookmarkTitleValidator_1 = __importDefault(require("../fieldValidators/bookmarkTitleValidator"));
+const fieldValidators_styles_1 = require("../fieldValidators/fieldValidators.styles");
 const bookmarkValidator_1 = __importDefault(require("../validators/bookmarkValidator"));
 const validatorMsg_1 = require("../validators/validatorMsg");
 const BookmarkPanel_Styles_1 = require("./BookmarkPanel.Styles");
@@ -38,6 +40,8 @@ const BookmarkPanelAdd = (props) => {
     const lang = localStorage.getItem("blognellaLang");
     const [anchorEl, setAnchorEl] = react_1.useState(null);
     const [errorMsg, setErrorMsg] = react_1.useState([]);
+    const [errors, setErrors] = react_1.useState({ title: "" });
+    const [touched, setTouched] = react_1.useState({});
     const fetchAllPosts = () => {
         Post_1.getPosts()
             .then(({ data: { posts } }) => {
@@ -55,7 +59,7 @@ const BookmarkPanelAdd = (props) => {
     const onBookmarkSave = (event) => {
         event.persist();
         const bookmark = {
-            title: bookmarkTitle,
+            title: bookmarkTitle.trim(),
             post: postId,
         };
         bookmarkValidator_1.default(bookmark, lang)
@@ -90,13 +94,20 @@ const BookmarkPanelAdd = (props) => {
         color: white;
       }
     `;
+    const onInputTitle = (value) => {
+        touched.title && bookmarkTitleValidator_1.default({ title: value.trim() }, lang).then((data) => { setErrors(Object.assign(Object.assign({}, errors), { title: data })); });
+    };
+    const onBlurTitle = (value) => {
+        bookmarkTitleValidator_1.default({ title: value.trim() }, lang).then((data) => { setErrors(Object.assign(Object.assign({}, errors), { title: data })); setTouched(Object.assign(Object.assign({}, touched), { title: true })); });
+    };
     return (react_1.default.createElement(BookmarkPanel_Styles_1.StyledPanel, null,
         react_1.default.createElement(StyledSelect, null,
             react_1.default.createElement(core_1.Select, { value: postId, onChange: handlePostId }, getPostsTitles())),
         react_1.default.createElement("div", null),
         react_1.default.createElement(core_1.TextField, { label: lang === "en" ? "Bookmark title" : "Tytuł zakładki", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your bookmark title here" : "Proszę wpisz tytuł zakładki", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
-            }, onChange: (input) => setBookmarkTitle(input.target.value) }),
+            }, onChange: (input) => setBookmarkTitle(input.target.value), onInput: (input) => onInputTitle(input.target.value), onBlur: (input) => onBlurTitle(input.target.value) }),
+        react_1.default.createElement(fieldValidators_styles_1.StyledErrorMessage, null, errors.title),
         react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onBookmarkSave }, lang === "en" ? "Save Bookmark" : "Zapisz Zakładkę"),
         react_1.default.createElement(core_1.Popover, { id: Boolean(anchorEl) ? 'simple-popover' : undefined, open: Boolean(anchorEl), anchorEl: anchorEl, onClose: () => setAnchorEl(null), anchorOrigin: {
                 vertical: 'bottom',

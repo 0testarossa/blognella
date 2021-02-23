@@ -2,6 +2,11 @@ import { Button, MenuItem, Popover, Select, TextField, Typography } from "@mater
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { updateUser } from "../../APIRequests/User";
+import { StyledErrorMessage } from "../fieldValidators/fieldValidators.styles";
+import userEmailValidate from "../fieldValidators/userEmailValidator";
+import userLoginValidate from "../fieldValidators/userLoginValidator";
+import userNickValidate from "../fieldValidators/userNickValidator";
+import userPasswordValidate from "../fieldValidators/userPasswordValidator";
 import userValidate from "../validators/userValidator";
 import { getUniqueValidatorMsg, getValidatorMsg } from "../validators/validatorMsg";
 import { StyledPanel } from "./UserPanel.styles";
@@ -17,6 +22,8 @@ const UserPanelUpdate = (props) => {
     const lang = localStorage.getItem("blognellaLang");
     const [anchorEl, setAnchorEl] = useState(null);
     const [errorMsg, setErrorMsg] = useState<string[]>([])
+    const [errors, setErrors] = useState({nick: "", login: "", password: "", email: ""});
+    const [touched, setTouched] = useState<any>({});
 
     const handleUserRole = (event) => {
         setRole(event.target.value);
@@ -26,11 +33,11 @@ const UserPanelUpdate = (props) => {
         event.persist();
         const user = {
             _id: props.user._id,
-            nick: nick,
-            login: login,
-            password: password,
+            nick: nick.trim(),
+            login: login.trim(),
+            password: password.trim(),
             role: role,
-            email: email,
+            email: email.trim(),
         }
         userValidate(user, lang)
         .then((data) => {
@@ -59,6 +66,38 @@ const UserPanelUpdate = (props) => {
         return allUsersRoles.map((role) => <MenuItem key={role} value={role}>{role}</MenuItem>)
     }
 
+    const onInputNick = (value:string) => {
+        touched.nick && userNickValidate({nick: value.trim()}, lang).then((data) => {setErrors({...errors, nick: data})});
+    }
+
+    const onBlurNick = (value:string) => {
+    userNickValidate({nick: value.trim()}, lang).then((data) => {setErrors({...errors, nick: data}); setTouched({...touched, nick: true})});
+    }
+
+    const onInputLogin = (value:string) => {
+    touched.login && userLoginValidate({login: value.trim()}, lang).then((data) => {setErrors({...errors, login: data})});
+    }
+
+    const onBlurLogin = (value:string) => {
+    userLoginValidate({login: value.trim()}, lang).then((data) => {setErrors({...errors, login: data}); setTouched({...touched, login: true})});
+    }
+    
+    const onInputPassword = (value:string) => {
+    touched.password && userPasswordValidate({password: value.trim()}, lang).then((data) => {setErrors({...errors, password: data})});
+    }
+
+    const onBlurPassword = (value:string) => {
+    userPasswordValidate({password: value.trim()}, lang).then((data) => {setErrors({...errors, password: data}); setTouched({...touched, password: true})});
+    }
+
+    const onInputEmail = (value:string) => {
+    touched.email && userEmailValidate({email: value.trim()}, lang).then((data) => {setErrors({...errors, email: data})});
+    }
+
+    const onBlurEmail = (value:string) => {
+    userEmailValidate({email: value.trim()}, lang).then((data) => {setErrors({...errors, email: data}); setTouched({...touched, email: true})});
+    }
+
     return (
         <StyledPanel>
             <TextField
@@ -72,7 +111,10 @@ const UserPanelUpdate = (props) => {
                 }}
                 defaultValue={nick}
                 onChange={(input) => setNick(input.target.value)}
+                onInput={(input:any) => onInputNick(input.target.value)}
+                onBlur={(input:any) => onBlurNick(input.target.value)}
             />
+            <StyledErrorMessage>{errors.nick}</StyledErrorMessage>
             <TextField
                 label="Login"
                 style={{ margin: 8 }}
@@ -84,7 +126,10 @@ const UserPanelUpdate = (props) => {
                 }}
                 defaultValue={login}
                 onChange={(input) => setLogin(input.target.value)}
+                onInput={(input:any) => onInputLogin(input.target.value)}
+                onBlur={(input:any) => onBlurLogin(input.target.value)}
             />
+            <StyledErrorMessage>{errors.login}</StyledErrorMessage>
             <TextField
                 label={lang === "en" ? "Password" : "Hasło"}
                 style={{ margin: 8 }}
@@ -97,7 +142,10 @@ const UserPanelUpdate = (props) => {
                 type="password"
                 defaultValue={password}
                 onChange={(input) => setPassword(input.target.value)}
+                onInput={(input:any) => onInputPassword(input.target.value)}
+                onBlur={(input:any) => onBlurPassword(input.target.value)}
             />
+            <StyledErrorMessage>{errors.password}</StyledErrorMessage>
             <Select
             value={role}
             onChange={handleUserRole}
@@ -117,7 +165,10 @@ const UserPanelUpdate = (props) => {
                 }}
                 defaultValue={email}
                 onChange={(input) => setEmail(input.target.value)}
+                onInput={(input:any) => onInputEmail(input.target.value)}
+                onBlur={(input:any) => onBlurEmail(input.target.value)}
             />
+            <StyledErrorMessage>{errors.email}</StyledErrorMessage>
 
             <Button variant="contained" color="primary" onClick={onUserSave}>
                 {lang === "en" ? "Save User" : "Zapisz Użytkownika"}

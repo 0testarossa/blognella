@@ -12,6 +12,9 @@ import { StyledPanel } from './PostsPanel.styles';
 import { getUniqueValidatorMsg, getValidatorMsg } from '../validators/validatorMsg';
 import postValidate from '../validators/postValidator';
 import { theme as theme2 } from '../../App.styles';
+import postTitleValidate from '../fieldValidators/postTitleValidator';
+import postUserValidate from '../fieldValidators/postUserValidator';
+import { StyledErrorMessage } from '../fieldValidators/fieldValidators.styles';
 
 const useStyles = makeStyles(() => ({
     chips: {
@@ -57,6 +60,8 @@ const PostsPanel = (props) => {
     const layout = localStorage.getItem("blognellaTheme") || "default";
     const [anchorEl, setAnchorEl] = useState(null);
     const [errorMsg, setErrorMsg] = useState<string[]>([])
+    const [errors, setErrors] = useState({title: "", user: ""});
+    const [touched, setTouched] = useState<any>({});
 
 
     const handleEditorChange = (e) => {
@@ -114,9 +119,9 @@ const PostsPanel = (props) => {
         const post = {
             date: date.toISOString(),
             tags: tags,
-            title: title,
+            title: title.trim(),
             content: contentId,
-            user: user
+            user: user.trim()
         }
         postValidate(post, lang)
         .then((data) => {
@@ -146,7 +151,23 @@ const PostsPanel = (props) => {
 
     const handleChange = (event) => {
         setTags(event.target.value);
-        };
+    };
+
+    const onInputTitle = (value:string) => {
+      touched.title && postTitleValidate({title: value.trim()}, lang).then((data) => {setErrors({...errors, title: data})});
+    }
+
+    const onBlurTitle = (value:string) => {
+      postTitleValidate({title: value.trim()}, lang).then((data) => {setErrors({...errors, title: data}); setTouched({...touched, title: true})});
+    }
+
+    const onInputUser = (value:string) => {
+      touched.user && postUserValidate({user: value.trim()}, lang).then((data) => {setErrors({...errors, user: data})});
+    }
+
+    const onBlurUser = (value:string) => {
+      postUserValidate({user: value.trim()}, lang).then((data) => {setErrors({...errors, user: data}); setTouched({...touched, user: true})});
+    }
 
     return (
       <StyledPanel inputColor={theme2.text[layout]}>
@@ -161,7 +182,10 @@ const PostsPanel = (props) => {
                         shrink: true,
                     }}
                     onChange={(input) => setTitle(input.target.value)}
+                    onInput={(input:any) => onInputTitle(input.target.value)}
+                    onBlur={(input:any) => onBlurTitle(input.target.value)}
          />
+         <StyledErrorMessage>{errors.title}</StyledErrorMessage>
 
         <Editor
         initialValue={data}
@@ -185,7 +209,10 @@ const PostsPanel = (props) => {
                     }}
                     value={user}
                     onChange={(input) => setUser(input.target.value)}
+                    onInput={(input:any) => onInputUser(input.target.value)}
+                    onBlur={(input:any) => onBlurUser(input.target.value)}
          />
+         <StyledErrorMessage>{errors.user}</StyledErrorMessage>
 
         <div>{lang === "en" ? "Date of publication" : "Data publikacji"}</div>
         <DatePicker
@@ -217,6 +244,7 @@ const PostsPanel = (props) => {
         </Select>
 
         <div></div>
+        <br/>
         <Button variant="contained" color="primary" onClick={onContentSave}>
                     {lang === "en" ? "Save Post" : "Zapisz Wpis"}
          </Button>

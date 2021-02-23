@@ -20,7 +20,7 @@ import { getAllValidationMsg, validateOrRejectExample } from './validation';
         const val = validateOrRejectExample(bookmarkValidator)
         .then(data => {
             if(data.length > 0) {
-                // console.log(data);
+                console.log(data);
                 return getAllValidationMsg(data[0].constraints, language)
             }
             return [];

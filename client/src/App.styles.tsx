@@ -18,6 +18,9 @@ export const StyledPanelContent = styled.div<{width: string, iconColor: string}>
     a{
         text-decoration: underline !important;
     }
+    .MuiFormControl-root label{
+        color: ${props => props.iconColor};
+    }
 `;
 
 export const theme = {

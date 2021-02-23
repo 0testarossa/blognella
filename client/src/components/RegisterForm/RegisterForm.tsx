@@ -6,6 +6,11 @@ import { createUser } from "../../APIRequests/User";
 import { Link, withRouter } from "react-router-dom";
 import { getUniqueValidatorMsg, getValidatorMsg } from "../validators/validatorMsg";
 import userValidate from "../validators/userValidator";
+import userNickValidate from "../fieldValidators/userNickValidator";
+import userLoginValidate from "../fieldValidators/userLoginValidator";
+import userPasswordValidate from "../fieldValidators/userPasswordValidator";
+import userEmailValidate from "../fieldValidators/userEmailValidator";
+import { StyledErrorMessage } from "../fieldValidators/fieldValidators.styles";
 
 const RegisterForm = (props) => {
     const [nick, setNick] = useState("");
@@ -15,15 +20,17 @@ const RegisterForm = (props) => {
     const lang = localStorage.getItem("blognellaLang");
     const [anchorEl, setAnchorEl] = useState(null);
     const [errorMsg, setErrorMsg] = useState<string[]>([])
+    const [errors, setErrors] = useState({nick: "", login: "", password: "", email: ""});
+    const [touched, setTouched] = useState<any>({});
     
 
     const onUserSave = (event) => {
         event.persist();
         const user = {
-            nick:nick,
-            login:login,
-            password:password,
-            email:email,
+            nick:nick.trim(),
+            login:login.trim(),
+            password:password.trim(),
+            email:email.trim(),
             role:"loggedUser"
         }
         userValidate(user, lang)
@@ -49,6 +56,38 @@ const RegisterForm = (props) => {
         });
     }
 
+    const onInputNick = (value:string) => {
+        touched.nick && userNickValidate({nick: value.trim()}, lang).then((data) => {setErrors({...errors, nick: data})});
+    }
+
+    const onBlurNick = (value:string) => {
+    userNickValidate({nick: value.trim()}, lang).then((data) => {setErrors({...errors, nick: data}); setTouched({...touched, nick: true})});
+    }
+
+    const onInputLogin = (value:string) => {
+    touched.login && userLoginValidate({login: value.trim()}, lang).then((data) => {setErrors({...errors, login: data})});
+    }
+
+    const onBlurLogin = (value:string) => {
+    userLoginValidate({login: value.trim()}, lang).then((data) => {setErrors({...errors, login: data}); setTouched({...touched, login: true})});
+    }
+    
+    const onInputPassword = (value:string) => {
+    touched.password && userPasswordValidate({password: value.trim()}, lang).then((data) => {setErrors({...errors, password: data})});
+    }
+
+    const onBlurPassword = (value:string) => {
+    userPasswordValidate({password: value.trim()}, lang).then((data) => {setErrors({...errors, password: data}); setTouched({...touched, password: true})});
+    }
+
+    const onInputEmail = (value:string) => {
+    touched.email && userEmailValidate({email: value.trim()}, lang).then((data) => {setErrors({...errors, email: data})});
+    }
+
+    const onBlurEmail = (value:string) => {
+    userEmailValidate({email: value.trim()}, lang).then((data) => {setErrors({...errors, email: data}); setTouched({...touched, email: true})});
+    }
+
     return (
         <>  
             <StyledRegisterForm>
@@ -64,8 +103,11 @@ const RegisterForm = (props) => {
                         shrink: true,
                     }}
                     onChange={(input) => setNick(input.target.value)}
+                    onInput={(input:any) => onInputNick(input.target.value)}
+                    onBlur={(input:any) => onBlurNick(input.target.value)}
                     />
                 </FormItem>
+                <StyledErrorMessage>{errors.nick}</StyledErrorMessage>
                 <FormItem>
                     <TextField
                     id="standard-full-width"
@@ -78,8 +120,11 @@ const RegisterForm = (props) => {
                         shrink: true,
                     }}
                     onChange={(input) => setLogin(input.target.value)}
+                    onInput={(input:any) => onInputLogin(input.target.value)}
+                    onBlur={(input:any) => onBlurLogin(input.target.value)}
                     />
                 </FormItem>
+                <StyledErrorMessage>{errors.login}</StyledErrorMessage>
                 <FormItem>
                 <TextField
                     id="standard-full-width"
@@ -93,8 +138,11 @@ const RegisterForm = (props) => {
                     }}
                     type="password"
                     onChange={(input) => setPassword(input.target.value)}
+                    onInput={(input:any) => onInputPassword(input.target.value)}
+                    onBlur={(input:any) => onBlurPassword(input.target.value)}
                     />
                 </FormItem>
+                <StyledErrorMessage>{errors.password}</StyledErrorMessage>
                 <FormItem>
                 <TextField
                     id="standard-full-width"
@@ -107,8 +155,11 @@ const RegisterForm = (props) => {
                         shrink: true,
                     }}
                     onChange={(input) => setEmail(input.target.value)}
+                    onInput={(input:any) => onInputEmail(input.target.value)}
+                    onBlur={(input:any) => onBlurEmail(input.target.value)}
                     />
                 </FormItem>
+                <StyledErrorMessage>{errors.email}</StyledErrorMessage>
                 <LogicControls>
                     <div>{lang === "en" ? "Have already account? " : "Masz już konto? "}
                     <Link to={"/login"}>{lang === "en" ? "Login" : "Zaloguj się"}</Link>

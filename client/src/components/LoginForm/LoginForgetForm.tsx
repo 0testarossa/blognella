@@ -5,6 +5,10 @@ import { Button, Popover, Typography } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import { getUsers, updateUser, UserProps } from "../../APIRequests/User";
 import { getValidatorMsg } from "../validators/validatorMsg";
+import userLoginValidate from "../fieldValidators/userLoginValidator";
+import userPasswordValidate from "../fieldValidators/userPasswordValidator";
+import userEmailValidate from "../fieldValidators/userEmailValidator";
+import { StyledErrorMessage } from "../fieldValidators/fieldValidators.styles";
 
 const LoginForgetForm = (props) => {
     const [login, setLogin] = useState("");
@@ -13,13 +17,15 @@ const LoginForgetForm = (props) => {
     const lang = localStorage.getItem("blognellaLang");
     const [anchorEl, setAnchorEl] = useState(null);
     const [errorMsg, setErrorMsg] = useState<string[]>([])
+    const [errors, setErrors] = useState({nick: "", login: "", password: "", email: ""});
+    const [touched, setTouched] = useState<any>({});
 
     const updateUserPassword = (user) => {
         const updatedSser = {
             _id: user._id,
             nick: user.nick,
             login: user.login,
-            password: password,
+            password: password.trim(),
             role: user.role,
             email: user.email,
         }
@@ -31,16 +37,40 @@ const LoginForgetForm = (props) => {
         getUsers()
         .then(({ data: { users } }: UserProps[] | any) => {
             const user = users.find((user) => user.login === login && user.email === email)
-            if(user) {
+            if(user && errors.password === "") {
                 updateUserPassword(user)
                 localStorage.setItem('blognellaId', user._id);
                 props.history.push('/');
             } else {
-                setErrorMsg([lang === "en" ? "Invalid login or email" : "Nieprawidłowy login lub email"])
+                setErrorMsg([lang === "en" ? "Invalid data" : "Niepoprawne dane"])
                 setAnchorEl(event.target);
             }
         })
         .catch((err: Error) => console.log(err))
+    }
+
+    const onInputLogin = (value:string) => {
+    touched.login && userLoginValidate({login: value.trim()}, lang).then((data) => {setErrors({...errors, login: data})});
+    }
+
+    const onBlurLogin = (value:string) => {
+    userLoginValidate({login: value.trim()}, lang).then((data) => {setErrors({...errors, login: data}); setTouched({...touched, login: true})});
+    }
+    
+    const onInputPassword = (value:string) => {
+    touched.password && userPasswordValidate({password: value.trim()}, lang).then((data) => {setErrors({...errors, password: data})});
+    }
+
+    const onBlurPassword = (value:string) => {
+    userPasswordValidate({password: value.trim()}, lang).then((data) => {setErrors({...errors, password: data}); setTouched({...touched, password: true})});
+    }
+
+    const onInputEmail = (value:string) => {
+    touched.email && userEmailValidate({email: value.trim()}, lang).then((data) => {setErrors({...errors, email: data})});
+    }
+
+    const onBlurEmail = (value:string) => {
+    userEmailValidate({email: value.trim()}, lang).then((data) => {setErrors({...errors, email: data}); setTouched({...touched, email: true})});
     }
 
     return (
@@ -58,8 +88,11 @@ const LoginForgetForm = (props) => {
                         shrink: true,
                     }}
                     onChange={(input) => setEmail(input.target.value)}
+                    onInput={(input:any) => onInputEmail(input.target.value)}
+                onBlur={(input:any) => onBlurEmail(input.target.value)}
                     />
                 </FormItem>
+                <StyledErrorMessage>{errors.email}</StyledErrorMessage>
                 <FormItem>
                     <TextField
                     id="standard-full-width"
@@ -72,8 +105,11 @@ const LoginForgetForm = (props) => {
                         shrink: true,
                     }}
                     onChange={(input) => setLogin(input.target.value)}
+                    onInput={(input:any) => onInputLogin(input.target.value)}
+                    onBlur={(input:any) => onBlurLogin(input.target.value)}
                     />
                 </FormItem>
+                <StyledErrorMessage>{errors.login}</StyledErrorMessage>
                 <FormItem>
                 <TextField
                     id="standard-full-width"
@@ -87,8 +123,11 @@ const LoginForgetForm = (props) => {
                     }}
                     type="password"
                     onChange={(input) => setPassword(input.target.value)}
+                    onInput={(input:any) => onInputPassword(input.target.value)}
+                    onBlur={(input:any) => onBlurPassword(input.target.value)}
                     />
                 </FormItem>
+                <StyledErrorMessage>{errors.password}</StyledErrorMessage>
                 <LogicControls>
                     <div></div>
                     <Button variant="contained" color="primary" onClick={onSubmit}>

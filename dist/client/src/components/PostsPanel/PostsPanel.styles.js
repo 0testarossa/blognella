@@ -7,7 +7,7 @@ exports.StyledPanel = void 0;
 const styled_components_1 = __importDefault(require("styled-components"));
 exports.StyledPanel = styled_components_1.default.div `
     label{
-        color: white;
+        /* color: white; */
     }
     .MuiInputBase-input{
         /* color: #dfdfdf; */

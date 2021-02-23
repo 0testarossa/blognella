@@ -40,7 +40,7 @@ export class PostValidator {
         const val = validateOrRejectExample(postValidator)
         .then(data => {
             if(data.length > 0) {
-                console.log(data);
+                // console.log(data);
                 return getAllValidationMsg(data[0].constraints, language)
             }
             return [];

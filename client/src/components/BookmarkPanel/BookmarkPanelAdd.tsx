@@ -4,6 +4,8 @@ import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import { createBookmark } from "../../APIRequests/Bookmark";
 import { getPosts, PostProps } from "../../APIRequests/Post";
+import bookmarkTitleValidate from "../fieldValidators/bookmarkTitleValidator";
+import { StyledErrorMessage } from "../fieldValidators/fieldValidators.styles";
 import bookmarkValidate from "../validators/bookmarkValidator";
 import { getUniqueValidatorMsg, getValidatorMsg } from "../validators/validatorMsg";
 import { StyledPanel } from "./BookmarkPanel.Styles";
@@ -15,6 +17,8 @@ const BookmarkPanelAdd = (props) => {
     const lang = localStorage.getItem("blognellaLang");
     const [anchorEl, setAnchorEl] = useState(null);
     const [errorMsg, setErrorMsg] = useState<string[]>([])
+    const [errors, setErrors] = useState({title: ""});
+    const [touched, setTouched] = useState<any>({});
 
     const fetchAllPosts = () => {
         getPosts()
@@ -36,7 +40,7 @@ const BookmarkPanelAdd = (props) => {
     const onBookmarkSave = (event) => {
         event.persist();
         const bookmark = {
-            title: bookmarkTitle,
+            title: bookmarkTitle.trim(),
             post: postId,
         }
         bookmarkValidate(bookmark, lang)
@@ -72,6 +76,14 @@ const BookmarkPanelAdd = (props) => {
       }
     `
 
+    const onInputTitle = (value:string) => {
+        touched.title && bookmarkTitleValidate({title: value.trim()}, lang).then((data) => {setErrors({...errors, title: data})});
+    }
+
+    const onBlurTitle = (value:string) => {
+        bookmarkTitleValidate({title: value.trim()}, lang).then((data) => {setErrors({...errors, title: data}); setTouched({...touched, title: true})});
+    }
+
     return (
         <StyledPanel>
             <StyledSelect>
@@ -94,7 +106,11 @@ const BookmarkPanelAdd = (props) => {
                     shrink: true,
                 }}
                 onChange={(input) => setBookmarkTitle(input.target.value)}
+                onInput={(input:any) => onInputTitle(input.target.value)}
+                onBlur={(input:any) => onBlurTitle(input.target.value)}
                 />
+                <StyledErrorMessage>{errors.title}</StyledErrorMessage>
+                
             <Button variant="contained" color="primary" onClick={onBookmarkSave}>
                 {lang === "en" ? "Save Bookmark" : "Zapisz Zakładkę"}
             </Button>

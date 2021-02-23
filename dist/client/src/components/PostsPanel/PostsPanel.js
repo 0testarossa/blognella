@@ -36,6 +36,9 @@ const PostsPanel_styles_1 = require("./PostsPanel.styles");
 const validatorMsg_1 = require("../validators/validatorMsg");
 const postValidator_1 = __importDefault(require("../validators/postValidator"));
 const App_styles_1 = require("../../App.styles");
+const postTitleValidator_1 = __importDefault(require("../fieldValidators/postTitleValidator"));
+const postUserValidator_1 = __importDefault(require("../fieldValidators/postUserValidator"));
+const fieldValidators_styles_1 = require("../fieldValidators/fieldValidators.styles");
 const useStyles = core_1.makeStyles(() => ({
     chips: {
         display: 'flex',
@@ -76,6 +79,8 @@ const PostsPanel = (props) => {
     const layout = localStorage.getItem("blognellaTheme") || "default";
     const [anchorEl, setAnchorEl] = react_1.useState(null);
     const [errorMsg, setErrorMsg] = react_1.useState([]);
+    const [errors, setErrors] = react_1.useState({ title: "", user: "" });
+    const [touched, setTouched] = react_1.useState({});
     const handleEditorChange = (e) => {
         setData(e.target.getContent());
     };
@@ -124,9 +129,9 @@ const PostsPanel = (props) => {
         const post = {
             date: date.toISOString(),
             tags: tags,
-            title: title,
+            title: title.trim(),
             content: contentId,
-            user: user
+            user: user.trim()
         };
         postValidator_1.default(post, lang)
             .then((data) => {
@@ -159,10 +164,23 @@ const PostsPanel = (props) => {
     const handleChange = (event) => {
         setTags(event.target.value);
     };
+    const onInputTitle = (value) => {
+        touched.title && postTitleValidator_1.default({ title: value.trim() }, lang).then((data) => { setErrors(Object.assign(Object.assign({}, errors), { title: data })); });
+    };
+    const onBlurTitle = (value) => {
+        postTitleValidator_1.default({ title: value.trim() }, lang).then((data) => { setErrors(Object.assign(Object.assign({}, errors), { title: data })); setTouched(Object.assign(Object.assign({}, touched), { title: true })); });
+    };
+    const onInputUser = (value) => {
+        touched.user && postUserValidator_1.default({ user: value.trim() }, lang).then((data) => { setErrors(Object.assign(Object.assign({}, errors), { user: data })); });
+    };
+    const onBlurUser = (value) => {
+        postUserValidator_1.default({ user: value.trim() }, lang).then((data) => { setErrors(Object.assign(Object.assign({}, errors), { user: data })); setTouched(Object.assign(Object.assign({}, touched), { user: true })); });
+    };
     return (react_1.default.createElement(PostsPanel_styles_1.StyledPanel, { inputColor: App_styles_1.theme.text[layout] },
         react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: lang === "en" ? "Title" : "Tytuł", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your post title here" : "Proszę wpisz tytuł wpisu", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
-            }, onChange: (input) => setTitle(input.target.value) }),
+            }, onChange: (input) => setTitle(input.target.value), onInput: (input) => onInputTitle(input.target.value), onBlur: (input) => onBlurTitle(input.target.value) }),
+        react_1.default.createElement(fieldValidators_styles_1.StyledErrorMessage, null, errors.title),
         react_1.default.createElement(tinymce_react_1.Editor, { initialValue: data, init: {
                 plugins: 'link image code',
                 toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code',
@@ -170,12 +188,14 @@ const PostsPanel = (props) => {
             }, onChange: (e) => handleEditorChange(e) }),
         react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "Nick", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your nick here" : "Proszę wpisz nick", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
-            }, value: user, onChange: (input) => setUser(input.target.value) }),
+            }, value: user, onChange: (input) => setUser(input.target.value), onInput: (input) => onInputUser(input.target.value), onBlur: (input) => onBlurUser(input.target.value) }),
+        react_1.default.createElement(fieldValidators_styles_1.StyledErrorMessage, null, errors.user),
         react_1.default.createElement("div", null, lang === "en" ? "Date of publication" : "Data publikacji"),
         react_1.default.createElement(react_date_picker_1.default, { onChange: (val) => setDate(val), value: date }),
         react_1.default.createElement("div", null, lang === "en" ? "Add tags to post" : "Dodaj etykiety do wpisu"),
         react_1.default.createElement(core_1.Select, { labelId: "demo-mutiple-chip-label", multiple: true, value: tags, onChange: handleChange, input: react_1.default.createElement(core_1.Input, { id: "select-multiple-chip" }), renderValue: (selected) => (react_1.default.createElement("div", { className: classes.chips }, selected.map((value) => (react_1.default.createElement(core_1.Chip, { key: value, label: value, className: classes.chip }))))), MenuProps: MenuProps }, allTags.map((name) => (react_1.default.createElement(core_1.MenuItem, { key: name, value: name, style: getStyles(name, tags, theme) }, name)))),
         react_1.default.createElement("div", null),
+        react_1.default.createElement("br", null),
         react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: onContentSave }, lang === "en" ? "Save Post" : "Zapisz Wpis"),
         react_1.default.createElement(core_1.Popover, { id: Boolean(anchorEl) ? 'simple-popover' : undefined, open: Boolean(anchorEl), anchorEl: anchorEl, onClose: () => { setAnchorEl(null); setErrorMsg([]); }, anchorOrigin: {
                 vertical: 'bottom',
