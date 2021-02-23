@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { LinkElement, MainViewTabsContainer, MainViewTabsContainerWrapper } from "../DefaultView/DefaultView.styles";
 import { Link } from "react-router-dom";
 import { BookmarkProps, getBookmarks } from "../../APIRequests/Bookmark";
+import { theme } from "../../App.styles";
 
 const DefaultViewTabs = () => {
     const [allBookmarks, setAllBookmarks] = useState<BookmarkProps[]>([]);
     const lang = localStorage.getItem("blognellaLang");
+    const layout = localStorage.getItem("blognellaTheme") || "default";
 
     const fetchAllBookmarks = () => {
         getBookmarks()
@@ -21,7 +23,7 @@ const DefaultViewTabs = () => {
 
     return (
         <MainViewTabsContainerWrapper>
-            <MainViewTabsContainer>
+            <MainViewTabsContainer style={{backgroundColor: theme.bookmarks[layout]}}>
                 <LinkElement><Link to={"/"}>{lang === "en" ? "Home" : "Główna"}</Link></LinkElement>
                 {getAllLinks()}
                 {/* <LinkElement><Link to={"/"}>Home</Link></LinkElement> */}

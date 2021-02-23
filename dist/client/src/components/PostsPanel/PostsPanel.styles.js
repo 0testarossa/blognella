@@ -10,10 +10,10 @@ exports.StyledPanel = styled_components_1.default.div `
         color: white;
     }
     .MuiInputBase-input{
-        color: #dfdfdf;
+        /* color: #dfdfdf; */
     }
     input{
-        color: white;
+        color: ${props => props.inputColor};
     }
 `;
 //# sourceMappingURL=PostsPanel.styles.js.map

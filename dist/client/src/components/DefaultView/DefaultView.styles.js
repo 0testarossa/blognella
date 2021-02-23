@@ -14,7 +14,7 @@ exports.LogoContainer = styled_components_1.default.div `
     display:flex;
     justify-content: space-between;
     align-items: baseline;
-    background: #333333;
+    /* background: #333333; */
 `;
 exports.LinksContainer = styled_components_1.default.div `
     display: flex;
@@ -75,12 +75,12 @@ exports.SearchElement = styled_components_1.default.div `
 exports.LoginRegisterContainer = styled_components_1.default.div `
     display:flex;
     justify-content: flex-end;
-    background: #333333;
+    /* background: #333333; */
     align-items: flex-end;
 `;
 exports.MainViewTabsContainer = styled_components_1.default.div `
     display:flex;
-    background-color:#222222;
+    /* background-color:#222222; */
     flex-wrap: wrap;
     border-top: 1px solid #404040;
     border-bottom: 1px solid #404040;
@@ -91,22 +91,23 @@ exports.MainViewTabsContainer = styled_components_1.default.div `
 `;
 exports.MainViewTabsContainerWrapper = styled_components_1.default.div `
     width: 100%;
-    background: #333333;
+    /* background: #333333; */
 `;
+// export const AboutSection = styled.div<{width: string, color: string}>`
 exports.AboutSection = styled_components_1.default.div `
-    width:20%;
     border-left: 1px solid #404040;
     display: flex;
     flex-direction: column;
     padding: 0rem 1rem;
-    color: #00cccb;
+    /* color: #00cccb; */
     overflow: auto;
     overflow-wrap: break-word;
+    color: ${props => props.color}
 `;
 exports.MainContentContainer = styled_components_1.default.div `
     display: flex;
     min-height: 40rem;
-    background-color: #333333;
+    /* background-color: #333333; */
     justify-content: space-between;
     flex-grow: 1;
     padding-top: 1rem;
@@ -118,9 +119,11 @@ exports.StyledAdminPanelContainer = styled_components_1.default.div `
     /* flex-direction: column; */
     a{
         text-decoration:none;
+        color: ${props => props.color};
     }
     a:hover{
-        color: #00cccb;
+        color: ${props => props.decoratedColor};
+        /* color: #00cccb; */
     }
 `;
 //# sourceMappingURL=DefaultView.styles.js.map

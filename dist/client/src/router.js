@@ -12,6 +12,7 @@ const loginPage_1 = __importDefault(require("./pages/loginPage"));
 const mainViewPage_1 = __importDefault(require("./pages/mainViewPage"));
 const registerPage_1 = __importDefault(require("./pages/registerPage"));
 const panelTagsPage_1 = __importDefault(require("./pages/panelTagsPage"));
+const PanelLayoutsPage_1 = __importDefault(require("./pages/PanelLayoutsPage"));
 const panelPostsAddingPage_1 = __importDefault(require("./pages/panelPostsAddingPage"));
 const panelPostsPage_1 = __importDefault(require("./pages/panelPostsPage"));
 const panelPostsUpdatingPage_1 = __importDefault(require("./pages/panelPostsUpdatingPage"));
@@ -66,7 +67,9 @@ function BasicExample() {
             react_1.default.createElement(react_router_dom_1.Route, { path: "/panel/users/:id" },
                 react_1.default.createElement(App_1.default, { page: panelUsersUpdatingPage_1.default })),
             react_1.default.createElement(react_router_dom_1.Route, { path: "/panel/users" },
-                react_1.default.createElement(App_1.default, { page: panelUsersPage_1.default })))));
+                react_1.default.createElement(App_1.default, { page: panelUsersPage_1.default })),
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/panel/layouts" },
+                react_1.default.createElement(App_1.default, { page: PanelLayoutsPage_1.default })))));
 }
 exports.default = BasicExample;
 //# sourceMappingURL=router.js.map

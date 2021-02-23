@@ -10,6 +10,8 @@ import { withRouter } from 'react-router-dom';
 import { StyledPanel } from './PostsPanel.styles';
 import { getUniqueValidatorMsg, getValidatorMsg } from '../validators/validatorMsg';
 import postValidate from '../validators/postValidator';
+import { theme as theme2 } from '../../App.styles';
+
 
 const useStyles = makeStyles(() => ({
     chips: {
@@ -47,12 +49,11 @@ const UpdatePostsPanel = (props) => {
     const [data, setData] = useState(props.post.content[0].text || "");
     const [title, setTitle] = useState(props.post.title || "");
     const [tags, setTags] = useState(props.post.tags || []);
-    // const [contentId, setContentId] = useState(undefined)
     const [allTags, setAllTags] = useState([])
     const [date, setDate] = useState<any>(new Date());
-    // const [date, setDate] = useState<any>(props.post.date);
     const [user, setUser] = useState(props.post.user);
     const lang = localStorage.getItem("blognellaLang");
+    const layout = localStorage.getItem("blognellaTheme") || "default";
     const [anchorEl, setAnchorEl] = useState(null);
     const [errorMsg, setErrorMsg] = useState<string[]>([])
 
@@ -124,7 +125,7 @@ const UpdatePostsPanel = (props) => {
         };
 
     return (
-        <StyledPanel>
+        <StyledPanel inputColor={theme2.text[layout]}>
          <TextField
                     id="standard-full-width"
                     label={lang === "en" ? "Title" : "Tytuł"}

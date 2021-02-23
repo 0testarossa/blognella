@@ -3,3 +3,10 @@ export enum USER_ROLES {
     LOOGED_USER = "loggedUser",
     ADMIN = "admin"
 }
+
+export enum LAYOUT_NAMES {
+    DEFAULT = "default",
+    WHITE = "white",
+    PURPLE = "purple",
+    RED = "red"
+}

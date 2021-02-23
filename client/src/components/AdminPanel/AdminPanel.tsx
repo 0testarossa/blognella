@@ -5,6 +5,7 @@ import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import PersonIcon from '@material-ui/icons/Person';
 import NotesIcon from '@material-ui/icons/Notes';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import ColorLensIcon from '@material-ui/icons/ColorLens';
 
 const AdminPanel = () => {
     const lang = localStorage.getItem("blognellaLang");
@@ -21,6 +22,9 @@ const AdminPanel = () => {
             </StyledText></StyledAdminPanelItem>
             <StyledAdminPanelItem><StyledText>
                 <Link to={"/panel/tags"}><CenteredSpan><LocalOfferIcon/>{lang === "en" ? "TAGS" : "ETYKIETY"}</CenteredSpan></Link>
+            </StyledText></StyledAdminPanelItem>
+            <StyledAdminPanelItem><StyledText>
+                <Link to={"/panel/layouts"}><CenteredSpan><ColorLensIcon/>{lang === "en" ? "LAYOUTS" : "WYGLĄD STRONY"}</CenteredSpan></Link>
             </StyledText></StyledAdminPanelItem>
         </StyledAdminPanel>
     )

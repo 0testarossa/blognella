@@ -8,7 +8,7 @@ const styled_components_1 = __importDefault(require("styled-components"));
 exports.StyledLoginForm = styled_components_1.default.div `
   display: flex;
   flex-direction: column;
-  background: #333333;
+  /* background: #333333; */
   color: white;
   border: 2px solid white;
 `;

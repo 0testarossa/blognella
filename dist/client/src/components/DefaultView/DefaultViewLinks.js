@@ -29,10 +29,12 @@ const User_1 = require("../../APIRequests/User");
 const DefaultViewTabs_1 = __importDefault(require("./DefaultViewTabs"));
 const App_1 = require("../../App");
 const SearchComponent_1 = __importDefault(require("../SearchComponent/SearchComponent"));
+const App_styles_1 = require("../../App.styles");
 const DefaultViewLinks = (props) => {
     const [nick, setNick] = react_1.useState("");
     const [role, setRole] = react_1.useState("");
     const lang = localStorage.getItem('blognellaLang');
+    const layout = localStorage.getItem('blognellaTheme') || "default";
     const fetchUser = () => {
         User_1.getUser(localStorage.getItem('blognellaId') || "")
             .then(({ data: { user } }) => {
@@ -62,7 +64,7 @@ const DefaultViewLinks = (props) => {
         window.location.reload();
     };
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(DefaultView_styles_1.LoginRegisterContainer, null,
+        react_1.default.createElement(DefaultView_styles_1.LoginRegisterContainer, { style: { backgroundColor: App_styles_1.theme.comments[layout] } },
             react_1.default.createElement(DefaultView_styles_1.SearchElement, null,
                 react_1.default.createElement(SearchComponent_1.default, null)),
             App_1.availablePages.includes(props.pageName) && role === "admin" ? react_1.default.createElement(DefaultView_styles_1.LinkElement, null,

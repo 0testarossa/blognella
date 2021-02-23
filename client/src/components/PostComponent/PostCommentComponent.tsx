@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { deleteComment, updateComment } from "../../APIRequests/Comment";
+import { theme } from "../../App.styles";
 import commentValidate from "../validators/commentValidator";
 import { getUniqueValidatorMsg, getValidatorMsg } from "../validators/validatorMsg";
 import { StyledComponentTextField, StyledCommentAuthor, StyledCommentButton} from "./PostComment.styles";
@@ -12,6 +13,7 @@ const PostCommentComponent = (props) => {
     const [isEditingMode, setIsEditingMode] = useState(false);
     const [commentText, setCommentText] = useState(props.comment.text);
     const lang = localStorage.getItem("blognellaLang");
+    const layout = localStorage.getItem("blognellaTheme") || "default";
     const [anchorEl, setAnchorEl] = useState(null);
     const [errorMsg, setErrorMsg] = useState<string[]>([])
 
@@ -83,7 +85,8 @@ const PostCommentComponent = (props) => {
         <>
             <div>
                 <StyledCommentAuthor>{props.comment.user} </StyledCommentAuthor> {new Date(props.comment.date).toDateString()}
-                {canEdit ? <><StyledCommentButton onClick={onEdit}>{lang === "en" ? "Edit" : "Edytuj"}</StyledCommentButton><StyledCommentButton onClick={onDelete}>{lang === "en" ? "Delete" : "Usuń"}</StyledCommentButton></> : <></>}
+                {canEdit ? <><StyledCommentButton color={theme.decoratedText[layout]} onClick={onEdit}>{lang === "en" ? "Edit" : "Edytuj"}</StyledCommentButton>
+                <StyledCommentButton color={theme.decoratedText[layout]} onClick={onDelete}>{lang === "en" ? "Delete" : "Usuń"}</StyledCommentButton></> : <></>}
             </div>
             {/* <div>{props.comment.text}</div> */}
             <StyledComponentTextField>
@@ -104,7 +107,8 @@ const PostCommentComponent = (props) => {
                      defaultValue={commentText}
                      onChange={(input) => setCommentText(input.target.value)}
              /> : 
-             <div style={{padding: "1rem 0", backgroundColor: "#333333", borderBottom: "2px solid #404040", wordBreak: "break-word"}}>
+            //  <div style={{padding: "1rem 0", backgroundColor: "#333333", borderBottom: "2px solid #404040", wordBreak: "break-word"}}>
+             <div style={{padding: "1rem 0", borderBottom: "2px solid #404040", wordBreak: "break-word"}}>
                 {commentText}
              </div>
                 }

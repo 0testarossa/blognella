@@ -31,14 +31,16 @@ export const StyledChapters = styled.div`
     
 `;
 
-export const StyledTagsLabel = styled.div`
+export const StyledTagsLabel = styled.div<{color:string}>`
     margin-top: 0.5rem;
     font-weight: bold;
-    color: #00cccb;
+    color: ${props => props.color};
+    /* color: #00cccb; */
 `;
 
-export const StyledTags = styled.div`
-    color: #00cccb;
+export const StyledTags = styled.div<{color:string}>`
+    /* color: #00cccb; */
+    color: ${props => props.color};
     font-size: 0.92rem;
     font-style: oblique;
     margin-bottom: 0.5rem;
@@ -58,7 +60,7 @@ export const StyledAuthor = styled.span`
 
 export const StyledBottomPageContainer = styled.div`
     width: 100%;
-    background-color: #303030;
+    /* background-color: #303030; */
     padding: 0.2rem 0.75rem;
     border-bottom: 2px solid #404040;
     margin-top: 2rem;

@@ -12,7 +12,7 @@ exports.StyledComponentTextField = styled_components_1.default.div `
     }
 
     .MuiInputBase-input{
-        color: #dfdfdf;
+        /* color: #dfdfdf; */
     }
 `;
 exports.StyledCommentAuthor = styled_components_1.default.span `
@@ -20,7 +20,9 @@ exports.StyledCommentAuthor = styled_components_1.default.span `
 `;
 exports.StyledCommentButton = styled_components_1.default.span `
     margin-left: 1rem;
-    color: #00cccb;
+    color: ${props => props.color};
+    font-weight: 600;
+    /* color: #00cccb; */
     cursor: pointer;
 
     &:hover{

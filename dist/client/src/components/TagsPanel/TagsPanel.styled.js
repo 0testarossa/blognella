@@ -10,7 +10,7 @@ exports.StyledTagsPanel = styled_components_1.default.div `
         color: white;
     }
     .MuiInputBase-input{
-        color: #dfdfdf;
+        /* color: #dfdfdf; */
     }
 `;
 //# sourceMappingURL=TagsPanel.styled.js.map

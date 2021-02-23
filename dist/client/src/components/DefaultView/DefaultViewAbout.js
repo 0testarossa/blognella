@@ -25,7 +25,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
 const Post_1 = require("../../APIRequests/Post");
 const PostAboutComponent_1 = __importDefault(require("../PostComponent/PostAboutComponent"));
-const DefaultView_styles_1 = require("./DefaultView.styles");
 const DefaultViewAbout = () => {
     const [aboutPost, setAboutPost] = react_1.useState([]);
     const lang = localStorage.getItem("blognellaLang");
@@ -41,7 +40,11 @@ const DefaultViewAbout = () => {
         if (aboutPost.length === 0)
             fetchAllPosts();
     }, []);
-    return (react_1.default.createElement(DefaultView_styles_1.AboutSection, null, aboutPost.length > 0 ? react_1.default.createElement(PostAboutComponent_1.default, { post: aboutPost[0] }) : react_1.default.createElement("div", null, lang === "en" ? "There is no About post" : "Brak wpisu o mnie")));
+    return (
+    // <AboutSection>
+    aboutPost.length > 0 ? react_1.default.createElement(PostAboutComponent_1.default, { post: aboutPost[0] }) : react_1.default.createElement("div", null, lang === "en" ? "There is no About post" : "Brak wpisu o mnie")
+    // </AboutSection>
+    );
 };
 exports.default = DefaultViewAbout;
 //# sourceMappingURL=DefaultViewAbout.js.map

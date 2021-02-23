@@ -5,11 +5,13 @@ import { getUser, UserProps } from "../../APIRequests/User";
 import DefaultViewTabs from "./DefaultViewTabs";
 import { availablePages } from "../../App";
 import SearchComponent from "../SearchComponent/SearchComponent";
+import { theme } from "../../App.styles";
 
 const DefaultViewLinks = (props) => {
     const [nick, setNick] = useState("");
     const [role, setRole] = useState("");
     const lang = localStorage.getItem('blognellaLang');
+    const layout = localStorage.getItem('blognellaTheme') || "default";
 
     const fetchUser = () => {
         getUser(localStorage.getItem('blognellaId') || "")
@@ -39,7 +41,7 @@ const DefaultViewLinks = (props) => {
 
     return (
         <>
-            <LoginRegisterContainer>
+            <LoginRegisterContainer style={{backgroundColor: theme.comments[layout]}}>
                 <SearchElement><SearchComponent/></SearchElement>
                 {availablePages.includes(props.pageName) && role === "admin" ? <LinkElement><Link to={"/panel/posts"}>Panel</Link></LinkElement> : <></>}
                 { nick ? <LinkElement onClick={onLogout} ><Link to={"/"}>{lang === "en" ? "Logout" : "Wyloguj"} <span style={{fontWeight: "bold"}}>{nick}</span></Link></LinkElement> : 

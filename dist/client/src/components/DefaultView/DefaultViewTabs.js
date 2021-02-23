@@ -23,9 +23,11 @@ const react_1 = __importStar(require("react"));
 const DefaultView_styles_1 = require("../DefaultView/DefaultView.styles");
 const react_router_dom_1 = require("react-router-dom");
 const Bookmark_1 = require("../../APIRequests/Bookmark");
+const App_styles_1 = require("../../App.styles");
 const DefaultViewTabs = () => {
     const [allBookmarks, setAllBookmarks] = react_1.useState([]);
     const lang = localStorage.getItem("blognellaLang");
+    const layout = localStorage.getItem("blognellaTheme") || "default";
     const fetchAllBookmarks = () => {
         Bookmark_1.getBookmarks()
             .then(({ data: { bookmarks } }) => { if (bookmarks.length !== allBookmarks.length)
@@ -39,7 +41,7 @@ const DefaultViewTabs = () => {
             react_1.default.createElement(react_router_dom_1.Link, { to: bookmark.post.length > 0 ? `/ui/post/${bookmark.post[0]._id}` : '/' }, bookmark.title))) || [];
     };
     return (react_1.default.createElement(DefaultView_styles_1.MainViewTabsContainerWrapper, null,
-        react_1.default.createElement(DefaultView_styles_1.MainViewTabsContainer, null,
+        react_1.default.createElement(DefaultView_styles_1.MainViewTabsContainer, { style: { backgroundColor: App_styles_1.theme.bookmarks[layout] } },
             react_1.default.createElement(DefaultView_styles_1.LinkElement, null,
                 react_1.default.createElement(react_router_dom_1.Link, { to: "/" }, lang === "en" ? "Home" : "Główna")),
             getAllLinks())));

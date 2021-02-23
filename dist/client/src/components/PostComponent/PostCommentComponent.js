@@ -28,6 +28,7 @@ const TextField_1 = __importDefault(require("@material-ui/core/TextField"));
 const react_1 = __importStar(require("react"));
 const react_router_dom_1 = require("react-router-dom");
 const Comment_1 = require("../../APIRequests/Comment");
+const App_styles_1 = require("../../App.styles");
 const commentValidator_1 = __importDefault(require("../validators/commentValidator"));
 const validatorMsg_1 = require("../validators/validatorMsg");
 const PostComment_styles_1 = require("./PostComment.styles");
@@ -35,6 +36,7 @@ const PostCommentComponent = (props) => {
     const [isEditingMode, setIsEditingMode] = react_1.useState(false);
     const [commentText, setCommentText] = react_1.useState(props.comment.text);
     const lang = localStorage.getItem("blognellaLang");
+    const layout = localStorage.getItem("blognellaTheme") || "default";
     const [anchorEl, setAnchorEl] = react_1.useState(null);
     const [errorMsg, setErrorMsg] = react_1.useState([]);
     const canEdit = props.role !== "guest" && (props.comment.user === props.nick || props.role === "admin");
@@ -104,8 +106,8 @@ const PostCommentComponent = (props) => {
             " ",
             new Date(props.comment.date).toDateString(),
             canEdit ? react_1.default.createElement(react_1.default.Fragment, null,
-                react_1.default.createElement(PostComment_styles_1.StyledCommentButton, { onClick: onEdit }, lang === "en" ? "Edit" : "Edytuj"),
-                react_1.default.createElement(PostComment_styles_1.StyledCommentButton, { onClick: onDelete }, lang === "en" ? "Delete" : "Usuń")) : react_1.default.createElement(react_1.default.Fragment, null)),
+                react_1.default.createElement(PostComment_styles_1.StyledCommentButton, { color: App_styles_1.theme.decoratedText[layout], onClick: onEdit }, lang === "en" ? "Edit" : "Edytuj"),
+                react_1.default.createElement(PostComment_styles_1.StyledCommentButton, { color: App_styles_1.theme.decoratedText[layout], onClick: onDelete }, lang === "en" ? "Delete" : "Usuń")) : react_1.default.createElement(react_1.default.Fragment, null)),
         react_1.default.createElement(PostComment_styles_1.StyledComponentTextField, null,
             isEditingMode ?
                 react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: "", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your comment here" : "Proszę wpisz komentarz", fullWidth: true, margin: "normal", InputLabelProps: {
@@ -113,7 +115,8 @@ const PostCommentComponent = (props) => {
                     }, InputProps: {
                         readOnly: !isEditingMode,
                     }, defaultValue: commentText, onChange: (input) => setCommentText(input.target.value) }) :
-                react_1.default.createElement("div", { style: { padding: "1rem 0", backgroundColor: "#333333", borderBottom: "2px solid #404040", wordBreak: "break-word" } }, commentText),
+                //  <div style={{padding: "1rem 0", backgroundColor: "#333333", borderBottom: "2px solid #404040", wordBreak: "break-word"}}>
+                react_1.default.createElement("div", { style: { padding: "1rem 0", borderBottom: "2px solid #404040", wordBreak: "break-word" } }, commentText),
             isEditingMode ?
                 react_1.default.createElement(Button_1.default, { variant: "contained", color: "primary", onClick: onSaveEditedComment }, lang === "en" ? "Save Comment" : "Zapisz Komentarz") : react_1.default.createElement(react_1.default.Fragment, null),
             react_1.default.createElement(core_1.Popover, { id: Boolean(anchorEl) ? 'simple-popover' : undefined, open: Boolean(anchorEl), anchorEl: anchorEl, onClose: () => setAnchorEl(null), anchorOrigin: {

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getPosts, PostProps } from "../../APIRequests/Post";
 import PostAboutComponent from "../PostComponent/PostAboutComponent";
-import { AboutSection } from "./DefaultView.styles";
-
 
 const DefaultViewAbout = () => {
     const [aboutPost, setAboutPost] = useState([]);
@@ -22,9 +20,9 @@ const DefaultViewAbout = () => {
     }, [])
 
     return (
-        <AboutSection>
-            {aboutPost.length > 0 ? <PostAboutComponent post={aboutPost[0]} /> : <div>{lang === "en" ? "There is no About post" : "Brak wpisu o mnie"}</div>}
-        </AboutSection>
+        // <AboutSection>
+            aboutPost.length > 0 ? <PostAboutComponent post={aboutPost[0]} /> : <div>{lang === "en" ? "There is no About post" : "Brak wpisu o mnie"}</div>
+        // </AboutSection>
     )
 }
 

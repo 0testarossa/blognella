@@ -34,6 +34,7 @@ const react_router_dom_1 = require("react-router-dom");
 const PostsPanel_styles_1 = require("./PostsPanel.styles");
 const validatorMsg_1 = require("../validators/validatorMsg");
 const postValidator_1 = __importDefault(require("../validators/postValidator"));
+const App_styles_1 = require("../../App.styles");
 const useStyles = core_1.makeStyles(() => ({
     chips: {
         display: 'flex',
@@ -66,12 +67,11 @@ const UpdatePostsPanel = (props) => {
     const [data, setData] = react_1.useState(props.post.content[0].text || "");
     const [title, setTitle] = react_1.useState(props.post.title || "");
     const [tags, setTags] = react_1.useState(props.post.tags || []);
-    // const [contentId, setContentId] = useState(undefined)
     const [allTags, setAllTags] = react_1.useState([]);
     const [date, setDate] = react_1.useState(new Date());
-    // const [date, setDate] = useState<any>(props.post.date);
     const [user, setUser] = react_1.useState(props.post.user);
     const lang = localStorage.getItem("blognellaLang");
+    const layout = localStorage.getItem("blognellaTheme") || "default";
     const [anchorEl, setAnchorEl] = react_1.useState(null);
     const [errorMsg, setErrorMsg] = react_1.useState([]);
     const handleEditorChange = (e) => {
@@ -135,7 +135,7 @@ const UpdatePostsPanel = (props) => {
     const handleChange = (event) => {
         setTags(event.target.value);
     };
-    return (react_1.default.createElement(PostsPanel_styles_1.StyledPanel, null,
+    return (react_1.default.createElement(PostsPanel_styles_1.StyledPanel, { inputColor: App_styles_1.theme.text[layout] },
         react_1.default.createElement(TextField_1.default, { id: "standard-full-width", label: lang === "en" ? "Title" : "Tytuł", style: { margin: 8 }, placeholder: lang === "en" ? "Please type in your post title here" : "Proszę wpisz tytuł wpisu", fullWidth: true, margin: "normal", InputLabelProps: {
                 shrink: true,
             }, defaultValue: title, onChange: (input) => setTitle(input.target.value) }),

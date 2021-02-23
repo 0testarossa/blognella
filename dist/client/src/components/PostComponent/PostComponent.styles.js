@@ -34,10 +34,12 @@ exports.StyledChapters = styled_components_1.default.div `
 exports.StyledTagsLabel = styled_components_1.default.div `
     margin-top: 0.5rem;
     font-weight: bold;
-    color: #00cccb;
+    color: ${props => props.color};
+    /* color: #00cccb; */
 `;
 exports.StyledTags = styled_components_1.default.div `
-    color: #00cccb;
+    /* color: #00cccb; */
+    color: ${props => props.color};
     font-size: 0.92rem;
     font-style: oblique;
     margin-bottom: 0.5rem;
@@ -54,7 +56,7 @@ exports.StyledAuthor = styled_components_1.default.span `
 `;
 exports.StyledBottomPageContainer = styled_components_1.default.div `
     width: 100%;
-    background-color: #303030;
+    /* background-color: #303030; */
     padding: 0.2rem 0.75rem;
     border-bottom: 2px solid #404040;
     margin-top: 2rem;

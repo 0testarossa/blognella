@@ -7,7 +7,7 @@ export const StyledComponentTextField = styled.div`
     }
 
     .MuiInputBase-input{
-        color: #dfdfdf;
+        /* color: #dfdfdf; */
     }
 `;
 
@@ -15,9 +15,11 @@ export const StyledCommentAuthor = styled.span`
     font-weight: bold;
 `;
 
-export const StyledCommentButton = styled.span`
+export const StyledCommentButton = styled.span<{color:string}>`
     margin-left: 1rem;
-    color: #00cccb;
+    color: ${props => props.color};
+    font-weight: 600;
+    /* color: #00cccb; */
     cursor: pointer;
 
     &:hover{

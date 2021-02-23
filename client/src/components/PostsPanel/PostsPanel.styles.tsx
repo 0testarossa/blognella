@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
-export const StyledPanel = styled.div`
+export const StyledPanel = styled.div<{inputColor: string}>`
     label{
         color: white;
     }
     .MuiInputBase-input{
-        color: #dfdfdf;
+        /* color: #dfdfdf; */
     }
     input{
-        color: white;
+        color: ${props => props.inputColor};
     }
 `

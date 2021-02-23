@@ -5,7 +5,7 @@ export const StyledSearch = styled.div`
         color: white;
     }
     .MuiInputBase-input{
-        color: #dfdfdf;
+        /* color: #dfdfdf; */
     }
     button{
         height: 30px;

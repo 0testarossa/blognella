@@ -9,6 +9,8 @@ exports.MainViewContainer = styled_components_1.default.div `
     /* display: flex; */
     /* justify-content: space-between; */
     margin: 0rem 1rem;
-    width:100%;
+    /* width:100%; */
+    min-width: ${props => props.minWidth};
+    width: ${props => props.width}
 `;
 //# sourceMappingURL=MainView.styles.js.map

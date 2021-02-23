@@ -8,6 +8,7 @@ import MainViewPage from "./pages/mainViewPage";
 
 import RegisterPage from "./pages/registerPage";
 import PanelTagsPage from "./pages/panelTagsPage";
+import PanelLayoutsPage from "./pages/PanelLayoutsPage";
 import PanelPostsAddingPage from "./pages/panelPostsAddingPage";
 import PanelPostsPage from "./pages/panelPostsPage";
 import PanelPostsUpdatingPage from "./pages/panelPostsUpdatingPage";
@@ -48,6 +49,7 @@ export default function BasicExample() {
              <Route path="/panel/users/add"><App page={PanelUsersAddingPage}/></Route>
              <Route path="/panel/users/:id"><App page={PanelUsersUpdatingPage}/></Route>
              <Route path="/panel/users"><App page={PanelUsersPage}/></Route>
+             <Route path="/panel/layouts"><App page={PanelLayoutsPage}/></Route>
            </Switch>
       </Router>
     );

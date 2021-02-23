@@ -5,6 +5,6 @@ export const StyledTagsPanel = styled.div`
         color: white;
     }
     .MuiInputBase-input{
-        color: #dfdfdf;
+        /* color: #dfdfdf; */
     }
 `

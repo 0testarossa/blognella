@@ -10,7 +10,7 @@ export const LogoContainer = styled.div`
     display:flex;
     justify-content: space-between;
     align-items: baseline;
-    background: #333333;
+    /* background: #333333; */
 `;
 
 export const LinksContainer = styled.div`
@@ -76,13 +76,13 @@ export const SearchElement = styled.div`
 export const LoginRegisterContainer = styled.div`
     display:flex;
     justify-content: flex-end;
-    background: #333333;
+    /* background: #333333; */
     align-items: flex-end;
 `;
 
 export const MainViewTabsContainer = styled.div`
     display:flex;
-    background-color:#222222;
+    /* background-color:#222222; */
     flex-wrap: wrap;
     border-top: 1px solid #404040;
     border-bottom: 1px solid #404040;
@@ -94,38 +94,41 @@ export const MainViewTabsContainer = styled.div`
 
 export const MainViewTabsContainerWrapper = styled.div`
     width: 100%;
-    background: #333333;
+    /* background: #333333; */
 `
 
-export const AboutSection = styled.div`
-    width:20%;
+// export const AboutSection = styled.div<{width: string, color: string}>`
+export const AboutSection = styled.div<{color: string}>`
     border-left: 1px solid #404040;
     display: flex;
     flex-direction: column;
     padding: 0rem 1rem;
-    color: #00cccb;
+    /* color: #00cccb; */
     overflow: auto;
     overflow-wrap: break-word;
+    color: ${props => props.color}
 `;
 
 export const MainContentContainer = styled.div`
     display: flex;
     min-height: 40rem;
-    background-color: #333333;
+    /* background-color: #333333; */
     justify-content: space-between;
     flex-grow: 1;
     padding-top: 1rem;
     padding-bottom: 2rem;
 `;
 
-export const StyledAdminPanelContainer = styled.div`
+export const StyledAdminPanelContainer = styled.div<{color:string, decoratedColor:string}>`
     display:flex;
     height: 100%;
     /* flex-direction: column; */
     a{
         text-decoration:none;
+        color: ${props => props.color};
     }
     a:hover{
-        color: #00cccb;
+        color: ${props => props.decoratedColor};
+        /* color: #00cccb; */
     }
 `;

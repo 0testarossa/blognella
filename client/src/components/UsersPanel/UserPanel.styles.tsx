@@ -5,7 +5,7 @@ export const StyledPanel = styled.div`
         color: white;
     }
     .MuiInputBase-input{
-        color: #dfdfdf;
+        /* color: #dfdfdf; */
     }
     input{
         color: white;

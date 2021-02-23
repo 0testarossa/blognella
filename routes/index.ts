@@ -3,6 +3,7 @@ import { addBookmark, deleteBookmark, getBookmark, getBookmarks, updateBookmark 
 import { addComment, deleteComment, getComment, getComments, updateComment } from '../controllers/commentController'
 import { addContent, deleteContent, getContent, getContents, updateContent } from '../controllers/contentController'
 import { addImage, deleteImage, getImage, getImages, updateImage } from '../controllers/imageController'
+import { addLayout, deleteLayout, getLayout, getLayouts, updateLayout } from '../controllers/layoutController'
 import { addPost, deletePost, getPost, getPosts, updatePost } from '../controllers/postController'
 import { addTag, deleteTag, getTag, getTags, updateTag } from '../controllers/tagController'
 import { getTodos, addTodo, updateTodo, deleteTodo } from '../controllers/todoController'
@@ -110,6 +111,16 @@ router.post('/comment', addComment)
 router.put('/comment/:id', updateComment)
 
 router.delete('/comment/:id', deleteComment)
+
+router.get('/layouts', getLayouts)
+
+router.get('/layout/:id', getLayout)
+
+router.post('/layout', addLayout)
+
+router.put('/layout/:id', updateLayout)
+
+router.delete('/layout/:id', deleteLayout)
 
 export default router
 // module.exports = router;
