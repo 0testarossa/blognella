@@ -13,8 +13,10 @@ export const StyledTitle = styled.div`
 
 export const StyledText = styled.div`
     margin: 0.2rem 0;
-    overflow: auto;
+    /* overflow: auto; */
+    overflow: hidden;
     max-width: 46rem;
+    word-break: break-all;
 `;
 
 export const StyledChaptersContainer = styled.div`

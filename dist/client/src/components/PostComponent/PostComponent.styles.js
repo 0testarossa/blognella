@@ -16,8 +16,10 @@ exports.StyledTitle = styled_components_1.default.div `
 `;
 exports.StyledText = styled_components_1.default.div `
     margin: 0.2rem 0;
-    overflow: auto;
+    /* overflow: auto; */
+    overflow: hidden;
     max-width: 46rem;
+    word-break: break-all;
 `;
 exports.StyledChaptersContainer = styled_components_1.default.div `
     display: flex;

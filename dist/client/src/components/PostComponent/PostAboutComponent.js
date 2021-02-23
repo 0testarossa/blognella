@@ -10,7 +10,7 @@ const PostAboutComponent = (props) => {
         "It will be avaiable soon - ",
         date) :
         react_1.default.createElement(react_1.default.Fragment, null,
-            react_1.default.createElement("div", { dangerouslySetInnerHTML: { __html: props.post.content[0].text } })));
+            react_1.default.createElement("div", { style: { overflow: "hidden" }, dangerouslySetInnerHTML: { __html: props.post.content[0].text } })));
 };
 exports.default = PostAboutComponent;
 //# sourceMappingURL=PostAboutComponent.js.map

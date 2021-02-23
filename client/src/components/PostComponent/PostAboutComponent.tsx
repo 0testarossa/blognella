@@ -6,7 +6,7 @@ const PostAboutComponent = (props) => {
     return (
         props.post.date > new Date().toISOString() ? <div>It will be avaiable soon - {date}</div> : 
             <>
-            <div dangerouslySetInnerHTML={{ __html: props.post.content[0].text }} />
+            <div style={{overflow: "hidden"}}dangerouslySetInnerHTML={{ __html: props.post.content[0].text }} />
             </>
     )
 }
